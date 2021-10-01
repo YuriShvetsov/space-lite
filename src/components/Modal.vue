@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" v-bind:class="classNames">
 
     <transition name="fade-scale">
       <div class="modal__container"
@@ -22,6 +22,12 @@
 <script>
 export default {
   name: 'modal',
+  props: {
+    classNames: {
+      type: Array,
+      default: ['modal_size_md']
+    }
+  },
   data() {
     return {
       isVisible: false
@@ -46,6 +52,7 @@ export default {
 .modal {
   width: 100vw;
   height: 100vh;
+  padding: 0 32px;
   position: fixed;
   left: 0;
   top: 0;
@@ -53,18 +60,34 @@ export default {
   z-index: map-get($zLayers, "zIndexModal");
 }
 .modal__container {
-  width: 100%;
-  max-width: 420px;
+  width: calc(100% - 64px);
   padding: 25px 40px;
   position: absolute;
   left: 50%;
   top: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0, 0.35);
-  transform: translate(-50%, 65px);
+  transform: translate(-50%, 0);
   z-index: 102;
   pointer-events: all;
+}
+.modal_size_md .modal__container {
+  max-width: 420px;
+  top: 65px;
+}
+.modal_size_lg .modal__container {
+  max-width: 720px;
+  top: 65px;
+}
+.modal_size_full .modal__container {  
+  width: 100vw;
+  height: 100vh;
 }
 .modal__overlay {
   width: 100%;
@@ -124,22 +147,22 @@ export default {
 @keyframes fade-scale-in {
   0% {
     opacity: 0;
-    transform: translate(-50%, 65px) scale(0.95);
+    transform: translate(-50%, 0) scale(0.95);
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, 65px) scale(1);
+    transform: translate(-50%, 0) scale(1);
   }
 }
 
 @keyframes fade-scale-out {
   0% {
     opacity: 1;
-    transform: translate(-50%, 65px) scale(1);
+    transform: translate(-50%, 0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, 65px) scale(0.95);
+    transform: translate(-50%, 0) scale(0.95);
   }
 }
 

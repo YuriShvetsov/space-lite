@@ -59,15 +59,9 @@
 
 <script>
 import catchFocus from '../js/catchFocus'
-import CustomSelect from './CustomSelect.vue'
-import TextBox from './TextBox.vue'
 
 export default {
   name: 'form-add-task',
-  components: {
-    CustomSelect,
-    TextBox
-  },
   emits: ['success', 'cancel'],
   data() {
     return {

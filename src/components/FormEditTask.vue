@@ -61,11 +61,9 @@
 
 <script>
 import catchFocus from '../js/catchFocus'
-import TextBox from './TextBox.vue'
 
 export default {
   name: 'form-edit-task',
-  components: { TextBox },
   emits: ['success', 'cancel'],
   props: {
     id: String,

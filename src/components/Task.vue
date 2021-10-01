@@ -79,16 +79,12 @@
 </template>
 
 <script>
-import Modal from './Modal.vue'
 import FormEditTask from './FormEditTask.vue'
-import Popup from './Popup.vue'
 
 export default {
   name: 'task',
   components: {
-    Modal,
-    FormEditTask,
-    Popup
+    FormEditTask
   },
   emits: ['change-done', 'update', 'remove', 'start-moving', 'duplicate'],
   props: {

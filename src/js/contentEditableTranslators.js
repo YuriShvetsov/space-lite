@@ -5,6 +5,8 @@ function translateHtmlToStr(html) {
     return level.replace(/<br>/, '')
   })
 
+  return lines.join('\n')
+
   function getLevel(src) {
     const items = []
     let item = ''
@@ -41,8 +43,6 @@ function translateHtmlToStr(html) {
 
     return items.length ? items.map(item => getLevel(item)) : [src]
   }
-
-  return lines.join('\n')
 }
 
 function flat(arr) {

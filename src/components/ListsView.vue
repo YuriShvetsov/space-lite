@@ -32,14 +32,12 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import ListItem from './ListItem.vue'
-import Modal from './Modal.vue'
 import FormAddList from './FormAddList.vue'
 
 export default {
   name: 'lists-view',
   components: {
     ListItem,
-    Modal,
     FormAddList
   },
   computed: {
