@@ -21,6 +21,11 @@
               >Rename</button>
             </li>
             <li class="popup__action">
+              <button class="popup__action-button button button_type_popup button_icon_import"
+                v-on:click="openModalImportTodos(), closeMenu()"
+              >Import</button>
+            </li>
+            <li class="popup__action">
               <button class="popup__action-button button button_type_popup button_icon_delete button_color_red"
                 v-on:click="openModalDeleteList(), closeMenu()"
               >Delete</button>
@@ -94,6 +99,15 @@
         ></form-rename-list>
       </modal>
 
+      <modal ref="modalImportTodos"
+        v-bind:classNames="['modal_size_lg']">
+        <form-import-todos
+          v-on:success="onSuccessFormImportTodos"
+          v-on:cancel="closeModalImportTodos"
+        >  
+        </form-import-todos>
+      </modal>
+
       <modal ref="modalDeleteList">
         <form-delete-list
           v-on:success="onSuccessFormDeleteList"
@@ -109,23 +123,21 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Task from './Task.vue'
-import Modal from './Modal.vue'
 import FormAddTask from './FormAddTask.vue'
 import FormEditTask from './FormEditTask.vue'
 import FormRenameList from './FormRenameList.vue'
+import FormImportTodos from './FormImportTodos.vue'
 import FormDeleteList from './FormDeleteList.vue'
-import Popup from './Popup.vue'
 
 export default {
   name: 'tasks-view',
   components: {
     Task,
-    Modal,
     FormAddTask,
     FormEditTask,
     FormRenameList,
-    FormDeleteList,
-    Popup
+    FormImportTodos,
+    FormDeleteList
   },
   data() {
     return {
@@ -167,6 +179,7 @@ export default {
       'removeCompletedTodos',
       'removeList',
       'addTodo',
+      'importTodos',
       'toggleTodo',
       'updateTodo',
       'removeTodo',
@@ -184,6 +197,12 @@ export default {
     },
     closeModalRenameList() {
       this.$refs.modalRenameList.close()
+    },
+    openModalImportTodos() {
+      this.$refs.modalImportTodos.open()
+    },
+    closeModalImportTodos() {
+      this.$refs.modalImportTodos.close()
     },
     openModalDeleteList() {
       this.$refs.modalDeleteList.open()
@@ -245,6 +264,10 @@ export default {
         name,
       })
       this.closeModalRenameList()
+    },
+    onSuccessFormImportTodos(todos) {
+      this.importTodos({ listId: this.id, todos })
+      this.closeModalImportTodos()
     },
     onSuccessFormDeleteList() {
       this.removeList(this.id)
@@ -454,6 +477,9 @@ export default {
   },
   mounted() {
     this.initListeners()
+
+    // Temp:
+    // this.openModalImportTodos()
   }
 }
 </script>

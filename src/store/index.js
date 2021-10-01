@@ -105,6 +105,29 @@ const store = createStore({
 
       list.todos.push(newTodo)
     },
+    IMPORT_TODOS(state, { listId, todos }) {
+      // Creating id for each imported todo
+      const ids = []
+      let timestamp = Date.now()
+
+      for (let i = 0; i < todos.length; i++) {
+        timestamp += 1
+        ids.push('todo-' + timestamp.toString(36))
+      }
+
+      // Adding imported todos to current list
+      const list = state.lists.find(list => list.id === listId)
+
+      todos.forEach((todo, index) => {
+        list.todos.push({
+          id: ids[index],
+          done: false,
+          name: todo.name,
+          notes: todo.notes,
+          priority: todo.priority
+        })
+      })
+    },
     TOGGLE_TODO(state, { listId, todoId }) {
       const list = state.lists.find(list => list.id === listId)
       const todo = list.todos.find(todo => todo.id === todoId)
@@ -207,6 +230,10 @@ const store = createStore({
     },
     addTodo({ commit, dispatch }, payload) {
       commit('ADD_TODO', payload)
+      dispatch('writeToLS')
+    },
+    importTodos({ commit, dispatch }, payload) {
+      commit('IMPORT_TODOS', payload)
       dispatch('writeToLS')
     },
     toggleTodo({ commit, dispatch }, payload) {
