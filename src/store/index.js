@@ -82,6 +82,15 @@ const store = createStore({
 
       list.name = name
     },
+    MOVE_LIST(state, { listId, targetListId }) {
+      const list = state.lists.find(list => list.id === listId)
+      const copyList = getTargetFromProxy(list)
+      const listIndex = state.lists.findIndex(list => list.id === listId)
+      const targetListIndex = state.lists.findIndex(list => list.id === targetListId)
+
+      state.lists.splice(listIndex, 1)
+      state.lists.splice(targetListIndex, 0, copyList)
+    },
     REMOVE_COMPLETED_TODOS(state, id) {
       const list = state.lists.find(list => list.id === id)
       const todos = getTargetFromProxy(list.todos)
@@ -210,6 +219,10 @@ const store = createStore({
     },
     updateListName({ commit, dispatch }, payload) {
       commit('UPDATE_LIST_NAME', payload)
+      dispatch('writeToLS')
+    },
+    moveList({ commit, dispatch }, payload) {
+      commit('MOVE_LIST', payload)
       dispatch('writeToLS')
     },
     removeCompletedTodos({ commit, dispatch }, id) {
