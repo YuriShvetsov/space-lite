@@ -477,9 +477,6 @@ export default {
   },
   mounted() {
     this.initListeners()
-
-    // Temp:
-    // this.openModalImportTodos()
   }
 }
 </script>

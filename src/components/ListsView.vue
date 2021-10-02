@@ -9,12 +9,19 @@
     </div>
 
     <div class="lists-view__body scrollable-wrapper">
-      <ul class="lists-view__ul scrollable-child">
+      <ul class="lists-view__ul scrollable-child"
+        ref="lists"
+      >
         <list-item
           v-for="list in lists"
           v-bind:key="list.id"
+          v-bind:data-id="list.id"
+          v-bind:class="['js-list-item']"
           v-bind="list"
           v-bind:isActive="listIsOpened(list.id)"
+          v-on:start-moving="onStartListMoving"
+          v-on:mouseover="setHoverList(list.id)"
+          v-on:mouseout="unsetHoverList"
         />
       </ul>
     </div>
@@ -40,6 +47,15 @@ export default {
     ListItem,
     FormAddList
   },
+  data() {
+    return {
+      listMoving: {
+        isStarted: false,
+        movingListId: null,
+        hoverListId: null
+      }
+    }
+  },
   computed: {
     ...mapState([
       'lists'
@@ -57,15 +73,84 @@ export default {
     },
     ...mapActions([
       'openList',
-      'addList'
+      'addList',
+      'moveList'
     ]),
     listIsOpened(id) {
       return id === this.openedList.id
     },
+
+    getListElements() {
+      return Array.from(this.$refs.lists.querySelectorAll('.js-list-item'))
+    },
+    getListElement(id) {
+      return this.getListElements().find(list => {
+        return list.dataset.id === id
+      })
+    },
+    
+    initListeners() {
+      document.addEventListener('mouseup', this.finishListMoving)
+    },
     onSuccessFormAddList(name) {
       this.addList(name)
       this.closeModalAddList()
+    },
+
+    // List moving
+    onStartListMoving(id) {
+      this.listMoving.isStarted = true
+      this.listMoving.movingListId = id
+      this.setCursorGrubMode()
+    },
+    finishListMoving(event) {
+      if (!this.listMoving.isStarted) return
+
+      if (!this.listMoving.hoverListId) {
+        this.unsetCursorGrubMode()
+        this.resetListMoving()
+        return
+      }
+
+      this.moveList({
+        listId: this.listMoving.movingListId,
+        targetListId: this.listMoving.hoverListId
+      })
+      this.unsetCursorGrubMode()
+      this.resetListMoving()
+    },
+
+    resetListMoving() {
+      this.listMoving.isStarted = false
+      this.listMoving.movingListId = null
+      this.listMoving.hoverListId = null
+    },
+    setHoverList(id) {
+      if (!this.listMoving.isStarted) return
+
+      if (this.listMoving.movingListId === this.listMoving.hoverListId) {
+        return
+      }
+
+      this.listMoving.hoverListId = id
+      this.moveList
+    },
+    unsetHoverList() {
+      if (!this.listMoving.isStarted) return
+
+      this.listMoving.hoverListId = null
+    },
+
+    // Helpers
+    setCursorGrubMode() {
+      document.body.classList.add('grabbing')
+    },
+    unsetCursorGrubMode() {
+      document.body.classList.remove('grabbing')
     }
+  },
+  mounted() {
+    this.initListeners()
   }
 }
 </script>
