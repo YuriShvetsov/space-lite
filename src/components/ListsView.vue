@@ -16,7 +16,6 @@
           v-for="list in lists"
           v-bind:key="list.id"
           v-bind:data-id="list.id"
-          v-bind:class="['js-list-item']"
           v-bind="list"
           v-bind:isActive="listIsOpened(list.id)"
           v-on:start-moving="onStartListMoving"
@@ -78,17 +77,7 @@ export default {
     ]),
     listIsOpened(id) {
       return id === this.openedList.id
-    },
-
-    getListElements() {
-      return Array.from(this.$refs.lists.querySelectorAll('.js-list-item'))
-    },
-    getListElement(id) {
-      return this.getListElements().find(list => {
-        return list.dataset.id === id
-      })
-    },
-    
+    },    
     initListeners() {
       document.addEventListener('mouseup', this.finishListMoving)
     },
@@ -98,6 +87,11 @@ export default {
     },
 
     // List moving
+    getListElement(id) {
+      const listElements = Array.from(this.$refs.lists.querySelectorAll('li'))
+
+      return listElements.find(list => list.dataset.id === id)
+    },
     onStartListMoving(id) {
       this.listMoving.isStarted = true
       this.listMoving.movingListId = id
@@ -116,10 +110,10 @@ export default {
         listId: this.listMoving.movingListId,
         targetListId: this.listMoving.hoverListId
       })
+      this.removeHighLightHoverList()
       this.unsetCursorGrubMode()
       this.resetListMoving()
     },
-
     resetListMoving() {
       this.listMoving.isStarted = false
       this.listMoving.movingListId = null
@@ -128,20 +122,37 @@ export default {
     setHoverList(id) {
       if (!this.listMoving.isStarted) return
 
-      if (this.listMoving.movingListId === this.listMoving.hoverListId) {
-        return
-      }
+      if (this.listMoving.movingListId === id) return
 
       this.listMoving.hoverListId = id
-      this.moveList
+      this.$nextTick(this.addHighLightHoverList)
     },
     unsetHoverList() {
       if (!this.listMoving.isStarted) return
+      if (!this.listMoving.hoverListId) return
 
-      this.listMoving.hoverListId = null
+      this.removeHighLightHoverList()
+      this.$nextTick(() => {
+        this.listMoving.hoverListId = null
+      })
     },
+    addHighLightHoverList() {
+      const movingListIndex = this.lists.findIndex(list => list.id === this.listMoving.movingListId)
+      const hoverListIndex = this.lists.findIndex(list => list.id === this.listMoving.hoverListId)
+      const hoverListAboveMovingList = hoverListIndex < movingListIndex
+      const hoverListElement = this.getListElement(this.listMoving.hoverListId)
 
-    // Helpers
+      if (hoverListAboveMovingList) {
+        hoverListElement.classList.add('list-item_pointer_top')
+      } else {
+        hoverListElement.classList.add('list-item_pointer_bottom')
+      }
+    },
+    removeHighLightHoverList() {
+      const hoverListElement = this.getListElement(this.listMoving.hoverListId)
+
+      hoverListElement.classList.remove('list-item_pointer_top', 'list-item_pointer_bottom')
+    },
     setCursorGrubMode() {
       document.body.classList.add('grabbing')
     },

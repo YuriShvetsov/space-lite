@@ -83,35 +83,35 @@ export default {
   width: 100%;
   list-style: none;
 }
-
+.list-item_pointer_top .list-item__button:hover,
+.list-item_pointer_bottom .list-item__button:hover {
+  background: unset;
+}
 .list-item__pointer {
   width: calc(100% - 10px);
   height: 2px;
-
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-
   background-color: lighten($colorViolet, 10%);
   border-radius: 2px;
   opacity: 0;
-
   pointer-events: none;
 }
-
-.list-item__pointer_visible {
-  opacity: 1;
-  transition: opacity .15s ease-in-out;
-}
-
 .list-item__pointer_top {
   top: 0;
 }
-
 .list-item__pointer_bottom {
   bottom: 0;
 }
-
+.list-item_pointer_top .list-item__pointer_top {
+  opacity: 1;
+  transition: opacity .15s ease-in-out;
+}
+.list-item_pointer_bottom .list-item__pointer_bottom {
+  opacity: 1;
+  transition: opacity .15s ease-in-out;
+}
 .list-item__button {
   display: flex;
   justify-content: space-between;
@@ -119,23 +119,18 @@ export default {
   padding: 9px 12px;
   color: $colorBlack;
 }
-
 .list-item__name {
   text-transform: lowercase;
 }
-
 .list-item__name::first-letter {
   text-transform: uppercase;
 }
-
 .list-item__count {
   color: $colorGray;
 }
-
 .list-item_active .list-item__button {
   background-color: $colorVioletLightest;
 }
-
 .list-item__name {
   margin-right: 10px;
 }
