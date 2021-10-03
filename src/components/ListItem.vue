@@ -7,7 +7,6 @@
       v-on:click="openCurList"
       v-on:mousedown="handleMouseDown"
       v-on:mouseup="handleMouseUp"
-      v-on:mouseover="handleMouseOver"
       v-on:mouseout="handleMouseOut"
     >
       <div class="list-item__name">{{ name }}</div>
@@ -33,7 +32,7 @@ export default {
   },
   data() {
     return {
-      cursorIsOver: false
+      timerStartMoving: null
     }
   },
   computed: {
@@ -54,22 +53,18 @@ export default {
       this.openList(this.id)
     },
     handleMouseDown(event) {
-      setTimeout(() => {
-        if (!this.cursorIsOver) return
-
+      this.timerStartMoving = setTimeout(() => {
         if (!this.isOpened) this.openList(this.id)
 
         this.$emit('start-moving', this.id)
+        clearTimeout(this.timerStartMoving)
       }, 500)
     },
     handleMouseUp(event) {
-      this.cursorIsOver = false
-    },
-    handleMouseOver(event) {
-      this.cursorIsOver = true
+      clearTimeout(this.timerStartMoving)
     },
     handleMouseOut(event) {
-      this.cursorIsOver = false
+      clearTimeout(this.timerStartMoving)
     }
   }
 }
