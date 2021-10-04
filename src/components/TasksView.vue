@@ -299,9 +299,9 @@ export default {
       })
 
       // Display of task animation
-      lastTaskElement.classList.add('anim-add-task')
+      lastTaskElement.classList.add('anim-add-item')
       lastTaskElement.addEventListener('animationend', e => {
-        e.target.classList.remove('anim-add-task')
+        e.target.classList.remove('anim-add-item')
       });
     },
     selectMovingTask() {

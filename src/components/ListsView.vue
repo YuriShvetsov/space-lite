@@ -84,6 +84,8 @@ export default {
     onSuccessFormAddList(name) {
       this.addList(name)
       this.closeModalAddList()
+      this.$nextTick(this.scrollToLastList)
+      this.$nextTick(this.animateNewList)
     },
 
     // List moving
@@ -158,6 +160,26 @@ export default {
     },
     unsetCursorGrubMode() {
       document.body.classList.remove('grabbing')
+    },
+    scrollToLastList() {
+      const listsCount = this.lists.length
+      const lastListEl = Array.from(this.$refs.lists.children)[listsCount - 1]
+
+      lastListEl.scrollIntoView({
+        behavior: 'smooth'
+      })
+    },
+    animateNewList() {
+      const listsCount = this.lists.length
+      const lastListEl = Array.from(this.$refs.lists.children)[listsCount - 1]
+
+      lastListEl.classList.add('anim-add-item')
+      lastListEl.addEventListener('animationend', removeAnimationClass)
+
+      function removeAnimationClass() {
+        lastListEl.classList.remove('anim-add-item')
+        lastListEl.removeEventListener('animationend', removeAnimationClass)
+      }
     }
   },
   mounted() {
