@@ -447,7 +447,10 @@ export default {
       let curScrollPos = this.$refs.content.scrollTop
 
       let timer = setInterval(() => {
-        if (!this.scrolling.isActive || curScrollPos === 0) clearInterval(timer)
+        if (!this.scrolling.isActive || curScrollPos === 0) {
+          clearInterval(timer)
+          return
+        }
 
         curScrollPos -= 1
 
@@ -464,7 +467,10 @@ export default {
       let curScrollPos = this.$refs.content.scrollTop
 
       let timer = setInterval(() => {
-        if (!this.scrolling.isActive || curScrollPos === maxScrollPos) clearInterval(timer)
+        if (!this.scrolling.isActive || curScrollPos === maxScrollPos) {
+          clearInterval(timer)
+          return
+        }
 
         curScrollPos += 1
 

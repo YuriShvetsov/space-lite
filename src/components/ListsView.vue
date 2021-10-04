@@ -9,6 +9,14 @@
     </div>
 
     <div class="lists-view__body scrollable-wrapper">
+
+      <div class="lists-view__scroll-trigger lists-view__scroll-trigger_top"
+          ref="topScrollTrigger"
+        ></div>
+        <div class="lists-view__scroll-trigger lists-view__scroll-trigger_bottom"
+          ref="bottomScrollTrigger"
+        ></div>
+
       <ul class="lists-view__ul scrollable-child"
         ref="lists"
       >
@@ -52,6 +60,9 @@ export default {
         isStarted: false,
         movingListId: null,
         hoverListId: null
+      },
+      scrolling: {
+        isActive: false
       }
     }
   },
@@ -80,6 +91,12 @@ export default {
     },    
     initListeners() {
       document.addEventListener('mouseup', this.finishListMoving)
+
+      this.$refs.topScrollTrigger.addEventListener('mouseover', this.startScrollUp)
+      this.$refs.topScrollTrigger.addEventListener('mouseout', this.endScrollUp)
+
+      this.$refs.bottomScrollTrigger.addEventListener('mouseover', this.startScrollDown)
+      this.$refs.bottomScrollTrigger.addEventListener('mouseout', this.endScrollDown)
     },
     onSuccessFormAddList(name) {
       this.addList(name)
@@ -98,12 +115,14 @@ export default {
       this.listMoving.isStarted = true
       this.listMoving.movingListId = id
       this.setCursorGrubMode()
+      this.activateScrollTriggers()
     },
     finishListMoving(event) {
       if (!this.listMoving.isStarted) return
 
       if (!this.listMoving.hoverListId) {
         this.unsetCursorGrubMode()
+        this.unActivateScrollTriggers()
         this.resetListMoving()
         return
       }
@@ -114,6 +133,7 @@ export default {
       })
       this.removeHighLightHoverList()
       this.unsetCursorGrubMode()
+      this.unActivateScrollTriggers()
       this.resetListMoving()
     },
     resetListMoving() {
@@ -180,6 +200,53 @@ export default {
         lastListEl.classList.remove('anim-add-item')
         lastListEl.removeEventListener('animationend', removeAnimationClass)
       }
+    },
+    activateScrollTriggers() {
+      this.$refs.topScrollTrigger.classList.add('lists-view__scroll-trigger_active')
+      this.$refs.bottomScrollTrigger.classList.add('lists-view__scroll-trigger_active')
+    },
+    unActivateScrollTriggers() {
+      this.$refs.topScrollTrigger.classList.remove('lists-view__scroll-trigger_active')
+      this.$refs.bottomScrollTrigger.classList.remove('lists-view__scroll-trigger_active')
+    },
+    startScrollUp() {
+      this.scrolling.isActive = true
+
+      let curScrollPos = this.$refs.lists.scrollTop
+
+      let timer = setInterval(() => {
+        if (!this.scrolling.isActive || curScrollPos === 0) {
+          clearInterval(timer)
+          return
+        }
+
+        curScrollPos -= 1
+
+        this.$refs.lists.scrollTo(0, curScrollPos)
+      }, 5)
+    },
+    endScrollUp() {
+      this.scrolling.isActive = false
+    },
+    startScrollDown() {
+      this.scrolling.isActive = true
+
+      let curScrollPos = this.$refs.lists.scrollTop
+      const maxScrollPos = this.$refs.lists.scrollHeight - this.$refs.lists.clientHeight
+
+      let timer = setInterval(() => {
+        if (!this.scrolling.isActive || curScrollPos === maxScrollPos) {
+          clearInterval(timer)
+          return
+        }
+
+        curScrollPos += 1
+
+        this.$refs.lists.scrollTo(0, curScrollPos)
+      }, 5)
+    },
+    endScrollDown() {
+      this.scrolling.isActive = false
     }
   },
   mounted() {
@@ -199,7 +266,6 @@ export default {
 
   position: relative;
 }
-
 .lists-view__header {
   height: 51px;
   width: 100%;
@@ -211,9 +277,30 @@ export default {
   left: 0;
   top: 0;
 }
-
+.lists-view__body {
+  position: relative;
+}
 .lists-view__ul {
   margin: 0;
   padding: 0;
+}
+.lists-view__scroll-trigger {
+  width: 100%;
+  height: 10px;
+  display: none;
+  position: absolute;  
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 10;
+}
+.lists-view__scroll-trigger_active {
+  display: block;
+}
+.lists-view__scroll-trigger_top {
+  top: 0;
+}
+.lists-view__scroll-trigger_bottom {
+  bottom: 0;
 }
 </style>
