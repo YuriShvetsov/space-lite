@@ -1,4 +1,4 @@
-function isValidImportedTodos(data) {
+export const isValidImportedTodos = data => {
   if (!Array.isArray(data)) return false
 
   for (let item of data) {
@@ -40,8 +40,4 @@ function isValidImportedTodos(data) {
   }
 
   return true
-}
-
-module.exports = {
-  isValidImportedTodos
 }

@@ -1,4 +1,5 @@
-const { translateHtmlToStr } = require('./contentEditableTranslators')
+import { translateHtmlToStr } from './contentEditableTranslators'
+
 const testValues = [
   {
     input: '',
@@ -31,6 +32,10 @@ const testValues = [
   {
     input: '1<div>2</div><div>4<br></div><div>4</div>',
     output: '1\n2\n4\n4'
+  },
+  {
+    input: '1<div><br></div><div>3</div>',
+    output: '1\n\n3'
   }
 ]
 

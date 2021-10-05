@@ -1,4 +1,6 @@
-function translateHtmlToStr(html) {
+import { flat } from './helpers'
+
+export const translateHtmlToStr = html => {
   const levels = getLevel(html)
   const lines = flat(levels).map(level => {
     if (level == '<br>') return ''
@@ -34,8 +36,6 @@ function translateHtmlToStr(html) {
         i += 5
         items.push(item)
         item = ''
-      } else if (src.substr(i, 14) === '<div><br></div>') {
-
       } else {
         item += src[i]
       }
@@ -43,22 +43,4 @@ function translateHtmlToStr(html) {
 
     return items.length ? items.map(item => getLevel(item)) : [src]
   }
-}
-
-function flat(arr) {
-  let result = []
-
-  for (let item of arr) {
-    if (Array.isArray(item)) {
-      result = result.concat(flat(item))
-    } else {
-      result.push(item)
-    }
-  }
-
-  return result
-}
-
-module.exports = {
-  translateHtmlToStr
 }

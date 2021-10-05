@@ -1,4 +1,5 @@
-const { isValidImportedTodos } = require('./isValidImportedTodos')
+import { isValidImportedTodos } from './isValidImportedTodos'
+
 const testValues = [
   {
     input: 10,
