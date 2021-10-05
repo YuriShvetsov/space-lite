@@ -1,25 +1,9 @@
 import { createStore, createLogger } from 'vuex'
+import { generateId, getTargetFromProxy } from './helpers'
 
 const debug = process.env.NODE_ENV !== 'production'
 
 // window.localStorage.removeItem('todos')
-
-function generateId(prefix) {
-  return prefix + '_' + Date.now().toString(36)
-}
-
-function getTargetFromProxy(proxy) {
-  const constructor = Object.getPrototypeOf(proxy).constructor()
-  const target = Object.assign(constructor, proxy)
-
-  for (let prop in target) {
-    if (typeof target[prop] === 'object') {
-      target[prop] = getTargetFromProxy(target[prop])
-    }
-  }
-
-  return target
-}
 
 const store = createStore({
   state: {
@@ -60,8 +44,7 @@ const store = createStore({
 
       if (lastIndex > curIndex) {
         state.openedListId = state.lists[curIndex + 1].id
-      }
-      else {
+      } else {
         state.openedListId = state.lists[curIndex - 1].id
       }
     },
@@ -121,7 +104,7 @@ const store = createStore({
 
       for (let i = 0; i < todos.length; i++) {
         timestamp += 1
-        ids.push('todo-' + timestamp.toString(36))
+        ids.push('todo_' + timestamp.toString(36))
       }
 
       // Adding imported todos to current list
