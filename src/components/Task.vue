@@ -296,6 +296,7 @@ export default {
 .task__content {
   width: 100%;
   margin-right: 12px;
+  padding: 0 2px;
   transition: opacity .15s ease-out;
 }
 
