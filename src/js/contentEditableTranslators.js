@@ -44,3 +44,16 @@ export const translateHtmlToStr = html => {
     return items.length ? items.map(item => getLevel(item)) : [src]
   }
 }
+
+export const translateStrToHtml = str => {
+  if (str === '') return str
+
+  const lines = str.split(/\n|\r\n|\r/)
+  const divList = lines.map(line => {
+    if (line === '') return '<div><br></div>'
+
+    return `<div>${ line }</div>`
+  })
+
+  return divList.join('')
+}
