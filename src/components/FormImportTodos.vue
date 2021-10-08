@@ -13,7 +13,7 @@
           <span class="form__label-name">Choose file json</span>
           <upload-file
             class="form-import__upload"
-            v-on:change="previewFile"
+            v-on:change="getData"
             ref="uploadFile"
           ></upload-file>
         </label>
@@ -26,9 +26,9 @@
             v-for="list of importedTodos"
             v-bind:key="list.id"
           >
+
             <div class="select-todos__list-name">{{ list.name }}</div>
             <ul class="select-todos__items-list">
-
               <li class="select-todos__item"
                 v-for="todo of list.todos"
                 v-bind:key="todo.id"
@@ -55,6 +55,7 @@
               </li>
 
             </ul>
+
           </div>
         </div>
 
@@ -91,7 +92,7 @@ export default {
     }
   },
   methods: {
-    previewFile(event) {
+    getData(event) {
       const file = event.target.files[0]
       const fileExtension = file.name.split('.').slice(-1)[0]
 
@@ -111,8 +112,8 @@ export default {
         }
 
         // Set...
-        this.importedTodos = json
-        this.selectedTodos = json.reduce((acc, list) => {
+        this.importedTodos = json.filter(list => list.todos.length > 0)
+        this.selectedTodos = this.importedTodos.reduce((acc, list) => {
           acc = acc.concat(...list.todos.map(todo => {
             return {
               id: todo.id,
@@ -267,15 +268,16 @@ export default {
 }
 .select-todos__item-name {
   width: calc(100% - 60px);
-
   font-size: 14px;
   font-weight: bold;
+  word-break: break-word;
 }
 .select-todos__item-notes {
   margin: 0;
   font-family: $font_main;
   font-size: 13px;
   color: #888;
+  word-break: break-word;
   white-space: pre-wrap;
 }
 .select-todos__item-priority {
