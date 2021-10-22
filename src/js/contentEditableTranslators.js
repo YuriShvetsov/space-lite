@@ -7,7 +7,11 @@ export const translateHtmlToStr = html => {
     return level.replace(/<br>/, '')
   })
 
-  return lines.join('\n')
+
+  const chars = {'&amp;': '&', '&gt;': '>', '&lt;': '<'}
+  const result = lines.join('\n').replace(/(&amp;|&gt;|&lt;)/gi, m => chars[m])
+
+  return result
 
   function getLevel(src) {
     const items = []

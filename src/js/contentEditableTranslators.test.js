@@ -36,6 +36,10 @@ const testValues = [
   {
     input: '1<div><br></div><div>3</div>',
     output: '1\n\n3'
+  },
+  {
+    input: '1<div><br></div><div>a & b</div><div>3 < 4</div><div>7 > 2</div>',
+    output: '1\n\na & b\n3 < 4\n7 > 2'
   }
 ]
 
