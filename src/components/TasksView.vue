@@ -65,19 +65,21 @@
         ref="scrollDownTrigger"
       ></div>
 
-      <ul class="tasks-view__ul scrollable-child" ref="content">
-        <task
-          class="js-task"
-          v-for="todo in todos"
-          v-bind:key="todo.id"
-          v-bind:data-id="todo.id"
-          v-bind="todo"
-          v-on:change-done="onChangeDoneTodo"
-          v-on:update="onUpdateTodo"
-          v-on:remove="onRemoveTodo"
-          v-on:start-moving="onStartTaskMoving"
-          v-on:duplicate="onDuplicateTodo"
-        ></task>
+      <ul class="tasks-view__ul scrollable-child" ref="content" >
+        <transition-group name="flip-list" :css="false">
+          <task
+            class="js-task"
+            v-for="todo in todos"
+            v-bind:key="todo.id"
+            v-bind:data-id="todo.id"
+            v-bind="todo"
+            v-on:change-done="onChangeDoneTodo"
+            v-on:update="onUpdateTodo"
+            v-on:remove="onRemoveTodo"
+            v-on:start-moving="onStartTaskMoving"
+            v-on:duplicate="onDuplicateTodo"
+          ></task>
+        </transition-group>
       </ul>
 
     </div>
@@ -483,6 +485,10 @@ export default {
   },
   mounted() {
     this.initListeners()
+  },
+  unmounted() {
+    // this.$refs.content.classList.add('dfajflsdjksd')
+    console.log('unmounted')
   }
 }
 </script>
@@ -558,5 +564,8 @@ export default {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+.flip-list-move {
+  transition: transform .3s ease;
 }
 </style>
