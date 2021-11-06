@@ -20,16 +20,18 @@
       <ul class="lists-view__ul scrollable-child"
         ref="lists"
       >
-        <list-item
-          v-for="list in lists"
-          v-bind:key="list.id"
-          v-bind:data-id="list.id"
-          v-bind="list"
-          v-bind:isActive="listIsOpened(list.id)"
-          v-on:start-moving="onStartListMoving"
-          v-on:mouseover="setHoverList(list.id)"
-          v-on:mouseout="unsetHoverList"
-        />
+        <transition-group name="flip-list" :css="false">
+          <list-item
+            v-for="list in lists"
+            v-bind:key="list.id"
+            v-bind:data-id="list.id"
+            v-bind="list"
+            v-bind:isActive="listIsOpened(list.id)"
+            v-on:start-moving="onStartListMoving"
+            v-on:mouseover="setHoverList(list.id)"
+            v-on:mouseout="unsetHoverList"
+          />
+        </transition-group>
       </ul>
     </div>
 
@@ -302,5 +304,8 @@ export default {
 }
 .lists-view__scroll-trigger_bottom {
   bottom: 0;
+}
+.flip-list-move {
+  transition: transform .3s ease;
 }
 </style>
