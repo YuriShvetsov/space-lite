@@ -22,7 +22,7 @@
           <pre class="task__notes-pre">{{ notes }}</pre>
         </div>
         <div class="task__priority"
-          v-bind:class="hasPriority"
+          v-bind:class="prioriyClassName"
         >{{ priority }}</div>
       </div>
 
@@ -117,7 +117,7 @@ export default {
         priority: this.priority
       }
     },
-    hasPriority() {
+    prioriyClassName() {
       if (this.priority === '') return
 
       return `task__priority_visible task__priority_${ this.priority.toLowerCase() }`

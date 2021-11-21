@@ -1,6 +1,6 @@
 <template>
   <div class="popup"
-    v-on:mouseleave="close"
+    v-on:mouseleave="autoClose"
   >
 
     <slot name="opener"></slot>
@@ -24,15 +24,24 @@ export default {
   name: 'popup',
   data() {
     return {
-      isOpened: false
+      isOpened: false,
+      autoCloseIsEnabled: false
     }
   },
   methods: {
     toggle() {
-      this.isOpened = !this.isOpened
+      this.isOpened ? this.close() : this.open()
+    },
+    open() {
+      this.isOpened = true
     },
     close() {
       this.isOpened = false
+    },
+    autoClose() {
+      if (!this.isOpened) return
+
+      this.close()
     },
 
     checkContentPosition() {

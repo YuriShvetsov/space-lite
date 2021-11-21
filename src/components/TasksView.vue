@@ -485,10 +485,6 @@ export default {
   },
   mounted() {
     this.initListeners()
-  },
-  unmounted() {
-    // this.$refs.content.classList.add('dfajflsdjksd')
-    console.log('unmounted')
   }
 }
 </script>

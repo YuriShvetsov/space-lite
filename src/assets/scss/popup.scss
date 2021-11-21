@@ -50,7 +50,6 @@
 .fade-translate-enter-active {
   animation-fill-mode: both;
   animation: fade-translate-in 150ms ease-in-out;
-  pointer-events: none;
 }
 
 .fade-translate-leave-active {
