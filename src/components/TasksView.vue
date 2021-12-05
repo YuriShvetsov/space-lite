@@ -40,7 +40,7 @@
     <div class="tasks-view__controls">
 
       <div class="tasks-view__controls-col">
-        <button class="button button_type_text-icon button_icon_add"
+        <button class="button button_type_text-icon button_icon_add-task"
           v-on:click="openModalAddTask"
         >Add task</button>
       </div>

@@ -13,7 +13,11 @@
         >
         <label class="task__done-label"
           v-bind:for="id"
-        ></label>
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#cccccc">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </label>
       </div>
 
       <div class="task__content" v-bind:class="{ 'task__content_half-hidden': done }">
@@ -208,7 +212,7 @@ export default {
   top: 0;
   transform: scaleX(0.4);
 
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.015), rgba(0, 0, 0, 0.02));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.025));
   border-radius: 5px;
   opacity: 0;
 
@@ -248,49 +252,13 @@ export default {
   display: block;
   width: 18px;
   height: 18px;
-  position: relative;
-
-  background-color: #fff;
-  border: 2px solid #e4e4ee;
-  border-radius: 50%;
 
   cursor: pointer;
-  overflow: hidden;
   z-index: map-get($zLayers, "zIndexPage");
 }
 
-.task__done-label::before {
-  content: "";
-  display: block;
-
-  width: 8px;
-  height: 8px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%) scale(1.5);
-
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
-  opacity: 0;
-
-  z-index: map-get($zLayers, "zIndexPage") + 1;
-}
-
-.task__done-checkbox:checked + .task__done-label {
-  background-color: unset;
-  background: linear-gradient(#f16377,#ed344e);
-  border: none;
-  box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2);
-
-  transition: background .15s ease-in-out;
-}
-
-.task__done-checkbox:checked + .task__done-label::before {
-  transform: translate(-50%,-50%) scale(1);
-  opacity: 1;
-  transition: transform .15s ease-in-out;
+.task__done-checkbox:checked + .task__done-label svg {
+  stroke: $colorGreenCold;
 }
 
 .task__content {

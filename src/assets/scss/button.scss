@@ -20,7 +20,7 @@
 
 .button:hover,
 .button:focus {
-  background-color: rgba(0, 0, 0, .02);
+  background-color: rgba(0, 0, 0, .025);
 }
 
 .button_type_icon {
@@ -30,22 +30,11 @@
   background-color: rgba(255, 255, 255, 0);
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 13px 13px;
+  background-size: 16px 16px;
   border-radius: 50%;
   overflow: hidden;
   opacity: 1;
   transition: opacity .15s ease-in-out;
-}
-
-.button_type_popup {
-  font-weight: normal;
-  text-transform: lowercase;
-  text-align: left;
-  color: $colorBlack;
-}
-
-.button_type_popup::first-letter {
-  text-transform: uppercase;
 }
 
 .button_type_submit {
@@ -55,7 +44,7 @@
 
 .button_type_submit:hover,
 .button_type_submit:focus {
-  background-color: darken($colorViolet, 2%);
+  background-color: darken($colorViolet, 3%);
 }
 
 .button_type_disabled {
@@ -90,7 +79,7 @@
   background-color: rgba(255, 255, 255, 0);
   background-position: calc(100% - 13px) calc(50% - 1px);
   background-repeat: no-repeat;
-  background-size: 12px 12px;
+  background-size: 15px 15px;
 }
 
 .button_type_popup {
@@ -99,12 +88,16 @@
   font-size: 13px;
   font-weight: 400;
   text-align: left;
-  text-transform: capitalize;
-  color: #222;
+  text-transform: lowercase;
+  color: $colorBlack;
   background-color: hsla(0,0%,100%,0);
-  background-position: 12px;
+  background-position: 10px;
   background-repeat: no-repeat;
-  background-size: 13px 13px;
+  background-size: 15px 15px;
+}
+
+.button_type_popup::first-letter {
+  text-transform: uppercase;
 }
 
 .button_icon_menu {
@@ -124,8 +117,12 @@
   background-image: url(../images/minus.svg);
 }
 
-.button_icon_add {
-  background-image: url(../images/add.svg);
+.button_icon_add-list {
+  background-image: url(../images/add-list.svg);
+}
+
+.button_icon_add-task {
+  background-image: url(../images/add-task.svg);
 }
 
 .button_icon_edit {
@@ -142,6 +139,10 @@
 
 .button_icon_import {
   background-image: url(../images/import.svg);
+}
+
+.button_icon_export {
+  background-image: url(../images/export.svg);
 }
 
 .button_icon_upload {

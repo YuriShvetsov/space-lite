@@ -3,7 +3,7 @@
 
     <div class="lists-view__header">
       <div class="lists-view__title title title_size_s">My lists</div>
-      <button class="lists-view__add-button button button_type_text-icon button_icon_add"
+      <button class="lists-view__add-button button button_type_text-icon button_icon_add-list"
         v-on:click="openModalAddList"
       >Add list</button>
     </div>

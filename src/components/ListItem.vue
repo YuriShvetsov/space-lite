@@ -118,7 +118,9 @@ export default {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 9px 12px;
+  padding: 8px 12px;
+
+  line-height: 1.2;
   color: $colorBlack;
 }
 .list-item__name {

@@ -13,9 +13,10 @@
         </div>
 
         <div class="app__data-actions">
-          <a class="app__data-link" :href="dataJSON" download="todos.json" title="Download data">
-            <img class="app__data-link-img" src="../assets/images/export.svg" alt="Export">
-          </a>
+          <a class="button button_type_icon button_icon_export"
+            :href="dataJSON"
+            download="todos.json"
+            title="Download data"></a>
         </div>
 
       </div>
@@ -189,31 +190,6 @@ export default {
 .app__data-actions {
   display: flex;
   align-items: center;
-}
-
-.app__data-link {
-  width: 30px;
-  height: 30px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  text-indent: -999px;
-  border-radius: 50%;
-
-  overflow: hidden;
-  transition: opacity 0.15s ease;
-}
-
-.app__data-link-img {
-  width: 14px;
-  height: 14px;
-  margin: 0 auto;
-
-  display: block;
-
-  object-fit: contain;
 }
 
 .app__data-link:hover {
