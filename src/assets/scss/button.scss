@@ -17,7 +17,9 @@
   transition: background-color 150ms ease-in-out;
 }
 
-.button:hover {
+
+.button:hover,
+.button:focus {
   background-color: rgba(0, 0, 0, .02);
 }
 
@@ -51,7 +53,8 @@
   background-color: $colorViolet;
 }
 
-.button_type_submit:hover {
+.button_type_submit:hover,
+.button_type_submit:focus {
   background-color: darken($colorViolet, 2%);
 }
 
@@ -71,11 +74,13 @@
   background-color: $colorRed;
 }
 
-.button_type_warn:hover {
+.button_type_warn:hover,
+.button_type_warn:focus {
   background-color: $colorRedDark;
 }
 
-.button_type_icon:hover {
+.button_type_icon:hover,
+.button_type_icon:focus {
   background-color: rgba(255, 255, 255, 0);
   opacity: .8;
 }

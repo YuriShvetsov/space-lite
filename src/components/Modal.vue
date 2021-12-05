@@ -41,7 +41,23 @@ export default {
     close() {
       this.isVisible = false
       document.body.style.overflow = 'auto'
+    },
+
+    onKeydownDocument() {
+      document.addEventListener('keydown', e => {
+
+        if (!this.isVisible) return
+
+        switch (e.code) {
+          case 'Escape':
+            this.close()
+            break
+        }
+      })
     }
+  },
+  mounted() {
+    this.onKeydownDocument()
   }
 }
 </script>
