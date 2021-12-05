@@ -10,7 +10,7 @@
       v-on:mouseout="handleMouseOut"
     >
       <div class="list-item__name">{{ name }}</div>
-      <div class="list-item__count">{{ todos.length }}</div>
+      <div class="list-item__count">{{ countTodos }}</div>
     </button>
     <div class="list-item__pointer list-item__pointer_bottom"></div>
   </li>
@@ -41,6 +41,13 @@ export default {
     ]),
     isOpened() {
       return this.openedList.id === this.id
+    },
+    countTodos() {
+      if (this.todos.length > 99) {
+        return '99+'
+      }
+
+      return this.todos.length
     }
   },
   methods: {
@@ -115,7 +122,10 @@ export default {
   color: $colorBlack;
 }
 .list-item__name {
+  max-width: calc(100% - 30px);
   text-transform: lowercase;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .list-item__name::first-letter {
   text-transform: uppercase;

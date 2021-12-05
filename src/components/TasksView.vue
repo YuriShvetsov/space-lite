@@ -507,7 +507,11 @@ export default {
 }
 
 .tasks-view__title {
+  max-width: calc(100% - 40px);
   text-transform: lowercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .tasks-view__title::first-letter {

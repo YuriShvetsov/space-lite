@@ -240,4 +240,9 @@ export default {
   position: relative;
   border-right: 2px solid #eee;
 }
+
+.app__section_main {
+  width: 100%;
+  max-width: calc(100% - 320px);
+}
 </style>
