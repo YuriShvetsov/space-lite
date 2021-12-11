@@ -13,10 +13,13 @@
         </div>
 
         <div class="app__data-actions">
-          <a class="button button_type_icon button_icon_export"
-            :href="dataJSON"
-            download="todos.json"
-            title="Download data"></a>
+          <div class="download-todos">
+            <a class="download-todos__btn button button_type_icon button_icon_export"
+              :href="dataJSON"
+              download="todos.json"
+            ></a>
+            <div class="download-todos__tooltip">Download json</div>
+          </div>
         </div>
 
       </div>
@@ -194,6 +197,37 @@ export default {
 
 .app__data-link:hover {
   opacity: 0.8;
+}
+
+.download-todos {
+  position: relative;
+
+  &__tooltip {
+    padding: 4px 8px;
+
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translate(15px, -50%);
+
+    font-size: 12px;
+    color: $colorBlack;
+    white-space: nowrap;
+
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, .1);
+    opacity: 0;
+
+    user-select: none;
+    pointer-events: none;
+    transition: opacity .15s ease, transform .15s ease;
+  }
+
+  &:hover &__tooltip {
+    transform: translate(-3px, -50%);
+    opacity: 1;
+  }
 }
 
 .app__body {
