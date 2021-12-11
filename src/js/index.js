@@ -1,1 +1,1 @@
-import './preloadImages'
+import './preloadImages.js'
