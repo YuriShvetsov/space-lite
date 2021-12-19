@@ -42,6 +42,10 @@ preloadImages(
     './assets/images/webpack-logo.svg'
   ],
   function () {
+    const debug = process.env.NODE_ENV !== 'production'
+
+    if (!debug) return
+
     console.log('All images were loaded')
   }
 )
