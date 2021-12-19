@@ -38,7 +38,9 @@
                     <input type="checkbox" class="select-todos__checkbox"
                       v-on:change="onToggleTodo($event, todo.id)"
                     >
-                    <div class="select-todos__checkmark"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#cccccc">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
                   </label>
                 </div>
                 <div class="select-todos__item-content">
@@ -223,45 +225,15 @@ export default {
 }
 .select-todos__checker {
   display: block;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
 }
 .select-todos__checkbox {
   display: none;
 }
-.select-todos__checkmark {
-  width: 18px;
-  height: 18px;
-  position: relative;
-  background: #fff;
-  border: 2px solid #e4e4ee;
-  border-radius: 50%;
-  overflow: hidden;
-}
-.select-todos__checkmark::before {
-  content: "";
-  display: block;
-  width: 8px;
-  height: 8px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%) scale(1.5);
-  background-color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
-  opacity: 0;
-  z-index: map-get($zLayers, "zIndexPage") + 1;
-}
-.select-todos__checkbox:checked ~ .select-todos__checkmark {
-  background-color: unset;
-  background: linear-gradient(#f16377,#ed344e);
-  border: none;
-  box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2);
-}
-.select-todos__checkbox:checked ~ .select-todos__checkmark::before {
-  transform: translate(-50%,-50%) scale(1);
-  opacity: 1;
-  transition: transform .15s ease-in-out;
+.select-todos__checkbox:checked + svg {
+  stroke: $colorGreenCold;
 }
 .select-todos__item-content {
   width: 100%;
