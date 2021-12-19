@@ -47,7 +47,7 @@
                   <div class="select-todos__inner-row select-todos__inner-row_between">
                     <div class="select-todos__item-name">{{ todo.name }}</div>
                     <div class="select-todos__item-priority"
-                      v-bind:class="priorityClassName(todo.priority)"
+                      v-bind:class="priorityClassName(todo)"
                     >{{ todo.priority }}</div>
                   </div>
                   <div class="select-todos__inner-row">
@@ -155,8 +155,17 @@ export default {
       this.importedTodos = []
       this.selectedTodos = []
     },
-    priorityClassName(priority) {
-      return `select-todos__item-priority_${ priority.toLowerCase() }`
+    priorityClassName(todo) {
+      const className = 'select-todos__item-priority'
+      let modificator = '_'
+
+      if (todo.priority === '') {
+        modificator += 'hidden'
+      } else {
+        modificator += todo.priority.toLowerCase()
+      }
+
+      return (className + modificator)
     }
   }
 }
@@ -239,7 +248,8 @@ export default {
   width: 100%;
 }
 .select-todos__item-name {
-  width: calc(100% - 60px);
+  width: 100%;
+  margin-right: 12px;
   font-size: 14px;
   font-weight: bold;
   word-break: break-word;
@@ -258,6 +268,9 @@ export default {
   text-transform: uppercase;
   border-radius: 3px;
   box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
+}
+.select-todos__item-priority_hidden {
+  display: none;
 }
 .select-todos__item-priority_low {
   color: lighten($colorGreenCold, 10%);
