@@ -66,6 +66,7 @@
       <div class="form__row form__row_controls">
         <button
           class="form__control-button button button_type_submit"
+          v-bind:disabled="!selectedTodos.length"
           v-on:click="emitSuccess"
         >OK</button>
         <button
@@ -79,6 +80,7 @@
 </template>
 
 <script>
+import { focusFirstElement, catchFocus } from '../js/focusForm'
 const { isValidImportedTodos } = require('../js/isValidImportedTodos')
 
 export default {
@@ -90,7 +92,18 @@ export default {
   data() {
     return {
       importedTodos: [],
-      selectedTodos: []
+      renderedTodos: []
+    }
+  },
+  computed: {
+    selectedTodos() {
+      return this.renderedTodos.filter(todo => todo.isSelected).map(todo => {
+        return {
+          name: todo.name,
+          notes: todo.notes,
+          priority: todo.priority
+        }
+      })
     }
   },
   methods: {
@@ -115,7 +128,7 @@ export default {
 
         // Set...
         this.importedTodos = json.filter(list => list.todos.length > 0)
-        this.selectedTodos = this.importedTodos.reduce((acc, list) => {
+        this.renderedTodos = this.importedTodos.reduce((acc, list) => {
           acc = acc.concat(...list.todos.map(todo => {
             return {
               id: todo.id,
@@ -133,19 +146,13 @@ export default {
     },
 
     emitSuccess() {
-      this.$emit('success', this.selectedTodos.filter(todo => todo.isSelected).map(todo => {
-        return {
-          name: todo.name,
-          notes: todo.notes,
-          priority: todo.priority
-        }
-      }))
+      this.$emit('success', this.selectedTodos)
     },
     emitCancel() {
       this.$emit('cancel')
     },
     onToggleTodo(event, todoId) {
-      const todo = this.selectedTodos.find(todo => todo.id === todoId)
+      const todo = this.renderedTodos.find(todo => todo.id === todoId)
 
       todo.isSelected = !todo.isSelected
     },
@@ -153,7 +160,7 @@ export default {
     //Helpers
     clear() {
       this.importedTodos = []
-      this.selectedTodos = []
+      this.renderedTodos = []
     },
     priorityClassName(todo) {
       const className = 'select-todos__item-priority'
@@ -167,6 +174,10 @@ export default {
 
       return (className + modificator)
     }
+  },
+  mounted() {
+    focusFirstElement(this.$el)
+    catchFocus(this.$el)
   }
 }
 </script>

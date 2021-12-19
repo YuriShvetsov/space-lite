@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import catchFocus from '../js/catchFocus'
+import { focusFirstElement, catchFocus } from '../js/focusForm'
 
 export default {
   name: 'form-edit-task',
@@ -143,11 +143,6 @@ export default {
     hideWarnOnImportantInput(input) {
       input.classList.remove('form__input_warn')
     },
-    focusOnFirstInput() {
-      const inputs = this.getInputs()
-
-      inputs[0].focus()
-    },
     focusOnFirstEmptyImportantInput() {
       const firstEmptyImportantInput = this.getEmptyImportantInputs()[0]
 
@@ -185,7 +180,7 @@ export default {
   },
   mounted() {
     this.isMounted = true
-    this.focusOnFirstInput()
+    focusFirstElement(this.$el)
     catchFocus(this.$el)
   }
 }

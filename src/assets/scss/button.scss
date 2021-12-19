@@ -47,15 +47,11 @@
   background-color: darken($colorViolet, 3%);
 }
 
-.button_type_disabled {
+.button:disabled {
   filter: grayscale(1);
   opacity: .5;
   user-select: none;
   cursor: default;
-}
-
-.button_type_disabled:hover {
-  background-color: rgba(255, 255, 255, 0);
 }
 
 .button_type_warn {
