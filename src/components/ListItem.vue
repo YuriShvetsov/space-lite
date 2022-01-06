@@ -59,7 +59,11 @@ export default {
 
       this.openList(this.id)
     },
-    handleMouseDown(event) {
+    handleMouseDown(e) {
+      const leftButton = (e.which === 1)
+
+      if (!leftButton) return
+
       this.timerStartMoving = setTimeout(() => {
         if (!this.isOpened) this.openList(this.id)
 
