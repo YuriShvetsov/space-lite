@@ -3,9 +3,14 @@
 
     <div class="lists-view__header">
       <div class="lists-view__title title title_size_s">My lists</div>
-      <button class="lists-view__add-button button button_type_text-icon button_icon_add-list"
+      <button class="lists-view__add-button button button_type_text-icon"
         v-on:click="openModalAddList"
-      >Add list</button>
+      >
+        <span>ADD LIST</span>
+        <svg class="button__icon button__icon_stroke">
+          <use xlink:href="#add-list"></use>
+        </svg>
+      </button>
     </div>
 
     <div class="lists-view__body scrollable-wrapper">

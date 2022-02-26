@@ -10,7 +10,7 @@
       
       <div class="form__row">
         <label class="form__label">
-          <span class="form__label-name">Choose file json</span>
+          <span class="form__label-name">Choose json file</span>
           <upload-file
             class="form-import__upload"
             v-on:change="getData"
@@ -38,8 +38,8 @@
                     <input type="checkbox" class="select-todos__checkbox"
                       v-on:change="onToggleTodo($event, todo.id)"
                     >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#cccccc">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    <svg class="select-todos__check-icon">
+                      <use xlink:href="#check"></use>
                     </svg>
                   </label>
                 </div>
@@ -65,14 +65,14 @@
 
       <div class="form__row form__row_controls">
         <button
-          class="form__control-button button button_type_submit"
+          class="form__control-button button button_fill_violet"
           v-bind:disabled="!selectedTodos.length"
           v-on:click="emitSuccess"
         >OK</button>
         <button
           class="form__control-button button"
           v-on:click="emitCancel"
-        >Cancel</button>
+        >CANCEL</button>
       </div>
     </div>
 
@@ -252,7 +252,14 @@ export default {
 .select-todos__checkbox {
   display: none;
 }
-.select-todos__checkbox:checked + svg {
+.select-todos__check-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #cccccc;
+}
+.select-todos__checkbox:checked + .select-todos__check-icon {
   stroke: $colorGreenCold;
 }
 .select-todos__item-content {

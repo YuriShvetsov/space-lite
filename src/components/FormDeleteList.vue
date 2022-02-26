@@ -11,12 +11,12 @@
     <div class="form__body">
 
       <div class="form__row form__row_controls">
-        <button class="form__control-button button button_type_warn"
+        <button class="form__control-button button button_fill_red"
           v-on:click="emitSuccess"
         >OK</button>
         <button class="form__control-button button button_color_red"
           v-on:click="emitCancel"
-        >Cancel</button>
+        >CANCEL</button>
       </div>
       
     </div>

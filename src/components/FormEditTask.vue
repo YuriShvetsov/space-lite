@@ -11,14 +11,19 @@
 
       <div class="form__row">
         <label class="form__label">
-          <span class="form__label-name">Name</span>
-          <input type="text"
-            spellcheck="false"
-            autocomplete="off"
-            important
-            class="form__input form__input_type_text js-input"
-            v-model.trim="_name"
-          >
+          <span class="form__label-name">Name*</span>
+          <div class="form__input-wrapper">
+            <input type="text"
+              spellcheck="false"
+              autocomplete="off"
+              important
+              class="form__input form__input_type_text js-input"
+              v-model.trim="_name"
+            >
+            <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
+              <use xlink:href="#warning"></use>
+            </svg>
+          </div>
         </label>
       </div>
 
@@ -45,13 +50,13 @@
 
       <div class="form__row form__row_controls">
         <button
-          class="form__control-button button button_type_submit"
+          class="form__control-button button button_fill_violet"
           v-on:click="emitSuccess"
         >OK</button>
         <button
           class="form__control-button button"
           v-on:click="emitCancel"
-        >Cancel</button>
+        >CANCEL</button>
       </div>
 
     </div>

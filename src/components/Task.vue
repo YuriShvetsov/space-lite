@@ -14,8 +14,8 @@
         <label class="task__done-label"
           v-bind:for="id"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="#cccccc">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          <svg class="task__done-icon">
+            <use xlink:href="#check"></use>
           </svg>
         </label>
       </div>
@@ -30,34 +30,59 @@
         >{{ priority }}</div>
       </div>
 
-      <button class="task__replace-button button button_type_icon button_icon_grabber"
+      <button class="task__replace-button button button_type_icon button_type_grabber button_color_black"
         v-on:mousedown="emitStartMoving"
-      >Replace</button>
+      >
+        <span>Replace</span>
+        <svg class="button__icon button__icon_stroke">
+          <use xlink:href="#grabber"></use>
+        </svg>
+      </button>
 
       <popup ref="menu" class="task__menu">
 
         <template v-slot:opener>
-          <button class="task__menu-button popup__opener button button_type_icon button_icon_menu"
+          <button class="task__menu-button popup__opener button button_type_icon button_color_black"
             v-on:click="toggleMenu"
-          >menu</button>
+          >
+            <span>Menu</span>
+            <svg class="button__icon button__icon_stroke">
+              <use xlink:href="#menu"></use>
+            </svg>
+          </button>
         </template>
 
         <template v-slot:content>
           <ul class="popup__action-list">
             <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_icon_edit"
+              <button class="popup__action-button button button_type_popup button_color_black"
                 v-on:click="openModalEditTask(), closeMenu()"
-              >Edit</button>
+              >
+                <span>Edit</span>
+                <svg class="button__icon button__icon_fill">
+                  <use xlink:href="#edit"></use>
+                </svg>
+              </button>
             </li>
             <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_icon_copy"
+              <button class="popup__action-button button button_type_popup button_color_black"
                 v-on:click="emitDuplicate(), closeMenu()"
-              >Duplicate</button>
+              >
+                <span>Duplicate</span>
+                <svg class="button__icon button__icon_stroke">
+                  <use xlink:href="#copy"></use>
+                </svg>
+              </button>
             </li>
             <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_icon_delete button_color_red"
+              <button class="popup__action-button button button_type_popup button_color_red"
                 v-on:click="emitRemove(), closeMenu()"
-              >Delete</button>
+              >
+                <span>Delete</span>
+                <svg class="button__icon button__icon_stroke">
+                  <use xlink:href="#delete"></use>
+                </svg>
+              </button>
             </li>
           </ul>
         </template>
@@ -257,7 +282,15 @@ export default {
   z-index: map-get($zLayers, "zIndexPage");
 }
 
-.task__done-checkbox:checked + .task__done-label svg {
+.task__done-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #cccccc;
+}
+
+.task__done-checkbox:checked + .task__done-label .task__done-icon {
   stroke: $colorGreenCold;
 }
 

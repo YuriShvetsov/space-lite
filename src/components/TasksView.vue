@@ -8,27 +8,47 @@
       <popup ref="menu">
 
         <template v-slot:opener>
-          <button class="popup__opener button button_type_icon button_icon_menu"
+          <button class="popup__opener button button_type_icon button_color_black"
             v-on:click="toggleMenu"
-          >menu</button>
+          >
+            <span>Menu</span>
+            <svg class="button__icon button__icon_stroke">
+              <use xlink:href="#menu"></use>
+            </svg>
+          </button>
         </template>
 
         <template v-slot:content>
           <ul class="popup__action-list">
             <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_icon_edit"
+              <button class="popup__action-button button button_type_popup button_color_black"
                 v-on:click="openModalRenameList(), closeMenu()"
-              >Rename</button>
+              >
+                <span>Rename</span>
+                <svg class="button__icon button__icon_fill">
+                  <use xlink:href="#edit"></use>
+                </svg>
+              </button>
             </li>
             <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_icon_import"
+              <button class="popup__action-button button button_type_popup button_color_black"
                 v-on:click="openModalImportTodos(), closeMenu()"
-              >Import</button>
+              >
+                <span>Import</span>
+                <svg class="button__icon button__icon_fill">
+                  <use xlink:href="#import"></use>
+                </svg>
+              </button>
             </li>
             <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_icon_delete button_color_red"
+              <button class="popup__action-button button button_type_popup button_color_red"
                 v-on:click="openModalDeleteList(), closeMenu()"
-              >Delete</button>
+              >
+                <span>Delete</span>
+                <svg class="button__icon button__icon_stroke">
+                  <use xlink:href="#delete"></use>
+                </svg>
+              </button>
             </li>
           </ul>
         </template>
@@ -40,17 +60,27 @@
     <div class="tasks-view__controls">
 
       <div class="tasks-view__controls-col">
-        <button class="button button_type_text-icon button_icon_add-task"
+        <button class="button button_type_text-icon"
           v-on:click="openModalAddTask"
-        >Add task</button>
+        >
+          <span>ADD TASK</span>
+          <svg class="button__icon button__icon_stroke">
+            <use xlink:href="#add-task"></use>
+          </svg>
+        </button>
       </div>
 
       <div class="tasks-view__controls-col">
-        <button class="button_color_red button button_type_text-icon button_icon_minus"
+        <button class="button button_type_text-icon button_color_red"
           v-bind:class="{ 'button_type_disabled': !haveCompletedTasks }"
           v-bind:disabled="!haveCompletedTasks"
           v-on:click="removeCompletedTodos(id)"
-        >Clear list</button>
+        >
+          <span>CLEAR LIST</span>
+          <svg class="button__icon button__icon_stroke">
+            <use xlink:href="#minus"></use>
+          </svg>
+        </button>
       </div>
       
     </div>

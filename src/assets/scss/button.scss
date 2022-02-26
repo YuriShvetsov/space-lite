@@ -1,11 +1,11 @@
 .button {
+  display: block;
   padding: 7px 12px;
   font-family: 'Open Sans', sans-serif;
   font-size: 13px;
   font-weight: bold;
   line-height: 1;
   color: $colorViolet;
-  text-transform: uppercase;
   white-space: nowrap;
   background-color: rgba(255, 255, 255, 0);
   border: none;
@@ -23,30 +23,6 @@
   background-color: rgba(0, 0, 0, .025);
 }
 
-.button_type_icon {
-  width: 28px;
-  height: 28px;
-  text-indent: -999px;
-  background-color: rgba(255, 255, 255, 0);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  border-radius: 50%;
-  overflow: hidden;
-  opacity: 1;
-  transition: opacity .15s ease-in-out;
-}
-
-.button_type_submit {
-  color: #fff;
-  background-color: $colorViolet;
-}
-
-.button_type_submit:hover,
-.button_type_submit:focus {
-  background-color: darken($colorViolet, 3%);
-}
-
 .button:disabled {
   filter: grayscale(1);
   opacity: .5;
@@ -54,14 +30,51 @@
   cursor: default;
 }
 
-.button_type_warn {
-  color: #fff;
-  background-color: $colorRed;
+.button__icon {
+  display: block;
+  position: absolute;
 }
 
-.button_type_warn:hover,
-.button_type_warn:focus {
-  background-color: $colorRedDark;
+.button__icon_fill {
+  fill: $colorViolet;
+}
+
+.button__icon_stroke {
+  fill: none;
+  stroke: $colorViolet;
+}
+
+.button_type_text-icon {
+  padding-right: 33px;
+  position: relative;
+}
+
+.button_type_text-icon .button__icon {
+  width: 15px;
+  height: 15px;
+  right: 13px;
+  top: 50%;
+  transform: translate(0, calc(-50% - 1px));
+}
+
+.button_type_icon {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  position: relative;
+  text-indent: -999px;
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity .15s ease-in-out;
+}
+
+.button_type_icon .button__icon {
+  width: 16px;
+  height: 16px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .button_type_icon:hover,
@@ -70,81 +83,87 @@
   opacity: .8;
 }
 
-.button_type_text-icon {
-  padding-right: 33px;
-  background-color: rgba(255, 255, 255, 0);
-  background-position: calc(100% - 13px) calc(50% - 1px);
-  background-repeat: no-repeat;
-  background-size: 15px 15px;
-}
-
 .button_type_popup {
   width: 100%;
   padding-left: 35px;
+  position: relative;
   font-size: 13px;
   font-weight: 400;
   text-align: left;
-  text-transform: lowercase;
-  color: $colorBlack;
-  background-color: hsla(0,0%,100%,0);
-  background-position: 10px;
-  background-repeat: no-repeat;
-  background-size: 15px 15px;
 }
 
-.button_type_popup::first-letter {
-  text-transform: uppercase;
+.button_type_popup .button__icon {
+  width: 15px;
+  height: 15px;
+  left: 10px;
+  top: 50%;
+  transform: translate(0, calc(-50% - 1px));
 }
 
-.button_icon_menu {
-  background-image: url(../images/menu.svg);
-}
-
-.button_icon_grabber {
-  background-image: url(../images/grabber.svg);
+.button_type_grabber {
   cursor: grab;
 }
 
-.button_icon_grabber:active {
+.button_type_grabber:active {
   cursor: grabbing;
 }
 
-.button_icon_minus {
-  background-image: url(../images/minus.svg);
+.button_fill_violet {
+  color: #fff;
+  background-color: $colorViolet;
 }
 
-.button_icon_add-list {
-  background-image: url(../images/add-list.svg);
+.button_fill_violet:hover,
+.button_fill_violet:focus {
+  background-color: darken($colorViolet, 3%);
 }
 
-.button_icon_add-task {
-  background-image: url(../images/add-task.svg);
+.button_fill_violet .button__icon_fill {
+  fill: #fff;
 }
 
-.button_icon_edit {
-  background-image: url(../images/edit.svg);
+.button_fill_violet .button__icon_stroke {
+  stroke: #fff;
 }
 
-.button_icon_copy {
-  background-image: url(../images/copy.svg);
+.button_fill_red {
+  color: #fff;
+  background-color: $colorRed;
 }
 
-.button_icon_delete {
-  background-image: url(../images/delete.svg);
+.button_fill_red:hover,
+.button_fill_red:focus {
+  background-color: $colorRedDark;
 }
 
-.button_icon_import {
-  background-image: url(../images/import.svg);
+.button_fill_red .button__icon_fill {
+  fill: #fff;
 }
 
-.button_icon_export {
-  background-image: url(../images/export.svg);
+.button_fill_red .button__icon_stroke {
+  stroke: #fff;
 }
 
-.button_icon_upload {
-  background-image: url(../images/upload.svg);
+.button_color_black {
+  color: $colorBlack;
+}
+
+.button_color_black .button__icon_fill {
+  fill: $colorBlack;
+}
+
+.button_color_black .button__icon_stroke {
+  stroke: $colorBlack;
 }
 
 .button_color_red {
   color: $colorRed;
+}
+
+.button_color_red .button__icon_fill {
+  fill: $colorRed;
+}
+
+.button_color_red .button__icon_stroke {
+  stroke: $colorRed;
 }

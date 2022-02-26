@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <sprite></sprite>
 
     <div class="app__container">
 
@@ -9,15 +10,21 @@
         
         <div class="app__logo">
           <div class="app__logo-text">Todolist</div>
-          <div class="app__logo-icon"></div>
+          <svg class="app__logo-icon">
+            <use xlink:href="#quill"></use>
+          </svg>
         </div>
 
         <div class="app__data-actions">
           <div class="download-todos">
-            <a class="download-todos__btn button button_type_icon button_icon_export"
+            <a class="download-todos__btn button button_type_icon button_color_black"
               :href="dataJSON"
               download="todos.json"
-            ></a>
+            >
+              <svg class="button__icon button__icon_fill">
+                <use xlink:href="#export"></use>
+              </svg>
+            </a>
             <div class="download-todos__tooltip">Download json</div>
           </div>
         </div>
@@ -44,12 +51,14 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import Sprite from './Sprite.vue';
 import ListsView from './ListsView.vue'
 import TasksView from './TasksView.vue'
 
 export default {
   name: 'app',
   components: {
+    Sprite,
     ListsView,
     TasksView
   },
@@ -183,10 +192,7 @@ export default {
   position: absolute;
   right: 5px;
   bottom: 16px;
-  background-image: url(../assets/images/quill.svg);
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-size: 30px 30px;
+  fill: $colorViolet;
   filter: drop-shadow(0 3px 3px rgba(0,0,0,.15));
 }
 

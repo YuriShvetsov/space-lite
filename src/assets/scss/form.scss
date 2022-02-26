@@ -3,6 +3,23 @@
   max-width: 420px;
 }
 
+.form__icon {
+  display: none;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+}
+
+.form__icon_fill_red {
+  fill: $colorRed;
+}
+
+.form__icon_pos_right_center {
+  right: 5px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
 .form__title {
   margin-bottom: 15px;
   text-align: center;
@@ -24,6 +41,10 @@
   line-height: 2;
   white-space: nowrap;
   color: #5a5a5a;
+}
+
+.form__input-wrapper {
+  position: relative;
 }
 
 .form__input {
@@ -64,10 +85,10 @@
 
 .form__input_warn {
   background-color: lighten($colorRed, 40%);
-  background-image: url(../images/warning.svg);
-  background-position: calc(100% - 5px) center;
-  background-repeat: no-repeat;
-  background-size: 18px 18px;
+}
+
+.form__input_warn + .form__icon {
+  display: block;
 }
 
 .form__input_warn:focus {

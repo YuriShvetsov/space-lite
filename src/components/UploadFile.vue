@@ -1,9 +1,14 @@
 <template>
   <div class="upload-file">
-    <button class="upload-file__button button button_type_text-icon button_icon_upload"
+    <button class="upload-file__button button button_type_text-icon"
       v-on:click="onClickButton"
       v-on:keydown="onKeydownButton"
-    >{{ name }}</button>
+    >
+      <span>{{ name }}</span>
+      <svg class="button__icon button__icon_stroke">
+        <use xlink:href="#upload"></use>
+      </svg>
+    </button>
     <input type="file" class="upload-file__input"
       ref="inputFile"
       v-on:change="onChangeInput"
@@ -19,7 +24,7 @@ export default {
   props: {
     name: {
       type: String,
-      default: 'Upload file'
+      default: 'UPLOAD FILE'
     },
     classNames: {
       type: Object,
