@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div :class="appClassNames">
     <sprite></sprite>
 
     <div class="app__container">
@@ -15,20 +15,6 @@
           </svg>
         </div>
 
-        <!-- <div class="app__data-actions">
-          <div class="download-todos">
-            <a class="download-todos__btn button button_type_icon button_color_black"
-              :href="dataJSON"
-              download="todos.json"
-            >
-              <svg class="button__icon button__icon_fill">
-                <use xlink:href="#export"></use>
-              </svg>
-            </a>
-            <div class="download-todos__tooltip">Download json</div>
-          </div>
-        </div> -->
-
         <div class="app__settings">
 
           <button class="app__settings-button button button_type_icon button_color_black"
@@ -40,10 +26,14 @@
             </svg>
           </button>
 
-          <modal ref="modalAppSettings">
-            <app-settings
-              v-on:close="closeModalAppSettings"
-            ></app-settings>
+          <modal ref="modalAppSettings"
+            v-bind:classNames="['modal_size_sm']"
+          >
+            <template v-slot:default>
+              <app-settings
+                v-on:close="closeModalAppSettings"
+              ></app-settings>
+            </template>
           </modal>
 
         </div>
@@ -89,7 +79,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['lists']),
+    ...mapGetters(['lists', 'curThemeIsDark', 'curThemeIsAuto', 'systemAppearanceIsDark']),
+    appClassNames() {
+      return {
+        'app': true,
+        'app_theme_dark': this.curThemeIsDark || (this.curThemeIsAuto && this.systemAppearanceIsDark)
+      }
+    },
     currentDateString() {
       const weekdayNames = [
         'Sunday',
@@ -144,12 +140,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .app {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $fontMain;
   font-size: 14px;
-  z-index: map-get($zLayers, "zIndexPage");
+  z-index: get-layer('page');
 }
 
 .app {
@@ -157,7 +153,7 @@ export default {
   height: 100vh;
   padding: 16px;
 
-  background-image: $mainBg;
+  background-image: get-light($mainBg);
 }
 
 .app__container {
@@ -167,19 +163,18 @@ export default {
   max-width: 990px;
   height: 100%;
   margin: 0 auto;
-  padding: 16px 0;
   
-  background-color: #fff;
-  border-radius: 8px;
-  border: 1px solid #eee;
+  border-radius: 10px;
 }
 
 .app__header {
   display: flex;
-
-  height: 56px;
-  padding: 0 16px;
+  height: 88px;
+  padding: 16px;
   position: relative;
+  background-color: get-light($bgColor, 'main');
+  border-bottom: 1px solid get-light($sectionBorderColor);
+  border-radius: 8px 8px 0 0;
 }
 
 .app__current-date {
@@ -189,7 +184,7 @@ export default {
   transform: translateY(-50%);
   font-size: 13px;
   font-weight: bold;
-  color: $colorGray;
+  color: lighten(get-light($secondaryTextColor), 12%);
   white-space: nowrap;
 }
 
@@ -203,10 +198,10 @@ export default {
 }
 
 .app__logo-text {
-  font-family: 'Galada', sans-serif;
+  font-family: $fontLogo;
   font-size: 36px;
   line-height: 1;
-  color: $colorViolet;
+  color: $primaryColor;
   text-transform: capitalize;
   text-shadow: 0 3px 3px rgba(0, 0, 0, .1);
 }
@@ -217,8 +212,9 @@ export default {
   height: 30px;
   position: absolute;
   right: 5px;
-  bottom: 16px;
-  fill: $colorViolet;
+  top: calc(50% - 3px);
+  transform: translate(0, -50%);
+  fill: $primaryColor;
   filter: drop-shadow(0 3px 3px rgba(0,0,0,.15));
 }
 
@@ -229,7 +225,10 @@ export default {
 
 .app__body {
   display: flex;
-  height: calc(100% - 56px);
+  height: calc(100% - 88px);
+  padding-bottom: 16px;
+  background-color: get-light($bgColor, 'main');
+  border-radius: 0 0 8px 8px;
 }
 
 .app__section {
@@ -245,11 +244,62 @@ export default {
   flex-direction: column;
   justify-content: stretch;
   position: relative;
-  border-right: 2px solid #eee;
+  border-right: 2px solid get-light($sectionBorderColor);
 }
 
 .app__section_main {
   width: 100%;
   max-width: calc(100% - 320px);
+}
+
+// Dark theme
+
+.app_theme_dark {
+  background-image: get-dark($mainBg);
+}
+
+.app_theme_dark {
+
+  .app__header {
+    background-color: get-dark($bgColor, 'second');
+    border-bottom: 1px solid get-dark($sectionBorderColor);
+  }
+
+  .app__current-date {
+    color: get-dark($secondaryTextColor);
+  }
+
+  .app__logo-text {
+    color: get-dark($baseTextColor);
+  }
+
+  .app__logo-icon {
+    fill: get-dark($baseTextColor);
+  }
+
+  .app__body {
+    background-color:get-dark($bgColor, 'main');
+  }
+
+  .app__section_side {
+    border-right: 2px solid get-dark($sectionBorderColor);
+  }
+
+}
+
+@include desktop-screen {
+  .app {
+    padding: 0;
+  }
+
+  .app__container {
+    max-width: unset;
+    border-radius: 0;
+  }
+
+  .app__header,
+  .app__body {
+    border-radius: 0;
+  }
 }
 </style>

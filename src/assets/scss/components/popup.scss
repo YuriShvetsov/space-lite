@@ -9,11 +9,11 @@
   position: absolute;
   top: 0;
   right: 100%;
-  background-color: #fff;
+  background-color: get-light($bgColor, 'main');
   border: 1px solid #fafafc;
   border-radius: 5px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
-  z-index: map-get($zLayers, "zIndexPage");
+  z-index: get-layer('popup');
 }
 
 .popup__content_pos_bottom {
@@ -67,4 +67,16 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+  .popup__content {
+    background-color: get-dark($bgColor, 'main');
+    border: 1px solid get-dark($sectionBorderColor);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  }
+
 }

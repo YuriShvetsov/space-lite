@@ -4,7 +4,7 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_s title_color_violet">Editing of task</div>
+      <div class="form__title title title_size_s title_color_primary">Editing of task</div>
     </div>
 
     <div class="form__body">
@@ -38,7 +38,7 @@
         </label>
       </div>
 
-      <div class="form__row form__row_no-label">
+      <div class="form__row form__row_padding_bottom">
         <label class="form__label">
           <span class="form__label-name">Priority</span>
           <CustomSelect
@@ -48,7 +48,7 @@
         </label>
       </div>
 
-      <div class="form__row form__row_controls">
+      <div class="form__row form__row_x_center">
         <button
           class="form__control-button button button_fill_violet"
           v-on:click="emitSuccess"

@@ -95,7 +95,9 @@
     <div class="pointer pointer_pos_bottom js-bottom-pointer"></div>
 
     <div class="task__outer">
-      <modal ref="modalEditTask">
+      <modal ref="modalEditTask"
+        v-bind:classNames="['modal_size_sm']"
+      >
         <form-edit-task
           v-bind="dataForEditing"
           v-on:success="onSuccessFormEditTask"
@@ -203,20 +205,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .task {
   margin: 2px 0;
   position: relative;
   list-style: none;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: $transparent;
   border-radius: 5px;
   user-select: none;
   transition: background-color .15s ease-in-out;
 }
 
 .task_selected {
-  background-color: lighten($colorViolet, 34%);
+  background-color: lighten($primaryColor, 34%);
 }
 
 .task_signal {
@@ -237,7 +239,7 @@ export default {
   top: 0;
   transform: scaleX(0.4);
 
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.025));
+  background-image: get-light($taskHoverBg);
   border-radius: 5px;
   opacity: 0;
 
@@ -279,7 +281,7 @@ export default {
   height: 18px;
 
   cursor: pointer;
-  z-index: map-get($zLayers, "zIndexPage");
+  z-index: get-layer('page');
 }
 
 .task__done-icon {
@@ -287,11 +289,11 @@ export default {
   width: 18px;
   height: 18px;
   fill: none;
-  stroke: #cccccc;
+  stroke: $gray;
 }
 
 .task__done-checkbox:checked + .task__done-label .task__done-icon {
-  stroke: $colorGreenCold;
+  stroke: $green;
 }
 
 .task__content {
@@ -308,15 +310,15 @@ export default {
 .task__name {
   font-size: 14px;
   font-weight: bold;
-  color: $colorBlack;
+  color: get-light($baseTextColor);
   word-break: break-all;
 }
 
 .task__notes-pre {
   margin: 0;
-  font-family: $font_main;
+  font-family: $fontMain;
   font-size: 13px;
-  color: $colorGray;
+  color: get-light($secondaryTextColor);
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -336,18 +338,18 @@ export default {
 }
 
 .task__priority_low {
-  color: lighten($colorGreenCold, 10%);
-  background-color: lighten($colorGreenCold, 48%);
+  color: get-light($taskPriorityTextColor, 'low');
+  background-color: get-light($taskPriorityBgColor, 'low');
 }
 
 .task__priority_middle {
-  color: lighten($colorBlue, 10%);
-  background-color: lighten($colorBlue, 40%);
+  color: get-light($taskPriorityTextColor, 'middle');
+  background-color: get-light($taskPriorityBgColor, 'middle');
 }
 
 .task__priority_high {
-  color: lighten($colorRed, 10%);
-  background-color: lighten($colorRed, 40%);
+  color: get-light($taskPriorityTextColor, 'high');
+  background-color: get-light($taskPriorityBgColor, 'high');
 }
 
 .task__replace-button,
@@ -382,7 +384,7 @@ export default {
   left: 50%;
   transform: translateX(-50%);
 
-  background-color: lighten($colorViolet, 10%);
+  background-color: lighten($primaryColor, 10%);
   border-radius: 2px;
   opacity: 0;
 
@@ -407,4 +409,51 @@ export default {
   right: 0;
   bottom: 100%;
 }
+
+// Dark theme 
+
+.app_theme_dark {
+
+  .task_selected {
+    background-color: $primaryColor;
+  }
+
+  .task__hover-bg {
+    background-image: map-get($taskHoverBg, 'dark');
+  }
+
+   .task__content_half-hidden {
+      opacity: 0.6;
+    }
+
+  .task__name {
+    color: get-dark($baseTextColor);
+  }
+
+  .task__notes-pre {
+    color: get-dark($secondaryTextColor);
+  }
+
+  .task__priority {
+    color: get-dark($taskPriorityTextColor);
+  }
+
+  .task__priority_low {
+    background-color: get-dark($taskPriorityBgColor, 'low');
+  }
+
+  .task__priority_middle {
+    background-color: get-dark($taskPriorityBgColor, 'middle');
+  }
+
+  .task__priority_high {
+    background-color: get-dark($taskPriorityBgColor, 'high');
+  }
+
+  .pointer {
+    background-color: lighten($primaryColor, 3%);
+  }
+
+}
+
 </style>

@@ -4,12 +4,12 @@
   >
     
     <div class="form__header">
-      <div class="form__title title title_size_s title_color_violet">Renaming of list</div>
+      <div class="form__title title title_size_s title_color_primary">Renaming of list</div>
     </div>
 
     <div class="form__body">
 
-      <div class="form__row">
+      <div class="form__row form__row_padding_bottom">
         <label class="form__label">
           <span class="form__label-name">Name*</span>
           <div class="form__input-wrapper">
@@ -27,7 +27,7 @@
         </label>
       </div>
 
-      <div class="form__row form__row_controls">
+      <div class="form__row form__row_x_center">
         <button class="form__control-button button button_fill_violet"
           v-on:click="emitSuccess"
         >OK</button>

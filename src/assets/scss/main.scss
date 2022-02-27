@@ -1,10 +1,17 @@
-@import './utils/vars.scss';
-@import './utils/reset.scss';
-@import './utils/fonts.scss';
+// Vendors
+@import './vendor/normalize';
 
-@import './text.scss';
-@import './button.scss';
-@import './form.scss';
-@import './popup.scss';
-@import './scrollable.scss';
-@import './other.scss';
+// Environment
+@import './env';
+
+// Common settings, fonts
+@import './reset';
+@import './fonts';
+
+// Components and other custom styles
+@import './components/text';
+@import './components/button';
+@import './components/form';
+@import './components/popup';
+@import './components/scrollable';
+@import './components/other';

@@ -5,11 +5,11 @@
   font-size: 13px;
   font-weight: bold;
   line-height: 1;
-  color: $colorViolet;
+  color: $primaryColor;
   text-decoration: none;
   white-space: nowrap;
-  background-color: rgba(255, 255, 255, 0);
-  border: none;
+  background-color: $transparent;
+  border: 1px solid $transparent;
   border-radius: 3px;
   outline: none;
   appearance: none;
@@ -37,12 +37,12 @@
 }
 
 .button__icon_fill {
-  fill: $colorViolet;
+  fill: $primaryColor;
 }
 
 .button__icon_stroke {
   fill: none;
-  stroke: $colorViolet;
+  stroke: $primaryColor;
 }
 
 .button_type_text-icon {
@@ -80,7 +80,7 @@
 
 .button_type_icon:hover,
 .button_type_icon:focus {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: $transparent;
   opacity: .8;
 }
 
@@ -111,11 +111,11 @@
 
 .button_fill_black {
   color: #fff;
-  background-color: lighten($colorBlack, 3%);
+  background-color: lighten($black, 3%);
 
   &:hover,
   &:focus {
-    background-color: lighten($colorBlack, 6%);
+    background-color: lighten($black, 6%);
   }
 
   .button__icon_fill {
@@ -129,11 +129,11 @@
 
 .button_fill_red {
   color: #fff;
-  background-color: $colorRed;
+  background-color: $redLight;
 
   &:hover,
   &:focus {
-    background-color: $colorRedDark;
+    background-color: darken($redLight, 5%);
   }
 
   .button__icon_fill {
@@ -147,11 +147,11 @@
 
 .button_fill_violet {
   color: #fff;
-  background-color: $colorViolet;
+  background-color: $primaryColor;
 
   &:hover,
   &:focus {
-    background-color: darken($colorViolet, 3%);
+    background-color: darken($primaryColor, 3%);
   }
 
   .button__icon_fill {
@@ -164,25 +164,134 @@
 }
 
 .button_color_black {
-  color: $colorBlack;
+  color: get-light($baseTextColor);
 
   .button__icon_fill {
-    fill: $colorBlack;
+    fill: lighten($black, 3%);
   }
   
   .button__icon_stroke {
-    stroke: $colorBlack;
+    stroke: lighten($black, 3%);
   }
 }
 
 .button_color_red {
-  color: $colorRed;
+  color: $redLight;
 
   .button__icon_fill {
-    fill: $colorRed;
+    fill: $redLight;
   }
   
   .button__icon_stroke {
-    stroke: $colorRed;
+    stroke: $redLight;
   }
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+  // Common
+
+  .button {
+    color: get-dark($baseTextColor);
+    background-color: $transparent;
+    transition: opacity 150ms ease-in-out, background-color 150ms ease-in-out;
+
+    &:hover {
+      background-color: lighten(get-dark($bgColor, 'second'), 4%);
+      opacity: 0.8;
+    }
+
+    .button__icon_fill {
+      fill: get-dark($baseTextColor);
+    }
+  
+    .button__icon_stroke {
+      stroke: get-dark($baseTextColor);
+    }
+  }
+
+  // Types
+
+  .button_type_icon {
+    background-color: $transparent;
+    border: none;
+  
+    &:hover {
+      background-color: $transparent;
+    }
+  
+    .button__icon_fill {
+      fill: get-dark($baseTextColor);
+    }
+  
+    .button__icon_stroke {
+      stroke: get-dark($baseTextColor);
+    }
+  }
+
+  .button_type_popup {
+
+    .button__icon_fill {
+      fill: get-dark($baseTextColor);
+    }
+  
+    .button__icon_stroke {
+      stroke: get-dark($baseTextColor);
+    }
+  }
+
+  // Colors
+
+  .button_color_red {
+    color: $red;
+
+    .button__icon_fill {
+      fill: $red;
+    }
+  
+    .button__icon_stroke {
+      stroke: $red;
+    }
+  }
+
+  // Fill
+
+  .button_fill_red {
+    color: $black;
+    background-color: $red;
+    border: 1px solid $red;
+
+    &:hover {
+      background-color: $red;
+    }
+
+    .button__icon_fill {
+      fill: $red;
+    }
+  
+    .button__icon_stroke {
+      stroke: $red;
+    }
+  }
+
+  .button_fill_violet {
+    color: get-dark($baseTextColor);
+    background-color: $primaryColor;
+    border: 1px solid $primaryColor;
+
+    &:hover {
+      background-color: $primaryColor;
+    }
+
+    .button__icon_fill {
+      fill: $primaryColor;
+    }
+  
+    .button__icon_stroke {
+      stroke: $primaryColor;
+    }
+  }
+
 }

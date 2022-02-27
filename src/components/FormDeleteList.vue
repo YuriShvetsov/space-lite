@@ -10,7 +10,7 @@
 
     <div class="form__body">
 
-      <div class="form__row form__row_controls">
+      <div class="form__row form__row_x_center">
         <button class="form__control-button button button_fill_red"
           v-on:click="emitSuccess"
         >OK</button>

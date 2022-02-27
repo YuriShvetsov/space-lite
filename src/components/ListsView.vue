@@ -40,7 +40,9 @@
       </ul>
     </div>
 
-    <modal ref="modalAddList">
+    <modal ref="modalAddList"
+      v-bind:classNames="['modal_size_sm']"
+    >
       <form-add-list
         v-on:success="onSuccessFormAddList"
         v-on:cancel="closeModalAddList"
@@ -262,7 +264,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../assets/scss/env';
+
 .lists-view {
   display: flex;
   flex-direction: column;
@@ -298,7 +302,7 @@ export default {
   position: absolute;  
   left: 50%;
   transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0);
+  background-color: $transparent;
   z-index: 10;
 }
 .lists-view__scroll-trigger_active {

@@ -1,0 +1,94 @@
+/* Color palette */
+
+$red: #e53f56;
+$redLight: #ed344e;
+$green: #1ad185;
+$blue: #1b84ff;
+$gray: #cccccc;
+$violet: #4d42fe;
+$black: #333333;
+
+/* Colors of elements */
+
+$primaryColor: $violet;
+$transparent: rgba(255, 255, 255, 0);
+
+$baseTextColor: (
+  'light': #333333,
+  'dark': #fafafa
+);
+$secondaryTextColor: (
+  'light': #5a5a5a,
+  'dark': #dbdada
+);
+
+$sectionBorderColor: (
+  'light': #efefef,
+  'dark': #464545
+);
+$formBorderColor: (
+  'light': $transparent,
+  'dark': #4b4b4b
+);
+$taskPriorityTextColor: (
+  'light': (
+    'low': lighten($green, 10%),
+    'middle': lighten($blue, 10%),
+    'high': lighten($red, 10%)
+  ),
+  'dark': #1e1e1e
+);
+$taskPriorityBgColor: (
+  'light': (
+    'low': lighten($green, 48%),
+    'middle': lighten($blue, 40%),
+    'high': lighten($red, 40%)
+  ),
+  'dark': (
+    'low': #41cc92,
+    'middle': #489cfe,
+    'high': $red
+  )
+);
+
+// Backgrounds
+
+$mainBg: (
+  'light': linear-gradient(135deg,#4d42fe,#07ccff),
+  'dark': linear-gradient(135deg,#8711c1,#2472fc)
+);
+$bgColor: (
+  'light': (
+    'main': #ffffff,
+    'second': #f5f5fa
+  ),
+  'dark': (
+    'main': #363636,
+    'second': #1e1e1e
+  )
+);
+$taskHoverBg: (
+  'light': linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.025)),
+  'dark': linear-gradient(to bottom, rgba(30, 30, 30, 0.5), rgba(30, 30, 30, 0.55))
+);
+
+/* Fonts */
+
+$fontLogo: 'Galada', sans-serif;
+$fontMain: 'Open Sans', sans-serif;
+
+/* Layers */
+
+$layersNames: ('page', 'popup', 'modal');
+$layers: ();
+
+$i: 0;
+@each $layerName in $layersNames {
+  $i: $i + 10;
+
+  $cssVarName: "layer_" + $layerName;
+  $layers: map-merge(
+    $layers,
+    ($cssVarName: $i),
+  );
+}

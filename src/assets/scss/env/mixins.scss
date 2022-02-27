@@ -1,0 +1,49 @@
+// Font-face
+
+@mixin font-face($font-family, $url, $weight, $style) {
+  @font-face {
+    font-family: $font-family;
+    src: url($url);
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+  }
+}
+
+// Breakpoints
+
+@mixin custom-screen($width) {
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin huge-screen {
+  @media screen and (max-width: 1200px) {
+    @content;
+  }
+}
+
+@mixin desktop-screen {
+  @media screen and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin tablet-screen {
+  @media screen and (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin extra-mobile-screen {
+  @media screen and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin mobile-screen {
+  @media screen and (max-width: 320px) {
+    @content;
+  }
+}

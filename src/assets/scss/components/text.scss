@@ -1,0 +1,53 @@
+.title {
+  font-weight: bold;
+  color: get-light($baseTextColor);
+  line-height: 1.5;
+}
+
+.title_size_xl {
+  font-size: 32px;
+}
+
+.title_size_l {
+  font-size: 24px;
+}
+
+.title_size_m {
+  font-size: 18px
+}
+
+.title_size_s {
+  font-size: 16px;
+}
+
+.title_color_red {
+  color: $redLight;
+}
+
+.title_color_primary {
+  color: $primaryColor;
+}
+
+.text {
+  font-size: 13px;
+}
+
+.text_color_gray {
+  color: get-light($secondaryTextColor);
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+
+  .title,
+  .text {
+    color: get-dark($baseTextColor);
+  }
+
+  .title_color_red {
+    color: $red;
+  }
+
+}

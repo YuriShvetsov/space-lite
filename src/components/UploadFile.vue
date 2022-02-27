@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .upload-file {
   display: inline-block;
@@ -92,6 +92,6 @@ export default {
 }
 .upload-file__error-msg {
   font-size: 13px;
-  color: $colorRed;
+  color: $red;
 }
 </style>

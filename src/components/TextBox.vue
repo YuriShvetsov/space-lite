@@ -68,7 +68,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../assets/scss/env';
+
 .text-box__input {
   width: 100%;
   max-height: 212px;

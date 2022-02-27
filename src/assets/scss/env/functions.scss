@@ -1,0 +1,29 @@
+/* Get color of component from light/dark themes */
+
+@function get-light($group, $name: null) {
+  $light-value: map-get($group, 'light');
+
+  @if type-of($light-value) == map and $name != null {
+    @return map-get($light-value, $name);
+  }
+
+  @return $light-value;
+}
+
+@function get-dark($group, $name: null) {
+  $dark-value: map-get($group, 'dark');
+
+  @if type-of($dark-value) == map and $name != null {
+    @return map-get($dark-value, $name);
+  }
+
+  @return $dark-value;
+}
+
+/* Get number of layer (z-index) by name */
+
+@function get-layer($name) {
+  $layer-name: 'layer_' + $name;
+
+  @return map-get($layers, $layer-name);
+}

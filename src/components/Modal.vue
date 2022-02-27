@@ -1,19 +1,19 @@
 <template>
   <div class="modal" v-bind:class="classNames">
 
+    <transition name="fade">
+      <div class="modal__overlay"
+        v-if="isVisible"
+        v-on:click="close"
+      ></div>
+    </transition>
+
     <transition name="fade-scale">
       <div class="modal__container"
         v-if="isVisible"
       >
         <slot></slot>
       </div>
-    </transition>
-
-    <transition name="fade">
-      <div class="modal__overlay"
-        v-if="isVisible"
-        v-on:click="close"
-      ></div>
     </transition>
     
   </div>
@@ -25,7 +25,7 @@ export default {
   props: {
     classNames: {
       type: Array,
-      default: ['modal_size_sm']
+      default: ['modal_size_default']
     }
   },
   data() {
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .modal {
   width: 100vw;
@@ -72,56 +72,65 @@ export default {
   position: fixed;
   left: 0;
   top: 0;
+  z-index: get-layer('modal');
   pointer-events: none;
-  z-index: map-get($zLayers, "zIndexModal");
 }
+
 .modal__container {
   width: calc(100% - 64px);
-  padding: 25px 40px;
   position: absolute;
   left: 50%;
   top: 0;
+  transform: translate(-50%, 0);
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0, 0.35);
-  transform: translate(-50%, 0);
-  z-index: 102;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   pointer-events: all;
 }
+
+.modal_size_default .modal__container {
+  width: unset;
+  top: 65px;
+}
+
 .modal_size_sm .modal__container {
   max-width: 420px;
   top: 65px;
 }
+
 .modal_size_md .modal__container {
   max-width: 640px;
   top: 65px;
 }
+
 .modal_size_lg .modal__container {
   max-width: 720px;
   top: 65px;
 }
-.modal_size_lx .modal__container {
+
+.modal_size_lgx .modal__container {
   max-width: 992px;
   top: 65px;
 }
+
 .modal_size_full .modal__container {  
   width: 100vw;
   height: 100vh;
   border-radius: 0;
 }
+
 .modal__overlay {
   width: 100%;
   height: 100%;
   position: absolute;
   left: 0;
   top: 0;
-  background-color: rgba(31,31,31,.22);
-  z-index: 101;
+
+  background-color: rgba(31, 31, 31, .22);
   cursor: pointer;
   pointer-events: all;
   transition: background-color 300ms ease-out;
@@ -189,6 +198,24 @@ export default {
     opacity: 0;
     transform: translate(-50%, 0) scale(0.95);
   }
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+  .modal__overlay {
+    background-color: rgba(31, 31, 31, .30);
+  }
+
+  .modal__overlay:hover {
+    background-color: rgba(31, 31, 31, .45);
+  }
+
+  .modal__container {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  }
+
 }
 
 </style>

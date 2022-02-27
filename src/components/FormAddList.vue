@@ -4,11 +4,11 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_s title_color_violet">Creating of list</div>
+      <div class="form__title title title_size_s title_color_primary">Creating of list</div>
     </div>
 
     <div class="form__body">
-      <div class="form__row">
+      <div class="form__row form__row_padding_bottom">
         <label class="form__label">
           <span class="form__label-name">Name*</span>
           <div class="form__input-wrapper">
@@ -26,7 +26,7 @@
         </label>
       </div>
 
-      <div class="form__row form__row_controls">
+      <div class="form__row form__row_x_center">
         <input class="form__control-button button button_fill_violet"
           type="submit"
           v-on:click.prevent="emitSuccess"

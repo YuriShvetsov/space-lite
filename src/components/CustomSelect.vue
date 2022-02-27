@@ -190,7 +190,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .select {
   width: 100%;
@@ -202,7 +202,7 @@ export default {
   padding: 6px;
   display: block;
   
-  font-family: 'Open Sans', sans-serif;
+  font-family: $fontMain;
   font-size: 13px;
   color: #464646;
 
@@ -229,14 +229,14 @@ export default {
 .select__options {
   width: 100%;
   height: 100%;
-  max-height: 134px;
+  max-height: 160px;
   margin-top: 3px;
   padding: 6px;
   position: relative;
 
   display: none;
 
-  background-color: #fff;
+  background-color: get-light($bgColor, 'main');
   border: 1px solid #f0f2f5;
   border-radius: 3px;
 
@@ -253,7 +253,7 @@ export default {
   top: 0;
   transform: translateY(-100%);
 
-  background-color: rgba(255, 255, 255, 0);
+  background-color: $transparent;
 }
 
 .select__option-list {
@@ -272,7 +272,7 @@ export default {
   font-size: 13px;
   color: #464646;
 
-  background-color: rgba(255, 255, 255, 0);
+  background-color: $transparent;
   border-radius: 3px;
   outline: none;
 
@@ -286,7 +286,7 @@ export default {
 }
 
 .select__option:focus {
-  background-color: $colorVioletLightest;
+  background-color: lighten($primaryColor, 34%);
   transition: none;
 }
 
@@ -295,10 +295,47 @@ export default {
 }
 
 .select__option_clear:hover:focus {
-  background-color: $colorVioletLightest;
+  background-color: lighten($primaryColor, 34%);
 }
 
 .select__option_clear:hover {
   background-color: rgba(0,0,0,.02);
 }
+
+// Dark theme
+
+.app_theme_dark {
+
+  .select__input {
+    color: get-dark($baseTextColor);
+    background-color: get-dark($bgColor, 'main');
+  }
+
+  .select__input:focus {
+    background-color: darken(get-dark($bgColor, 'main'), 6%);
+  }
+
+  .select__options {
+    background-color: get-dark($bgColor, 'main');
+    border: 1px solid get-dark($formBorderColor);
+  }
+
+  .select__option {
+    color: get-dark($baseTextColor);
+  }
+
+  .select__option:hover {
+    background-color: darken(get-dark($bgColor, 'main'), 6%);
+  }
+
+  .select__option:focus {
+    background-color: $primaryColor;
+  }
+
+  .select__option_clear {
+    color: darken(get-dark($secondaryTextColor), 15%);
+  }
+
+}
+
 </style>

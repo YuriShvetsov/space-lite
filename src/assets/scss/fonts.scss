@@ -1,0 +1,9 @@
+/* Open Sans */
+
+@include font-face('Open Sans', '../fonts/open-sans/OpenSans-Regular.ttf', normal, normal );
+@include font-face('Open Sans', '../fonts/open-sans/OpenSans-SemiBold.ttf', bold, normal );
+@include font-face('Open Sans', '../fonts/open-sans/OpenSans-Italic.ttf', normal, italic );
+
+/* Galada */
+
+@include font-face('Galada', '../fonts/galada/Galada-Regular.ttf', normal, normal );

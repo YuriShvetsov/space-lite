@@ -82,42 +82,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .list-item {
   position: relative;
   width: 100%;
   list-style: none;
 }
+
 .list-item_pointer_top .list-item__button:hover,
 .list-item_pointer_bottom .list-item__button:hover {
-  background: unset;
+  background-color: unset;
 }
+
 .list-item__pointer {
   width: calc(100% - 10px);
   height: 2px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  background-color: lighten($colorViolet, 10%);
+  background-color: lighten($primaryColor, 10%);
   border-radius: 2px;
   opacity: 0;
   pointer-events: none;
 }
+
 .list-item__pointer_top {
   top: 0;
 }
+
 .list-item__pointer_bottom {
   bottom: 0;
 }
+
 .list-item_pointer_top .list-item__pointer_top {
   opacity: 1;
   transition: opacity .15s ease-in-out;
 }
+
 .list-item_pointer_bottom .list-item__pointer_bottom {
   opacity: 1;
   transition: opacity .15s ease-in-out;
 }
+
 .list-item__button {
   display: flex;
   justify-content: space-between;
@@ -125,24 +132,65 @@ export default {
   padding: 8px 12px;
 
   line-height: 1.2;
-  color: $colorBlack;
+  color: get-light($baseTextColor);
 }
+
 .list-item__name {
   max-width: calc(100% - 30px);
   text-transform: lowercase;
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
 .list-item__name::first-letter {
   text-transform: uppercase;
 }
+
 .list-item__count {
-  color: $colorGray;
+  color: get-light($secondaryTextColor);
 }
+
 .list-item_active .list-item__button {
-  background-color: $colorVioletLightest;
+  background-color: lighten($primaryColor, 34%);
+  transition: none;
 }
+
 .list-item__name {
   margin-right: 10px;
 }
+
+// Dark theme
+
+.app_theme_dark {
+
+  .list-item__button {
+    color: get-dark($baseTextColor);
+
+    &:hover {
+      background-color: darken(get-dark($bgColor, 'main'), 6%);
+    }
+  }
+
+  .list-item_pointer_top .list-item__button:hover,
+  .list-item_pointer_bottom .list-item__button:hover {
+    opacity: 1;
+    background-color: unset;
+  }
+
+  .list-item_active .list-item__button {
+    background-color: $primaryColor;
+
+    &:hover { opacity: 1; }
+  }
+
+  .list-item__count {
+    color: darken(get-dark($secondaryTextColor), 30%);
+  }
+
+  .list-item__pointer {
+    background-color: lighten($primaryColor, 3%);
+  }
+
+}
+
 </style>

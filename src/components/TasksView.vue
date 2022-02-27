@@ -116,14 +116,18 @@
 
     <div class="tasks-view__outer">
 
-      <modal ref="modalAddTask">
+      <modal ref="modalAddTask"
+        v-bind:classNames="['modal_size_sm']"
+      >
         <form-add-task
           v-on:success="onSuccessFormAddTask"
           v-on:cancel="closeModalAddTask"
         ></form-add-task>
       </modal>
 
-      <modal ref="modalRenameList">
+      <modal ref="modalRenameList"
+        v-bind:classNames="['modal_size_sm']"
+      >
         <form-rename-list
           v-bind:name="name"
           v-on:success="onSuccessFormRenameList"
@@ -521,7 +525,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/utils/vars.scss';
+@import '../assets/scss/env';
 
 .tasks-view {
   display: flex;
@@ -574,9 +578,9 @@ export default {
   left: 50%;
   transform: translateX(-50%);
 
-  background-color: rgba(255, 255, 255, 0);
+  background-color: $transparent;
 
-  z-index: 10;
+  z-index: get-layer('page');
 }
 
 .scroll-trigger_active {

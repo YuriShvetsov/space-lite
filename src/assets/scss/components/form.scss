@@ -1,0 +1,159 @@
+.form {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.form__header {
+  padding: 24px 40px;
+  background-color: get-light($bgColor, 'main');
+  border-bottom: 1px solid get-light($sectionBorderColor);
+  border-radius: 8px 8px 0 0;
+}
+
+.form__body {
+  padding: 18px 40px 24px;
+  background-color: get-light($bgColor, 'main');
+  border-radius: 0 0 8px 8px;
+}
+
+.form__title {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.form__desc {
+  text-align: center;
+}
+
+.form__row_x_center {
+  display: flex;
+  justify-content: center;
+}
+
+.form__row_padding_bottom {
+  padding-bottom: 16px;
+}
+
+.form__label {
+  padding-left: 6px;
+}
+
+.form__label-name {
+  font-size: 13px;
+  line-height: 2;
+  white-space: nowrap;
+  color: get-light($secondaryTextColor);
+}
+
+.form__input-wrapper {
+  position: relative;
+}
+
+.form__input {
+  font-family: 'Open Sans';
+  font-size: 13px;
+  color: #464646;
+  line-height: 20px;
+  border: none;
+  outline: none;
+}
+
+.form__input_type_text {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  background-color: #f0f2f5;
+  border-radius: 3px;
+}
+
+.form__input_type_file {
+  display: block;
+  width: auto;
+}
+
+.form__textarea {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  background-color: #f0f2f5;
+  border-radius: 3px;
+  resize: none;
+}
+
+.form__input_type_text:focus,
+.form__textarea:focus {
+  background-color: #f6f7f9;
+}
+
+.form__input_warn {
+  background-color: lighten($red, 40%);
+}
+
+.form__input_warn + .form__icon {
+  display: block;
+}
+
+.form__input_warn:focus {
+  background-color: lighten($red, 41%);
+}
+
+.form__control-button {
+  min-width: 100px;
+}
+
+.form__control-button:not(:last-of-type) {
+  margin-right: 10px;
+}
+
+.form__icon {
+  display: none;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+}
+
+.form__icon_fill_red {
+  fill: $red;
+}
+
+.form__icon_pos_right_center {
+  right: 5px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+  .form__header {
+    background-color: get-dark($bgColor, 'main');
+    border-top: 1px solid get-dark($formBorderColor);
+    border-right: 1px solid get-dark($formBorderColor);
+    border-bottom: 1px solid get-dark($sectionBorderColor);
+    border-left: 1px solid get-dark($formBorderColor);
+  }
+
+  .form__body {
+    background-color: get-dark($bgColor, 'second');
+    border-right: 1px solid get-dark($formBorderColor);
+    border-bottom: 1px solid get-dark($formBorderColor);
+    border-left: 1px solid get-dark($formBorderColor);
+  }
+
+  .form__label-name,
+  .form__input {
+    color: get-dark($baseTextColor);
+  }
+
+  .form__input_type_text,
+  .form__textarea {
+    background-color: get-dark($bgColor, 'main');
+  }
+
+  .form__input_type_text:focus,
+  .form__textarea:focus {
+    background-color: darken(get-dark($bgColor, 'main'), 4%);
+  }
+
+}

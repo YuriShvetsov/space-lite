@@ -3,7 +3,7 @@
     v-on:submit.prevent
   >
     <div class="form__header">
-      <div class="form__title title title_size_s title_color_violet">Import of tasks</div>
+      <div class="form__title title title_size_s title_color_primary">Import of tasks</div>
     </div>
 
     <div class="form__body">
@@ -19,7 +19,7 @@
         </label>
       </div>
 
-      <div class="form__row">
+      <div class="form__row form__row_padding_bottom">
 
         <div class="select-todos">
           <div class="select-todos__list"
@@ -27,7 +27,7 @@
             v-bind:key="list.id"
           >
 
-            <div class="select-todos__list-name">{{ list.name }}</div>
+            <div class="select-todos__list-name">{{ list.name }} ({{ list.todos.length }})</div>
             <ul class="select-todos__items-list">
               <li class="select-todos__item"
                 v-for="todo of list.todos"
@@ -63,7 +63,7 @@
 
       </div>
 
-      <div class="form__row form__row_controls">
+      <div class="form__row form__row_x_center">
         <button
           class="form__control-button button button_fill_violet"
           v-bind:disabled="!selectedTodos.length"
@@ -182,8 +182,8 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import '../assets/scss/utils/vars.scss';
+<style lang="scss" scoped>
+@import '../assets/scss/env';
 
 .form-import {
   width: 100%;
@@ -257,10 +257,10 @@ export default {
   width: 18px;
   height: 18px;
   fill: none;
-  stroke: #cccccc;
+  stroke: $gray;
 }
 .select-todos__checkbox:checked + .select-todos__check-icon {
-  stroke: $colorGreenCold;
+  stroke: $green;
 }
 .select-todos__item-content {
   width: 100%;
@@ -274,7 +274,7 @@ export default {
 }
 .select-todos__item-notes {
   margin: 0;
-  font-family: $font_main;
+  font-family: $fontMain;
   font-size: 13px;
   color: #888;
   word-break: break-word;
@@ -291,16 +291,60 @@ export default {
   display: none;
 }
 .select-todos__item-priority_low {
-  color: lighten($colorGreenCold, 10%);
-  background-color: lighten($colorGreenCold, 48%);
+  color: get-light($taskPriorityTextColor, 'low');
+  background-color: get-light($taskPriorityBgColor, 'low');
 }
 .select-todos__item-priority_middle {
-  color: lighten($colorBlue, 10%);
-  background-color: lighten($colorBlue, 40%);
+  color: get-light($taskPriorityTextColor, 'middle');
+  background-color: get-light($taskPriorityBgColor, 'middle');
 }
 .select-todos__item-priority_high {
-  color: lighten($colorRed, 10%);
-  background-color: lighten($colorRed, 40%);
+  color: get-light($taskPriorityTextColor, 'high');
+  background-color: get-light($taskPriorityBgColor, 'high');
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+  .select-todos {
+    background-color: get-dark($bgColor, 'main');
+    border: 1px solid get-dark($formBorderColor);
+  }
+
+  .select-todos__list-name {
+    color: get-dark($baseTextColor);
+  }
+
+  .select-todos__item {
+    background-color: darken(get-dark($bgColor, 'main'), 6%);
+    border: 1px solid get-dark($formBorderColor);
+  }
+
+  .select-todos__item-name {
+    color: get-dark($baseTextColor);
+  }
+
+  .select-todos__item-notes {
+    color: get-dark($secondaryTextColor);
+  }
+
+  .select-todos__item-priority {
+    color: get-dark($taskPriorityTextColor);
+  }
+
+  .select-todos__item-priority_low {
+    background-color: get-dark($taskPriorityBgColor, 'low');
+  }
+
+  .select-todos__item-priority_middle {
+    background-color: get-dark($taskPriorityBgColor, 'middle');
+  }
+
+  .select-todos__item-priority_high {
+    background-color: get-dark($taskPriorityBgColor, 'high');
+  }
+
 }
 
 </style>
