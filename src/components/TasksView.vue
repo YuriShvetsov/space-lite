@@ -132,7 +132,8 @@
       </modal>
 
       <modal ref="modalImportTodos"
-        v-bind:classNames="['modal_size_lg']">
+        v-bind:classNames="['modal_size_lg']"
+      >
         <form-import-todos
           v-on:success="onSuccessFormImportTodos"
           v-on:cancel="closeModalImportTodos"

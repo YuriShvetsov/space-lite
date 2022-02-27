@@ -25,7 +25,7 @@ export default {
   props: {
     classNames: {
       type: Array,
-      default: ['modal_size_md']
+      default: ['modal_size_sm']
     }
   },
   data() {
@@ -93,17 +93,26 @@ export default {
   z-index: 102;
   pointer-events: all;
 }
-.modal_size_md .modal__container {
+.modal_size_sm .modal__container {
   max-width: 420px;
+  top: 65px;
+}
+.modal_size_md .modal__container {
+  max-width: 640px;
   top: 65px;
 }
 .modal_size_lg .modal__container {
   max-width: 720px;
   top: 65px;
 }
+.modal_size_lx .modal__container {
+  max-width: 992px;
+  top: 65px;
+}
 .modal_size_full .modal__container {  
   width: 100vw;
   height: 100vh;
+  border-radius: 0;
 }
 .modal__overlay {
   width: 100%;

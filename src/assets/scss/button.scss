@@ -6,6 +6,7 @@
   font-weight: bold;
   line-height: 1;
   color: $colorViolet;
+  text-decoration: none;
   white-space: nowrap;
   background-color: rgba(255, 255, 255, 0);
   border: none;
@@ -62,7 +63,7 @@
   height: 28px;
   padding: 0;
   position: relative;
-  text-indent: -999px;
+  text-indent: -99999px;
   border-radius: 50%;
   overflow: hidden;
   opacity: 1;
@@ -108,62 +109,80 @@
   cursor: grabbing;
 }
 
-.button_fill_violet {
+.button_fill_black {
   color: #fff;
-  background-color: $colorViolet;
-}
+  background-color: lighten($colorBlack, 3%);
 
-.button_fill_violet:hover,
-.button_fill_violet:focus {
-  background-color: darken($colorViolet, 3%);
-}
+  &:hover,
+  &:focus {
+    background-color: lighten($colorBlack, 6%);
+  }
 
-.button_fill_violet .button__icon_fill {
-  fill: #fff;
-}
+  .button__icon_fill {
+    fill: #fff;
+  }
 
-.button_fill_violet .button__icon_stroke {
-  stroke: #fff;
+  .button__icon_stroke {
+    stroke: #fff;
+  }
 }
 
 .button_fill_red {
   color: #fff;
   background-color: $colorRed;
+
+  &:hover,
+  &:focus {
+    background-color: $colorRedDark;
+  }
+
+  .button__icon_fill {
+    fill: #fff;
+  }
+
+  .button__icon_stroke {
+    stroke: #fff;
+  }
 }
 
-.button_fill_red:hover,
-.button_fill_red:focus {
-  background-color: $colorRedDark;
-}
+.button_fill_violet {
+  color: #fff;
+  background-color: $colorViolet;
 
-.button_fill_red .button__icon_fill {
-  fill: #fff;
-}
+  &:hover,
+  &:focus {
+    background-color: darken($colorViolet, 3%);
+  }
 
-.button_fill_red .button__icon_stroke {
-  stroke: #fff;
+  .button__icon_fill {
+    fill: #fff;
+  }
+
+  .button__icon_stroke {
+    stroke: #fff;
+  }
 }
 
 .button_color_black {
   color: $colorBlack;
-}
 
-.button_color_black .button__icon_fill {
-  fill: $colorBlack;
-}
-
-.button_color_black .button__icon_stroke {
-  stroke: $colorBlack;
+  .button__icon_fill {
+    fill: $colorBlack;
+  }
+  
+  .button__icon_stroke {
+    stroke: $colorBlack;
+  }
 }
 
 .button_color_red {
   color: $colorRed;
-}
 
-.button_color_red .button__icon_fill {
-  fill: $colorRed;
-}
-
-.button_color_red .button__icon_stroke {
-  stroke: $colorRed;
+  .button__icon_fill {
+    fill: $colorRed;
+  }
+  
+  .button__icon_stroke {
+    stroke: $colorRed;
+  }
 }
