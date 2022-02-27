@@ -12,7 +12,6 @@ $black: #333333;
 
 $primaryColor: $violet;
 $transparent: rgba(255, 255, 255, 0);
-
 $baseTextColor: (
   'light': #333333,
   'dark': #fafafa
@@ -21,7 +20,6 @@ $secondaryTextColor: (
   'light': #5a5a5a,
   'dark': #dbdada
 );
-
 $sectionBorderColor: (
   'light': #efefef,
   'dark': #464545
@@ -38,18 +36,6 @@ $taskPriorityTextColor: (
   ),
   'dark': #1e1e1e
 );
-$taskPriorityBgColor: (
-  'light': (
-    'low': lighten($green, 48%),
-    'middle': lighten($blue, 40%),
-    'high': lighten($red, 40%)
-  ),
-  'dark': (
-    'low': #41cc92,
-    'middle': #489cfe,
-    'high': $red
-  )
-);
 
 // Backgrounds
 
@@ -65,6 +51,18 @@ $bgColor: (
   'dark': (
     'main': #363636,
     'second': #1e1e1e
+  )
+);
+$taskPriorityBgColor: (
+  'light': (
+    'low': lighten($green, 48%),
+    'middle': lighten($blue, 40%),
+    'high': lighten($red, 40%)
+  ),
+  'dark': (
+    'low': #41cc92,
+    'middle': #489cfe,
+    'high': $red
   )
 );
 $taskHoverBg: (

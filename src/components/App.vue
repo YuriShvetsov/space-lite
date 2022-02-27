@@ -167,7 +167,6 @@ export default {
   width: 100vw;
   height: 100vh;
   padding: 16px;
-
   background-image: get-light($mainBg);
 }
 
