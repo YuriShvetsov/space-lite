@@ -75,7 +75,7 @@ export default {
   },
   data() {
     return {
-      currentDate: new Date()
+      currentDate: null
     }
   },
   computed: {
@@ -129,12 +129,27 @@ export default {
     }
   },
   methods: {
+    updateCurrentDate() {
+      this.currentDate = new Date()
+    },
+    scheduleUpdateCurrentDate() {
+      const timeout = 1000
+
+      setTimeout(() => {
+        this.updateCurrentDate()
+        this.scheduleUpdateCurrentDate()
+      }, timeout);
+    },
     openModalAppSettings() {
       this.$refs.modalAppSettings.open()
     },
     closeModalAppSettings() {
       this.$refs.modalAppSettings.close()
     }
+  },
+  created() {
+    this.updateCurrentDate()
+    this.scheduleUpdateCurrentDate();
   }
 }
 </script>
