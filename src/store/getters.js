@@ -7,6 +7,9 @@ export default {
   lists(state) {
     return state.lists
   },
+  themes(state) {
+    return state.themes
+  },
   curTheme(state) {
     return state.curTheme
   },
@@ -15,9 +18,6 @@ export default {
   },
   curThemeIsAuto(state) {
     return state.curTheme === themes.AUTO_THEME
-  },
-  themes() {
-    return themes.THEMES
   },
   systemAppearanceIsDark(state) {
     return state.systemAppearance === 'dark'

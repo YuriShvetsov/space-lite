@@ -2,6 +2,8 @@ import { generateId, getTargetFromProxy } from './helpers'
 import * as themes from './themes'
 
 export default {
+  // Lists
+
   SET_LISTS(state, lists) {
     state.lists = lists
   },
@@ -57,16 +59,19 @@ export default {
     state.lists.splice(listIndex, 1)
     state.lists.splice(targetListIndex, 0, copyList)
   },
+  REMOVE_LIST(state, id) {
+    const listIndex = state.lists.findIndex(l => l.id === id)
+
+    state.lists.splice(listIndex, 1)
+  },
+
+  // Tasks (todos)
+
   REMOVE_COMPLETED_TODOS(state, id) {
     const list = state.lists.find(list => list.id === id)
     const todos = getTargetFromProxy(list.todos)
 
     list.todos = todos.filter(todo => !todo.done)
-  },
-  REMOVE_LIST(state, id) {
-    const listIndex = state.lists.findIndex(l => l.id === id)
-
-    state.lists.splice(listIndex, 1)
   },
   ADD_TODO(state, { id, name, notes, priority }) {
     const list = state.lists.find(l => l.id === id)
@@ -146,18 +151,23 @@ export default {
     list.todos.splice(todoIndex, 1)
     list.todos.splice(targetIndex, 0, copyTodo)
   },
-  SET_DEFAULT_THEME(state) {
+
+  // Themes
+
+  ADD_MAIN_THEMES(state) {
+    state.themes = [themes.LIGHT_THEME, themes.DARK_THEME]
+  },
+  ADD_AUTO_THEME(state) {
+    state.themes.push(themes.AUTO_THEME)
+  },
+  SET_CUR_THEME_BY_DEFAULT(state) {
     state.curTheme = themes.DEFAULT_THEME
   },
-  SET_CUR_THEME(state, themeValue) {
-    if (!themes.THEMES.includes(themeValue)) {
-      throw new Error('Invalid theme value')
-    }
-
-    state.curTheme = themeValue
+  SET_CUR_THEME(state, theme) {
+    state.curTheme = theme
   },
   SET_SYSTEM_APPEARANCE(state, value) {
-    const validValues = ['light', 'dark'];
+    const validValues = ['light', 'dark', null];
 
     if (!validValues.includes(value)) {
       throw new Error('Invalid system appearance value')

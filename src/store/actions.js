@@ -1,7 +1,9 @@
 export default {
+  // Main
+
   init({ dispatch }) {
+    dispatch('initThemes')
     dispatch('readFromLS')
-    dispatch('reactSystemAppearance')
   },
   readFromLS({ commit, dispatch }) {
     const data = JSON.parse(window.localStorage.getItem('todos'))
@@ -9,7 +11,7 @@ export default {
     if (!data) {
       commit('ADD_EMPTY_LIST')
       commit('OPEN_FIRST_LIST')
-      commit('SET_DEFAULT_THEME')
+      commit('SET_CUR_THEME_BY_DEFAULT')
       dispatch('writeToLS')
       return
     }
@@ -27,6 +29,9 @@ export default {
 
     window.localStorage.setItem('todos', json)
   },
+
+  // Lists
+
   openList({ state, commit, dispatch }, id) {
     if (state.openedListId === id) return
 
@@ -46,10 +51,6 @@ export default {
     commit('MOVE_LIST', payload)
     dispatch('writeToLS')
   },
-  removeCompletedTodos({ commit, dispatch }, id) {
-    commit('REMOVE_COMPLETED_TODOS', id)
-    dispatch('writeToLS')
-  },
   removeList({ state, commit, dispatch }, id) {
     if (state.lists.length === 1) {
       commit('ADD_EMPTY_LIST')
@@ -60,6 +61,13 @@ export default {
     }
 
     commit('REMOVE_LIST', id)
+    dispatch('writeToLS')
+  },
+
+  // Tasks (todos)
+
+  removeCompletedTodos({ commit, dispatch }, id) {
+    commit('REMOVE_COMPLETED_TODOS', id)
     dispatch('writeToLS')
   },
   addTodo({ commit, dispatch }, payload) {
@@ -90,19 +98,33 @@ export default {
     commit('MOVE_TODO', payload)
     dispatch('writeToLS')
   },
+
+  // Themes
+
+  initThemes({ commit, dispatch }) {
+    commit('ADD_MAIN_THEMES')
+    dispatch('reactSystemAppearance')
+  },
   changeCurTheme({ commit, dispatch }, payload) {
     commit('SET_CUR_THEME', payload)
     dispatch('writeToLS')
   },
   reactSystemAppearance({ commit }) {
+    const preferColorSchemeIsSupported = window.matchMedia('(prefers-color-scheme)').media !== 'not all'
+
+    if (!preferColorSchemeIsSupported) return
+
+    commit('ADD_AUTO_THEME')
+
     const preferColorScheme = window.matchMedia('(prefers-color-scheme: light)')
 
     setSystemAppearance(preferColorScheme)
-
     preferColorScheme.addEventListener('change', setSystemAppearance)
 
     function setSystemAppearance(scheme) {
-      if (scheme.matches) {
+      const isLight = scheme.matches
+
+      if (isLight) {
         commit('SET_SYSTEM_APPEARANCE', 'light')
       } else {
         commit('SET_SYSTEM_APPEARANCE', 'dark')

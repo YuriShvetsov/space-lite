@@ -138,7 +138,7 @@ export default {
       setTimeout(() => {
         this.updateCurrentDate()
         this.scheduleUpdateCurrentDate()
-      }, timeout);
+      }, timeout)
     },
     openModalAppSettings() {
       this.$refs.modalAppSettings.open()

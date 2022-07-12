@@ -29,6 +29,7 @@ export default {
   },
   watch: {
     _curTheme(value) {
+      if (value === this.curTheme) return
       this.changeCurTheme(value)
     }
   },
