@@ -40,13 +40,13 @@
       </div>
 
       <div class="form__row form__row_padding_bottom">
-        <label class="form__label">
+        <label class="form__label form__label_pointer-events-none">
           <span class="form__label-name">Priority</span>
-          <CustomSelect
-            v-model="priority"
-            v-bind="prioritySelectSettings"
-          ></CustomSelect>
         </label>
+        <LineSelect
+          v-model="priority"
+          v-bind="prioritySelectSettings"
+        />
       </div>
 
       <div class="form__row form__row_x_center">
@@ -76,8 +76,7 @@ export default {
 
       isMounted: false,
       prioritySelectSettings: {
-        clearOptionName: 'Not choosed',
-        mainOptions: [
+        options: [
           {
             name: 'Low',
             value: 'low'
@@ -177,6 +176,11 @@ export default {
 
       this.$emit('cancel')
       this.isMounted = false
+    },
+
+    // Helpers
+    preventDefault(e) {
+      e.preventDefault()
     }
   },
   mounted() {
