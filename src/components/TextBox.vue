@@ -2,7 +2,7 @@
   <div class="text-box">
 
     <div class="text-box__input form__input form__textarea"
-      contenteditable="true"
+      :contenteditable="contentEditablePropValue"
       role="textbox"
       tabindex="0"
       v-bind:spellcheck="spellcheck"
@@ -44,6 +44,13 @@ export default {
       set(value) {
         this.$emit('update:modelValue', value)
       }
+    },
+    contentEditablePropValue() {
+      const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+
+      if (isFirefox) return true;
+
+      return 'plaintext-only';
     }
   },
   methods: {

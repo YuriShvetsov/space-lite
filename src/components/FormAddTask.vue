@@ -176,11 +176,6 @@ export default {
 
       this.$emit('cancel')
       this.isMounted = false
-    },
-
-    // Helpers
-    preventDefault(e) {
-      e.preventDefault()
     }
   },
   mounted() {

@@ -175,11 +175,6 @@ export default {
     },
     emitCancel() {
       this.$emit('cancel')
-    },
-
-    // Helpers
-    preventDefault(e) {
-      e.preventDefault()
     }
   },
   created() {
