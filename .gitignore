@@ -3,6 +3,7 @@
 dist
 
 # Files
+package-lock.json
 .DS_Store
 .vscode
-package-lock.json
+.idea
