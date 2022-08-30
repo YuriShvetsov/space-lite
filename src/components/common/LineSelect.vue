@@ -66,7 +66,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import '../../assets/scss/env/index';
 
 .line-select {
   display: flex;

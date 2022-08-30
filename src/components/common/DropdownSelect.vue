@@ -39,6 +39,7 @@
 
 <script>
 export default {
+  name: 'DropdownSelect',
   props: {
     modelValue: {
       type: String,
@@ -246,7 +247,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import '../../assets/scss/env/index';
 
 .select {
   width: 100%;

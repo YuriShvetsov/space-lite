@@ -24,24 +24,6 @@
         </div>
       </div>
 
-      <!-- <div class="app-settings__row">
-        <div class="app-settings__col app-settings__col_vertical_center" style="opacity: 0.5;">
-          <div class="app-settings__text text">Show archive list:</div>
-        </div>
-        <div class="app-settings__col app-settings__col_vertical_center" style="opacity: 0.5;">
-          <archive-switcher></archive-switcher>
-        </div>
-      </div> -->
-
-      <!-- <div class="app-settings__row">
-        <div class="app-settings__col app-settings__col_vertical_center" style="opacity: 0.5;">
-          <div class="app-settings__text text">Show hidden lists:</div>
-        </div>
-        <div class="app-settings__col app-settings__col_vertical_center" style="opacity: 0.5;">
-          <hidden-lists-switcher></hidden-lists-switcher>
-        </div>
-      </div> -->
-
       <div class="app-settings__row">
         <div class="app-settings__col app-settings__col_vertical_center">
           <div class="app-settings__text text">Download tasks in json:</div>
@@ -60,7 +42,6 @@
 import { mapGetters } from 'vuex'
 
 import ThemeSwitcher from './ThemeSwitcher.vue'
-import ArchiveSwitcher from './ArchiveSwitcher.vue'
 import HiddenListsSwitcher from './HiddenListsSwitcher.vue'
 import DownloadTasksButton from './DownloadTasksButton.vue'
 
@@ -69,7 +50,6 @@ export default {
   name: 'app-settings',
   components: {
     ThemeSwitcher,
-    ArchiveSwitcher,
     HiddenListsSwitcher,
     DownloadTasksButton
   },
