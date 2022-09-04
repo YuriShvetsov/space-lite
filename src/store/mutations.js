@@ -2,6 +2,10 @@ import { generateId, getTargetFromProxy } from './helpers'
 import * as themes from './themes'
 
 export default {
+  MIGRATE(state) {
+
+  },
+
   // Lists
 
   SET_LISTS(state, lists) {
@@ -14,7 +18,10 @@ export default {
     state.lists.push({
       id: generateId('list'),
       name: 'Main',
-      todos: []
+      todos: [],
+      settings: {
+        hiddenTasksVisible: false
+      }
     })
   },
   OPEN_FIRST_LIST(state) {
@@ -50,6 +57,15 @@ export default {
 
     list.name = name
   },
+  SET_DEFAULT_HIDDEN_TODOS_VISIBLE(state) {
+    state.hiddenTodosVisible = false
+  },
+  SET_HIDDEN_TODOS_VISIBLE(state, isVisible) {
+    state.hiddenTodosVisible = isVisible
+  },
+  TOGGLE_HIDDEN_TODOS_VISIBLE(state) {
+    state.hiddenTodosVisible = !state.hiddenTodosVisible
+  },
   MOVE_LIST(state, { listId, targetListId }) {
     const list = state.lists.find(list => list.id === listId)
     const copyList = getTargetFromProxy(list)
@@ -78,6 +94,7 @@ export default {
     const newTodo = {
       id: generateId('todo'),
       done: false,
+      hidden: false,
       name,
       notes,
       priority
@@ -102,6 +119,7 @@ export default {
       list.todos.push({
         id: ids[index],
         done: false,
+        hidden:todo.hidden,
         name: todo.name,
         notes: todo.notes,
         priority: todo.priority
@@ -135,6 +153,18 @@ export default {
     }
 
     list.todos.splice(insertIndex, 0, copy)
+  },
+  HIDE_TODO(state, { listId, todoId }) {
+    const list = state.lists.find(list => list.id === listId)
+    const todo = list.todos.find(todo => todo.id === todoId)
+
+    todo.hidden = true
+  },
+  SHOW_TODO(state, { listId, todoId }) {
+    const list = state.lists.find(list => list.id === listId)
+    const todo = list.todos.find(todo => todo.id === todoId)
+
+    todo.hidden = false
   },
   REMOVE_TODO(state, { listId, todoId }) {
     const list = state.lists.find(list => list.id === listId)

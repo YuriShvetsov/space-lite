@@ -9,8 +9,8 @@
       v-on:mouseup="handleMouseUp"
       v-on:mouseout="handleMouseOut"
     >
-      <div class="list-item__name">{{ name }}</div>
-      <div class="list-item__count">{{ countTodos }}</div>
+      <span class="list-item__name">{{ name }}</span>
+      <span class="list-item__count">{{ countTodos }}</span>
     </button>
     <div class="list-item__pointer list-item__pointer_bottom"></div>
   </li>
@@ -37,17 +37,21 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'openedList'
+      'lists',
+      'openedList',
+      'hiddenTodosVisible'
     ]),
     isOpened() {
       return this.openedList.id === this.id
     },
     countTodos() {
-      if (this.todos.length > 99) {
-        return '99+'
-      }
+      const countAllTodos = this.todos.length
+      const countVisibleTodos = this.todos.filter(todo => !todo.hidden ).length
+      const count = this.hiddenTodosVisible ? countAllTodos : countVisibleTodos
 
-      return this.todos.length
+      if (count > 99) return '99+'
+
+      return count
     }
   },
   methods: {

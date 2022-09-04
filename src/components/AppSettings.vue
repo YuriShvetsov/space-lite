@@ -2,7 +2,7 @@
   <div :class="containerClassNames">
 
     <div class="app-settings__header">
-      <div class="app-settings__title title title_size_s title_color_primary">App settings</div>
+      <div class="app-settings__title title title_size_s title_color_primary">Settings</div>
       <button class="app-settings__close-button button button_type_icon button_color_black"
         v-on:click="emitClose"
       >
@@ -15,22 +15,31 @@
 
     <div class="app-settings__body">
 
-      <div class="app-settings__row">
-        <div class="app-settings__col app-settings__col_vertical_center">
-          <div class="app-settings__text text">Appearance:</div>
+      <div class="app-settings__section">
+
+        <div class="app-settings__section-title">General</div>
+
+        <div class="app-settings__section-row app-settings__appearance">
+          <div class="app-settings__text app-settings__text_left-pos text">Appearance:</div>
+          <theme-switcher class="app-settings__theme-switcher" />
         </div>
-        <div class="app-settings__col app-settings__col_vertical_center">
-          <theme-switcher></theme-switcher>
-        </div>
+
       </div>
 
-      <div class="app-settings__row">
-        <div class="app-settings__col app-settings__col_vertical_center">
-          <div class="app-settings__text text">Download tasks in json:</div>
+      <div class="app-settings__section">
+
+        <div class="app-settings__section-title">Data</div>
+
+        <div class="app-settings__section-row app-settings__hidden-todos">
+          <hidden-todos-switcher />
+          <div class="app-settings__text app-settings__text_right-pos text">Show hidden tasks</div>
         </div>
-        <div class="app-settings__col app-settings__col_vertical_center">
-          <download-tasks-button></download-tasks-button>
+
+        <div class="app-settings__section-row app-settings__download-todos">
+          <div class="app-settings__text app-settings__text_left-pos text">Save your tasks in a json file</div>
+          <download-tasks-button />
         </div>
+
       </div>
 
     </div>
@@ -42,15 +51,14 @@
 import { mapGetters } from 'vuex'
 
 import ThemeSwitcher from './ThemeSwitcher.vue'
-import HiddenListsSwitcher from './HiddenListsSwitcher.vue'
+import HiddenTodosSwitcher from './HiddenTodosSwitcher.vue'
 import DownloadTasksButton from './DownloadTasksButton.vue'
-
 
 export default {
   name: 'app-settings',
   components: {
     ThemeSwitcher,
-    HiddenListsSwitcher,
+    HiddenTodosSwitcher,
     DownloadTasksButton
   },
   emits: ['close'],
@@ -86,11 +94,17 @@ export default {
   background-color: get-light($bgColor, 'main');
   border-radius: 8px 8px 0 0;
   border-bottom: 1px solid get-light($sectionBorderColor);
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
 }
 
 .app-settings__body {
-  padding: 12px 30px;
+  padding: 8px 30px;
   background-color: get-light($bgColor, 'main');
+  border-right: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  border-left: 1px solid transparent;
   border-radius: 0 0 8px 8px;
 }
 
@@ -105,22 +119,49 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.app-settings__row {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  padding: 10px 0;
+.app-settings__section {
+  padding: 12px 0;
 }
 
-.app-settings__row:not(:first-child) {
+.app-settings__section:not(:first-child) {
   border-top: 1px solid get-light($sectionBorderColor);
 }
 
-.app-settings__col:not(:last-child) {
-  padding-right: 16px;
+.app-settings__section-title {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-.app-settings__col_vertical_center {
+.app-settings__section-row:not(:last-child) {
+  margin-bottom: 6px;
+}
+
+.app-settings__text_left-pos {
+  margin-right: 8px;
+}
+
+.app-settings__text_right-pos {
+  margin-left: 8px;
+}
+
+// Modules
+
+.app-settings__appearance {
+  display: flex;
+  align-items: center;
+}
+
+.app-settings__theme-switcher {
+  padding: 0 10px;
+}
+
+.app-settings__hidden-todos {
+  display: flex;
+  align-items: center;
+}
+
+.app-settings__download-todos {
   display: flex;
   align-items: center;
 }
@@ -144,8 +185,12 @@ export default {
     border-left: 1px solid get-dark($formBorderColor);
   }
 
-  .app-settings__row:not(:first-child) {
+  .app-settings__section:not(:first-child) {
     border-top: 1px solid get-dark($sectionBorderColor);
+  }
+
+  .app-settings__section-title {
+    color: #fff;
   }
 
 }

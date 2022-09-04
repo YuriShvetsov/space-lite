@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 import Sprite from './Sprite.vue'
 import AppSettings from './AppSettings.vue'
@@ -129,6 +129,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['migrate']),
     updateCurrentDate() {
       this.currentDate = new Date()
     },
@@ -148,6 +149,7 @@ export default {
     }
   },
   created() {
+    // this.migrate()
     this.updateCurrentDate()
     this.scheduleUpdateCurrentDate();
   }
@@ -184,6 +186,7 @@ export default {
 
 .app__header {
   display: flex;
+  justify-content: flex-end;
   height: 88px;
   padding: 16px;
   position: relative;
@@ -207,7 +210,10 @@ export default {
   display: block;
   margin: 0 auto;
   padding: 15px 38px 5px 5px;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
   user-select: none;
 }

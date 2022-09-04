@@ -105,9 +105,11 @@
             v-bind="todo"
             v-on:change-done="onChangeDoneTodo"
             v-on:update="onUpdateTodo"
-            v-on:remove="onRemoveTodo"
             v-on:start-moving="onStartTaskMoving"
             v-on:duplicate="onDuplicateTodo"
+            v-on:hide="onHideTodo"
+            v-on:show="onShowTodo"
+            v-on:remove="onRemoveTodo"
           ></task>
         </transition-group>
       </ul>
@@ -189,7 +191,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([ 'openedList' ]),
+    ...mapGetters([
+      'openedList',
+      'hiddenTodosVisible'
+    ]),
     id() {
       return this.openedList.id
     },
@@ -197,7 +202,11 @@ export default {
       return this.openedList.name
     },
     todos() {
-      return this.openedList.todos
+      if (this.hiddenTodosVisible) {
+        return this.openedList.todos
+      }
+
+      return this.openedList.todos.filter(todo => !todo.hidden)
     },
     dataIsValid() {
       return (
@@ -221,7 +230,9 @@ export default {
       'updateTodo',
       'removeTodo',
       'moveTodo',
-      'duplicateTodo'
+      'duplicateTodo',
+      'hideTodo',
+      'showTodo'
     ]),
     openModalAddTask() {
       this.$refs.modalAddTask.open()
@@ -276,8 +287,14 @@ export default {
         taskCopy.classList.add('anim-duplicate-task')
         taskCopy.addEventListener('animationend', e => {
           e.target.classList.remove('anim-duplicate-task')
-        });
+        }, { once: true })
       })
+    },
+    onHideTodo(id) {
+      this.hideTodo({ listId: this.id, todoId: id })
+    },
+    onShowTodo(id) {
+      this.showTodo({ listId: this.id, todoId: id })
     },
     onRemoveTodo(id) {
       this.removeTodo({

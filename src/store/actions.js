@@ -1,4 +1,9 @@
 export default {
+  migrate({ commit, dispatch }) {
+    commit('MIGRATE')
+    dispatch('writeToLS')
+  },
+
   // Main
 
   init({ dispatch }) {
@@ -12,6 +17,7 @@ export default {
       commit('ADD_EMPTY_LIST')
       commit('OPEN_FIRST_LIST')
       commit('SET_CUR_THEME_BY_DEFAULT')
+      commit('SET_DEFAULT_HIDDEN_TODOS_VISIBLE')
       dispatch('writeToLS')
       return
     }
@@ -19,12 +25,14 @@ export default {
     commit('SET_LISTS', data.lists)
     commit('SET_OPENED_LIST_ID', data.openedListId)
     commit('SET_CUR_THEME', data.curTheme)
+    commit('SET_HIDDEN_TODOS_VISIBLE', data.hiddenTodosVisible)
   },
   writeToLS({ state }) {
     const json = JSON.stringify({
       lists: state.lists,
       openedListId: state.openedListId,
-      curTheme: state.curTheme
+      curTheme: state.curTheme,
+      hiddenTodosVisible: state.hiddenTodosVisible
     })
 
     window.localStorage.setItem('todos', json)
@@ -45,6 +53,10 @@ export default {
   },
   updateListName({ commit, dispatch }, payload) {
     commit('UPDATE_LIST_NAME', payload)
+    dispatch('writeToLS')
+  },
+  toggleHiddenTodosVisible({ commit, dispatch }) {
+    commit('TOGGLE_HIDDEN_TODOS_VISIBLE')
     dispatch('writeToLS')
   },
   moveList({ commit, dispatch }, payload) {
@@ -90,12 +102,20 @@ export default {
     commit('DUPLICATE_TODO', payload)
     dispatch('writeToLS')
   },
-  removeTodo({ commit, dispatch }, payload) {
-    commit('REMOVE_TODO', payload)
+  hideTodo({ commit, dispatch }, payload) {
+    commit('HIDE_TODO', payload)
+    dispatch('writeToLS')
+  },
+  showTodo({ commit, dispatch }, payload) {
+    commit('SHOW_TODO', payload)
     dispatch('writeToLS')
   },
   moveTodo({ commit, dispatch }, payload) {
     commit('MOVE_TODO', payload)
+    dispatch('writeToLS')
+  },
+  removeTodo({ commit, dispatch }, payload) {
+    commit('REMOVE_TODO', payload)
     dispatch('writeToLS')
   },
 

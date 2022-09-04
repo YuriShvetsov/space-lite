@@ -26,9 +26,15 @@
           <pre class="task__notes-pre">{{ notes }}</pre>
         </div>
         <div class="task__priority"
-          v-bind:class="prioriyClassName"
+          v-bind:class="priorityClassName"
         >{{ priority }}</div>
       </div>
+
+      <svg class="task__hidden-status"
+        v-show="hidden"
+      >
+        <use xlink:href="#eye-slash"></use>
+      </svg>
 
       <button class="task__replace-button button button_type_icon button_type_grabber button_color_black"
         v-on:mousedown="emitStartMoving"
@@ -71,6 +77,16 @@
                 <span>Duplicate</span>
                 <svg class="button__icon button__icon_stroke">
                   <use xlink:href="#copy"></use>
+                </svg>
+              </button>
+            </li>
+            <li class="popup__action">
+              <button class="popup__action-button button button_type_popup button_color_black"
+                v-on:click="emitHideShow(), closeMenu()"
+              >
+                <span>{{ toggleVisibilityText }}</span>
+                <svg class="button__icon button__icon_fill">
+                  <use :xlink:href="toggleVisibilityIcon"></use>
                 </svg>
               </button>
             </li>
@@ -127,6 +143,10 @@ export default {
       type: Boolean,
       default: false
     },
+    hidden: {
+      type: Boolean,
+      default: false
+    },
     priority: {
       type: String,
       default: ''
@@ -148,10 +168,16 @@ export default {
         priority: this.priority
       }
     },
-    prioriyClassName() {
+    priorityClassName() {
       if (this.priority === '') return
 
       return `task__priority_visible task__priority_${ this.priority.toLowerCase() }`
+    },
+    toggleVisibilityText() {
+      return this.hidden ? 'Show' : 'Hide'
+    },
+    toggleVisibilityIcon() {
+      return this.hidden ? '#eye' : '#eye-slash'
     }
   },
   methods: {
@@ -189,6 +215,13 @@ export default {
     },
     emitDuplicate() {
       this.$emit('duplicate', this.id)
+    },
+    emitHideShow() {
+      if (this.hidden) {
+        this.$emit('show', this.id)
+      } else {
+        this.$emit('hide', this.id)
+      }
     },
     emitRemove() {
       this.$emit('remove', this.id)
@@ -352,6 +385,24 @@ export default {
   background-color: get-light($taskPriorityBgColor, 'high');
 }
 
+.task__hidden-status {
+  display: block;
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translate(0, -50%);
+  opacity: .4;
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.task:hover .task__hidden-status {
+  transform: translate(18px, -50%);
+  opacity: 0;
+}
+
 .task__replace-button,
 .task__menu-button {
   opacity: 0;
@@ -448,6 +499,11 @@ export default {
 
   .task__priority_high {
     background-color: get-dark($taskPriorityBgColor, 'high');
+  }
+
+  .task__hidden-status {
+    fill: #fff;
+    opacity: .6;
   }
 
   .pointer {

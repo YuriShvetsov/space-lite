@@ -21,7 +21,8 @@ export const isValidImportedTodos = data => {
           !todo.hasOwnProperty('done') ||
           !todo.hasOwnProperty('name') ||
           !todo.hasOwnProperty('notes') ||
-          !todo.hasOwnProperty('priority')) {
+          !todo.hasOwnProperty('priority') ||
+          !todo.hasOwnProperty('hidden')) {
         return false
       }
 
@@ -29,7 +30,8 @@ export const isValidImportedTodos = data => {
           typeof todo['done'] !== 'boolean' ||
           typeof todo['name'] !== 'string' ||
           typeof todo['notes'] !== 'string' ||
-          typeof todo['priority'] !== 'string') {
+          typeof todo['priority'] !== 'string' ||
+          typeof todo['hidden'] !== 'boolean') {
         return false
       }
 

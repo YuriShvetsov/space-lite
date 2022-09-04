@@ -46,9 +46,16 @@
                 <div class="select-todos__item-content">
                   <div class="select-todos__inner-row select-todos__inner-row_between">
                     <div class="select-todos__item-name">{{ todo.name }}</div>
-                    <div class="select-todos__item-priority"
-                      v-bind:class="priorityClassName(todo)"
-                    >{{ todo.priority }}</div>
+                    <div class="select-todos__item-icons">
+                      <svg class="select-todos__item-hidden-status"
+                        v-show="todo.hidden"
+                      >
+                        <use xlink:href="#eye-slash"></use>
+                      </svg>
+                      <div class="select-todos__item-priority"
+                           v-bind:class="priorityClassName(todo)"
+                      >{{ todo.priority }}</div>
+                    </div>
                   </div>
                   <div class="select-todos__inner-row">
                     <pre class="select-todos__item-notes">{{ todo.notes }}</pre>
@@ -101,7 +108,8 @@ export default {
         return {
           name: todo.name,
           notes: todo.notes,
-          priority: todo.priority
+          priority: todo.priority,
+          hidden: todo.hidden
         }
       })
     }
@@ -135,7 +143,8 @@ export default {
               isSelected: false,
               name: todo.name,
               notes: todo.notes,
-              priority: todo.priority
+              priority: todo.priority,
+              hidden: todo.hidden
             }
           }))
           return acc
@@ -280,7 +289,18 @@ export default {
   word-break: break-word;
   white-space: pre-wrap;
 }
+.select-todos__item-icons {
+  display: flex;
+}
+.select-todos__item-hidden-status {
+  display: block;
+  width: 18px;
+  height: 18px;
+  opacity: .4;
+  pointer-events: none;
+}
 .select-todos__item-priority {
+  margin-left: 8px;
   padding: 2px 7px;
   font-size: 10px;
   text-transform: uppercase;
@@ -327,6 +347,11 @@ export default {
 
   .select-todos__item-notes {
     color: get-dark($secondaryTextColor);
+  }
+
+  .select-todos__item-hidden-status {
+    fill: #fff;
+    opacity: .6;
   }
 
   .select-todos__item-priority {

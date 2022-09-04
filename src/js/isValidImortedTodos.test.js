@@ -68,9 +68,10 @@ const testValues = [
           {
             id: 'todo-1000',
             done: true,
-            name: 'Task1',
+            name: 'Task 1',
             notes: 'Some notes',
-            priority: 'high'
+            priority: 'high',
+            hidden: false
           }
         ]
       },
@@ -83,14 +84,16 @@ const testValues = [
             done: true,
             name: 'Task 2',
             notes: 'Some notes',
-            priority: 'high'
+            priority: 'high',
+            hidden: true
           },
           {
             id: 'todo-1201',
             done: false,
             name: 'Task 3',
             notes: 'Some notes',
-            priority: ''
+            priority: '',
+            hidden: false
           }
         ]
       }

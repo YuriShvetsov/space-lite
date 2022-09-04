@@ -7,6 +7,9 @@ export default {
   lists(state) {
     return state.lists
   },
+  hiddenTodosVisible(state) {
+    return state.hiddenTodosVisible
+  },
   themes(state) {
     return state.themes
   },
