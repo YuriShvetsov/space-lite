@@ -22,7 +22,7 @@
           ref="bottomScrollTrigger"
         ></div>
 
-      <ul class="lists-view__ul scrollable-child"
+      <ul class="lists-view__ul scrollable-child js-scroll-child"
         ref="lists"
       >
         <transition-group name="flip-list" :css="false">
@@ -54,8 +54,14 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+
 import ListItem from './ListItem.vue'
 import FormAddList from './FormAddList.vue'
+
+import {
+  addListeners as addScrollListeners,
+  removeListeners as removeScrollListeners
+} from '../js/onScrollScrollableChild'
 
 export default {
   name: 'lists-view',
@@ -106,6 +112,8 @@ export default {
 
       this.$refs.bottomScrollTrigger.addEventListener('mouseover', this.startScrollDown)
       this.$refs.bottomScrollTrigger.addEventListener('mouseout', this.endScrollDown)
+
+      addScrollListeners(this.$el)
     },
     onSuccessFormAddList(name) {
       this.addList(name)
@@ -260,6 +268,9 @@ export default {
   },
   mounted() {
     this.initListeners()
+  },
+  beforeUnmount() {
+    removeScrollListeners(this.$el)
   }
 }
 </script>
