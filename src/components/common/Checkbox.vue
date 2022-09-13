@@ -64,7 +64,7 @@
   background-color: transparent;
   border: 1px solid $gray;
   border-radius: 4px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .08);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .08);
   transition: background-color .15s ease, border .15s ease, box-shadow .15s ease;
 }
 

@@ -124,7 +124,28 @@ export default {
 }
 
 .app-settings__section:not(:first-child) {
-  border-top: 1px solid get-light($sectionBorderColor);
+  border-top: 1px solid transparent;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    left: 50%;
+    top: -1px;
+    transform: translate(-50%, 0);
+
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0),
+      rgba(0, 0, 0, 0.05) 10%,
+      rgba(0, 0, 0, .1) 50%,
+      rgba(0, 0, 0, 0.05) 90%,
+      rgba(255, 255, 255, 0)
+    );
+  }
 }
 
 .app-settings__section-title {
@@ -185,8 +206,15 @@ export default {
     border-left: 1px solid get-dark($formBorderColor);
   }
 
-  .app-settings__section:not(:first-child) {
-    border-top: 1px solid get-dark($sectionBorderColor);
+  .app-settings__section:not(:first-child)::before {
+    background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(255, 255, 255, .08) 10%,
+      rgba(255, 255, 255, .2) 50%,
+      rgba(255, 255, 255, .08) 90%,
+      rgba(0, 0, 0, 0)
+    );
   }
 
   .app-settings__section-title {
