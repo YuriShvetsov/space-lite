@@ -88,7 +88,7 @@
 
 <script>
 import { focusFirstElement, catchFocus } from '../js/focusForm'
-const { isValidImportedTodos } = require('../js/isValidImportedTodos')
+import { isValidImportedTodos } from '../js/isValidImportedTodos'
 
 export default {
   name: 'form-import-todos',

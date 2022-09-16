@@ -144,6 +144,7 @@ export default {
     const copy = {
       id: generateId('todo'),
       done: false,
+      hidden: todo.hidden,
       priority: todo.priority,
       name: todo.name,
       notes: todo.notes
