@@ -96,7 +96,7 @@
       ></div>
 
       <ul class="tasks-view__ul scrollable-child js-scroll-child" ref="content" >
-        <transition-group name="flip-list" :css="false">
+        <transition-group :name="todosAnimationName" :css="false">
           <task
             class="js-task"
             v-for="todo in todos"
@@ -193,7 +193,8 @@ export default {
       },
       scrolling: {
         isActive: false
-      }
+      },
+      todosAnimationName: 'flip-list'
     }
   },
   computed: {
@@ -223,6 +224,12 @@ export default {
     },
     haveCompletedTasks() {
       return this.todos.find(todo => todo.done)
+    }
+  },
+  watch: {
+    hiddenTodosVisible() {
+      this.disableTodosAnimation()
+      this.enableTodosAnimation()
     }
   },
   methods: {
@@ -308,6 +315,7 @@ export default {
         todoId: id
       })
     },
+
     onSuccessFormAddTask({ name, notes, priority }) {
       this.addTodo({
         id: this.id,
@@ -339,6 +347,15 @@ export default {
     },
     closeMenu() {
       this.$refs.menu.close()
+    },
+
+    enableTodosAnimation() {
+      setTimeout(() => {
+        this.todosAnimationName = 'flip-list'
+      })
+    },
+    disableTodosAnimation() {
+      this.todosAnimationName = 'none'
     },
 
     getTaskElements() {
