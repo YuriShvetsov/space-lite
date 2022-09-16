@@ -95,7 +95,7 @@
         ref="scrollDownTrigger"
       ></div>
 
-      <ul class="tasks-view__ul scrollable-child js-scroll-child" ref="content" >
+      <ul class="tasks-view__ul scrollable-child" ref="content" >
         <transition-group :name="todosAnimationName" :css="false">
           <task
             class="js-task"
@@ -169,10 +169,7 @@ import FormRenameList from './FormRenameList.vue'
 import FormImportTodos from './FormImportTodos.vue'
 import FormDeleteList from './FormDeleteList.vue'
 
-import {
-  addListeners as addScrollListeners,
-  removeListeners as removeScrollListeners
-} from '../js/onScrollScrollableChild'
+import Scrollable from '../js/scrollable'
 
 export default {
   name: 'tasks-view',
@@ -439,7 +436,8 @@ export default {
       this.$refs.scrollDownTrigger.addEventListener('mouseover', this.startScrollDown)
       this.$refs.scrollDownTrigger.addEventListener('mouseout', this.endScrollDown)
 
-      addScrollListeners(this.$el) // Automatic hiding of the scrollbar
+      this.scrollableContent = new Scrollable(this.$refs.content)
+      this.scrollableContent.initListener()
     },
     onStartTaskMoving(id) {
       this.taskMoving.isStarted = true
@@ -564,7 +562,7 @@ export default {
     this.initListeners()
   },
   beforeUnmount() {
-    removeScrollListeners(this.$el)
+    this.scrollableContent.removeListener()
   }
 }
 </script>
