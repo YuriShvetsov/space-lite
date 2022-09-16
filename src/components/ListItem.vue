@@ -141,13 +141,8 @@ export default {
 
 .list-item__name {
   max-width: calc(100% - 30px);
-  text-transform: lowercase;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.list-item__name::first-letter {
-  text-transform: uppercase;
 }
 
 .list-item__count {

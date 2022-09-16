@@ -15,6 +15,7 @@
             <input type="text"
               spellcheck="false"
               autocomplete="off"
+              name="name"
               important
               class="form__input form__input_type_text js-input"
               v-model.trim="name"
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { focusFirstElement, catchFocus } from '../js/focusForm'
 
 export default {
@@ -57,6 +59,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['lists']),
+    listNames() {
+      return this.lists.map(list => list.name)
+    },
     inputData() {
       return {
         name: this.name
@@ -76,34 +82,39 @@ export default {
     },
     getImportantInputs() {
       const inputs = this.getInputs()
-      const importantInputs = Array.from(inputs).filter(input => input.hasAttribute('important'))
 
-      return importantInputs
+      return Array.from(inputs).filter(input => input.hasAttribute('important'))
     },
-    getEmptyImportantInputs() {
+    getInvalidImportantInputs() {
       const importantInputs = this.getImportantInputs()
 
-      return importantInputs.filter(input => input.value.length === 0)
-    },
-    importantInputsFilled() {
-      const emptyImportantInputs = this.getEmptyImportantInputs()
+      return importantInputs.filter(input => {
+        if (input.getAttribute('name') === 'name') {
+          return this.listNames.includes(this.name)
+        }
 
-      return emptyImportantInputs.length === 0
+        return input.value.length === 0
+      })
+    },
+    importantInputsValid() {
+      const invalidImportantInputs = this.getInvalidImportantInputs()
+
+      return invalidImportantInputs.length === 0
     },
     showWarnOnImportantInputs() {
-      const emptyImportantInputs = this.getEmptyImportantInputs()
+      const invalidImportantInputs = this.getInvalidImportantInputs()
 
-      emptyImportantInputs.forEach(input => {
+      invalidImportantInputs.forEach(input => {
         input.classList.add('form__input_warn')
       })
     },
     hideWarnOnImportantInput(input) {
       input.classList.remove('form__input_warn')
     },
-    focusOnFirstEmptyImportantInput() {
-      const firstEmptyImportantInput = this.getEmptyImportantInputs()[0]
+    focusOnFirstInvalidImportantInput() {
+      const firstInvalidImportantInput = this.getInvalidImportantInputs()[0]
 
-      firstEmptyImportantInput.focus()
+      firstInvalidImportantInput.focus()
     },
     checkImportantInputs() {
       const importantInputs = this.getImportantInputs()
@@ -116,9 +127,9 @@ export default {
     emitSuccess() {
       if (!this.isMounted) return
 
-      if (!this.importantInputsFilled()) {
+      if (!this.importantInputsValid()) {
         this.showWarnOnImportantInputs()
-        this.focusOnFirstEmptyImportantInput()
+        this.focusOnFirstInvalidImportantInput()
         return
       }
 
