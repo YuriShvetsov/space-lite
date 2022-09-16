@@ -18,10 +18,7 @@ export default {
     state.lists.push({
       id: generateId('list'),
       name: 'Main',
-      todos: [],
-      settings: {
-        hiddenTasksVisible: false
-      }
+      todos: []
     })
   },
   OPEN_FIRST_LIST(state) {
