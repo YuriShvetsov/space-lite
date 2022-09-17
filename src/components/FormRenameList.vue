@@ -93,11 +93,11 @@ export default {
       const importantInputs = this.getImportantInputs()
 
       return importantInputs.filter(input => {
+        if (input.value.length === 0) return true
+
         if (input.getAttribute('name') === 'name') {
           return this.listNames.includes(this._name)
         }
-
-        return input.value.length === 0
       })
     },
     importantInputsValid() {

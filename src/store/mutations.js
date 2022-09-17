@@ -41,6 +41,8 @@ export default {
     state.openedListId = id
   },
   ADD_LIST(state, name) {
+    if (!name) throw new Error('The name cannot be empty')
+
     const newList = {
       id: generateId('list'),
       name,
@@ -50,6 +52,8 @@ export default {
     state.lists.push(newList)
   },
   UPDATE_LIST_NAME(state, { id, name }) {
+    if (!name) throw new Error('The name cannot be empty')
+
     const list = state.lists.find(l => l.id === id)
 
     list.name = name
@@ -87,6 +91,8 @@ export default {
     list.todos = todos.filter(todo => !todo.done)
   },
   ADD_TODO(state, { id, name, notes, priority }) {
+    if (!name) throw new Error('The name cannot be empty')
+
     const list = state.lists.find(l => l.id === id)
     const newTodo = {
       id: generateId('todo'),
@@ -130,6 +136,8 @@ export default {
     todo.done = !todo.done
   },
   UPDATE_TODO(state, { listId, todoId, name, notes, priority }) {
+    if (!name) throw new Error('The name cannot be empty')
+
     const list = state.lists.find(list => list.id === listId)
     const todo = list.todos.find(todo => todo.id === todoId)
 
