@@ -28,14 +28,6 @@ $formBorderColor: (
   'light': $transparent,
   'dark': #4b4b4b
 );
-$taskPriorityTextColor: (
-  'light': (
-    'low': lighten($green, 10%),
-    'middle': lighten($blue, 10%),
-    'high': lighten($red, 10%)
-  ),
-  'dark': #1e1e1e
-);
 
 // Backgrounds
 
@@ -55,14 +47,14 @@ $bgColor: (
 );
 $taskPriorityBgColor: (
   'light': (
-    'low': lighten($green, 48%),
-    'middle': lighten($blue, 40%),
-    'high': lighten($red, 40%)
+    'low': darken($green, 1%),
+    'middle': lighten($blue, 12%),
+    'high': lighten($red, 4%)
   ),
   'dark': (
-    'low': #41cc92,
-    'middle': #489cfe,
-    'high': $red
+    'low': darken($green, 1%),
+    'middle': lighten($blue, 12%),
+    'high': lighten($red, 4%)
   )
 );
 $taskHoverBg: (

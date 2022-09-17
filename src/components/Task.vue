@@ -1,5 +1,7 @@
 <template>
-  <li class="task" ref="task">
+  <li class="task" ref="task"
+    :class="containerClasses"
+  >
 
     <div class="task__hover-bg"></div>
 
@@ -20,21 +22,25 @@
         </label>
       </div>
 
-      <div class="task__content" v-bind:class="{ 'task__content_half-hidden': done }">
+      <div class="task__content">
         <div class="task__name">{{ name }}</div>
         <div class="task__notes">
           <pre class="task__notes-pre">{{ notes }}</pre>
         </div>
-        <div class="task__priority"
-          v-bind:class="priorityClassName"
-        >{{ priority }}</div>
       </div>
 
-      <svg class="task__hidden-status"
-        v-show="hidden"
-      >
-        <use xlink:href="#eye-slash"></use>
-      </svg>
+      <div class="task__labels">
+        <svg class="task__hidden-status"
+          v-show="hidden"
+        >
+          <use xlink:href="#eye-slash"></use>
+        </svg>
+        <svg class="task__priority"
+          :class="priorityClasses"
+        >
+          <use xlink:href="#flag"></use>
+        </svg>
+      </div>
 
       <button class="task__replace-button button button_type_icon button_type_grabber button_color_black"
         v-on:mousedown="emitStartMoving"
@@ -168,10 +174,13 @@ export default {
         priority: this.priority
       }
     },
-    priorityClassName() {
-      if (this.priority === '') return
+    priorityClasses() {
+      if (!this.priority) return ''
 
       return `task__priority_visible task__priority_${ this.priority.toLowerCase() }`
+    },
+    containerClasses() {
+      return { 'task_completed': this.done }
     },
     toggleVisibilityText() {
       return this.hidden ? 'Show' : 'Hide'
@@ -331,12 +340,12 @@ export default {
 
 .task__content {
   width: 100%;
-  margin-right: 12px;
+  margin-right: 6px;
   padding: 0 2px;
   transition: opacity .15s ease-out;
 }
 
-.task__content_half-hidden {
+.task_completed .task__content {
   opacity: 0.5;
 }
 
@@ -356,51 +365,53 @@ export default {
   word-break: break-word;
 }
 
-.task__priority {
-  display: none;
-  margin-top: 5px;
-  padding: 2px 7px;
-  font-size: 10px;
-  text-transform: uppercase;
-  border-radius: 3px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
-}
-
-.task__priority_visible {
-  display: inline-block;
-}
-
-.task__priority_low {
-  color: get-light($taskPriorityTextColor, 'low');
-  background-color: get-light($taskPriorityBgColor, 'low');
-}
-
-.task__priority_middle {
-  color: get-light($taskPriorityTextColor, 'middle');
-  background-color: get-light($taskPriorityBgColor, 'middle');
-}
-
-.task__priority_high {
-  color: get-light($taskPriorityTextColor, 'high');
-  background-color: get-light($taskPriorityBgColor, 'high');
-}
-
-.task__hidden-status {
-  display: block;
-  width: 18px;
-  height: 18px;
+.task__labels {
+  display: flex;
+  align-items: center;
   position: absolute;
   right: 18px;
   top: 50%;
   transform: translate(0, -50%);
-  opacity: .4;
-  pointer-events: none;
   transition: opacity .15s ease, transform .15s ease;
 }
 
-.task:hover .task__hidden-status {
+.task:not(.task_pointer, .task_selected):hover .task__labels {
   transform: translate(18px, -50%);
   opacity: 0;
+}
+
+.task__hidden-status {
+  display: block;
+  width: 16px;
+  height: 16px;
+
+  opacity: .4;
+  pointer-events: none;
+}
+
+.task__priority {
+  display: none;
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+
+  &_visible { display: block; }
+
+  &_low {
+    fill: get-light($taskPriorityBgColor, 'low');
+  }
+
+  &_middle {
+    fill: get-light($taskPriorityBgColor, 'middle');
+  }
+
+  &_high {
+    fill: get-light($taskPriorityBgColor, 'high');
+  }
+}
+
+.task_completed .task__priority {
+  opacity: .5;
 }
 
 .task__replace-button,
@@ -483,22 +494,6 @@ export default {
 
   .task__notes-pre {
     color: get-dark($secondaryTextColor);
-  }
-
-  .task__priority {
-    color: get-dark($taskPriorityTextColor);
-  }
-
-  .task__priority_low {
-    background-color: get-dark($taskPriorityBgColor, 'low');
-  }
-
-  .task__priority_middle {
-    background-color: get-dark($taskPriorityBgColor, 'middle');
-  }
-
-  .task__priority_high {
-    background-color: get-dark($taskPriorityBgColor, 'high');
   }
 
   .task__hidden-status {

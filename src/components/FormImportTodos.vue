@@ -52,9 +52,11 @@
                       >
                         <use xlink:href="#eye-slash"></use>
                       </svg>
-                      <div class="select-todos__item-priority"
-                           v-bind:class="priorityClassName(todo)"
-                      >{{ todo.priority }}</div>
+                      <svg class="select-todos__item-priority"
+                        v-bind:class="priorityClassName(todo)"
+                      >
+                        <use xlink:href="#flag"></use>
+                      </svg>
                     </div>
                   </div>
                   <div class="select-todos__inner-row">
@@ -166,22 +168,15 @@ export default {
       todo.isSelected = !todo.isSelected
     },
 
-    //Helpers
+    // Helpers
     clear() {
       this.importedTodos = []
       this.renderedTodos = []
     },
     priorityClassName(todo) {
-      const className = 'select-todos__item-priority'
-      let modificator = '_'
+      if (!todo.priority) return ''
 
-      if (todo.priority === '') {
-        modificator += 'hidden'
-      } else {
-        modificator += todo.priority.toLowerCase()
-      }
-
-      return (className + modificator)
+      return `select-todos__item-priority_visible select-todos__item-priority_${ todo.priority.toLowerCase() }`
     }
   },
   mounted() {
@@ -291,36 +286,35 @@ export default {
 }
 .select-todos__item-icons {
   display: flex;
+  align-items: center;
+  height: 20px;
 }
 .select-todos__item-hidden-status {
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   opacity: .4;
   pointer-events: none;
 }
 .select-todos__item-priority {
-  margin-left: 8px;
-  padding: 2px 7px;
-  font-size: 10px;
-  text-transform: uppercase;
-  border-radius: 3px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.02);
-}
-.select-todos__item-priority_hidden {
   display: none;
-}
-.select-todos__item-priority_low {
-  color: get-light($taskPriorityTextColor, 'low');
-  background-color: get-light($taskPriorityBgColor, 'low');
-}
-.select-todos__item-priority_middle {
-  color: get-light($taskPriorityTextColor, 'middle');
-  background-color: get-light($taskPriorityBgColor, 'middle');
-}
-.select-todos__item-priority_high {
-  color: get-light($taskPriorityTextColor, 'high');
-  background-color: get-light($taskPriorityBgColor, 'high');
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+
+  &_visible { display: block; }
+
+  &_low {
+    fill: get-light($taskPriorityBgColor, 'low');
+  }
+
+  &_middle {
+    fill: get-light($taskPriorityBgColor, 'middle');
+  }
+
+  &_high {
+    fill: get-light($taskPriorityBgColor, 'high');
+  }
 }
 
 // Dark theme
@@ -353,23 +347,6 @@ export default {
     fill: #fff;
     opacity: .6;
   }
-
-  .select-todos__item-priority {
-    color: get-dark($taskPriorityTextColor);
-  }
-
-  .select-todos__item-priority_low {
-    background-color: get-dark($taskPriorityBgColor, 'low');
-  }
-
-  .select-todos__item-priority_middle {
-    background-color: get-dark($taskPriorityBgColor, 'middle');
-  }
-
-  .select-todos__item-priority_high {
-    background-color: get-dark($taskPriorityBgColor, 'high');
-  }
-
 }
 
 </style>
