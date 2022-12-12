@@ -3,7 +3,7 @@
   "author": "Yuri Shvetsov",
   "private": true,
   "scripts": {
-    "start": "webpack serve --env NODE_ENV=development",
+    "dev": "webpack serve --env NODE_ENV=development",
     "build": "webpack --env NODE_ENV=production --progress",
     "watch": "webpack --env NODE_ENV=production --watch --progress",
     "clean": "rm -rf ./dist",

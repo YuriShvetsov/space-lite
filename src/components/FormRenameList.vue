@@ -24,6 +24,7 @@
             <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
               <use xlink:href="#warning"></use>
             </svg>
+            <div class="form__input-warning">{{ nameWarningText }}</div>
           </div>
         </label>
       </div>
@@ -55,7 +56,8 @@ export default {
   data() {
     return {
       _name: '',
-      isMounted: false
+      isMounted: false,
+      nameWarningText: ''
     }
   },
   computed: {
@@ -93,10 +95,19 @@ export default {
       const importantInputs = this.getImportantInputs()
 
       return importantInputs.filter(input => {
-        if (input.value.length === 0) return true
+        const inputName = input.getAttribute('name')
 
-        if (input.getAttribute('name') === 'name') {
-          return this.listNames.includes(this._name)
+        switch (inputName) {
+          case 'name':
+            if (!input.value.length) {
+              this.nameWarningText = 'Name can\'t be empty';
+              return true
+            }
+
+            if (this.listNames.includes(this._name)) {
+              this.nameWarningText = 'This name is already exists';
+              return true
+            }
         }
       })
     },
@@ -124,7 +135,10 @@ export default {
       const importantInputs = this.getImportantInputs()
 
       importantInputs.forEach(input => {
-        if (input.value.length > 0) this.hideWarnOnImportantInput(input)
+        if (input.value.length > 0) {
+          this.hideWarnOnImportantInput(input)
+          this.nameWarningText = ''
+        }
       })
     },
 

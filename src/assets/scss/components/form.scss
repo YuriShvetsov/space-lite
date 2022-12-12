@@ -98,6 +98,21 @@
   background-color: lighten($red, 41%);
 }
 
+.form__input-warning {
+  display: none;
+  font-size: 11px;
+  color: $red;
+  text-align: right;
+  position: absolute;
+  right: 6px;
+  top: -6px;
+  transform: translateY(-100%);
+}
+
+.form__input_warn ~ .form__input-warning {
+  display: block;
+}
+
 .form__control-button {
   min-width: 100px;
 }

@@ -16,6 +16,7 @@
             <input type="text"
               spellcheck="false"
               autocomplete="off"
+              name="name"
               important
               class="form__input form__input_type_text js-input"
               v-model.trim="_name"
@@ -23,6 +24,7 @@
             <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
               <use xlink:href="#warning"></use>
             </svg>
+            <div class="form__input-warning">{{ nameWarningText }}</div>
           </div>
         </label>
       </div>
@@ -98,7 +100,8 @@ export default {
             value: 'high'
           }
         ]
-      }
+      },
+      nameWarningText: ''
     }
   },
   computed: {
@@ -127,20 +130,31 @@ export default {
 
       return importantInputs
     },
-    getEmptyImportantInputs() {
+    getInvalidImportantInputs() {
       const importantInputs = this.getImportantInputs()
 
-      return importantInputs.filter(input => input.value.length === 0)
+      return importantInputs.filter(input => {
+        const inputName = input.getAttribute('name')
+        const inputValue = input.value
+
+        switch (inputName) {
+          case 'name':
+            if (!inputValue) {
+              this.nameWarningText = 'Name can\'t be empty';
+              return true
+            }
+        }
+      })
     },
     importantInputsAreFilled() {
-      const emptyImportantInputs = this.getEmptyImportantInputs()
+      const invalidImportantInputs = this.getInvalidImportantInputs()
 
-      return emptyImportantInputs.length === 0
+      return invalidImportantInputs.length === 0
     },
     showWarnOnImportantInputs() {
-      const emptyImportantInputs = this.getEmptyImportantInputs()
+      const invalidImportantInputs = this.getInvalidImportantInputs()
 
-      emptyImportantInputs.forEach(input => {
+      invalidImportantInputs.forEach(input => {
         input.classList.add('form__input_warn')
       });
     },
@@ -148,16 +162,19 @@ export default {
       input.classList.remove('form__input_warn')
     },
     focusOnFirstEmptyImportantInput() {
-      const firstEmptyImportantInput = this.getEmptyImportantInputs()[0]
+      const firstInvalidImportantInput = this.getInvalidImportantInputs()[0]
 
-      firstEmptyImportantInput.focus()
+      firstInvalidImportantInput.focus()
     },
     checkImportantInputs() {
       const importantInputs = this.getImportantInputs()
 
       importantInputs.forEach(input => {
-        if (input.value.length > 0) this.hideWarnOnImportantInput(input)
-      });
+        if (input.value.length > 0) {
+          this.hideWarnOnImportantInput(input)
+          this.nameWarningText = ''
+        }
+      })
     },
 
     emitSuccess() {

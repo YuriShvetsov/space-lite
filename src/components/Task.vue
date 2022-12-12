@@ -353,7 +353,7 @@ export default {
   font-size: 14px;
   font-weight: bold;
   color: get-light($baseTextColor);
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .task__notes-pre {
