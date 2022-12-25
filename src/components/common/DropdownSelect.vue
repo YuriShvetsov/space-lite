@@ -265,7 +265,7 @@ export default {
 
   background-color: #f0f2f5;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   outline: none;
   user-select: none;
   cursor: pointer;
@@ -295,7 +295,7 @@ export default {
 
   background-color: get-light($bgColor, 'main');
   border: 1px solid #f0f2f5;
-  border-radius: 3px;
+  border-radius: 4px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
 
   overflow-y: auto;
@@ -331,7 +331,7 @@ export default {
   color: #464646;
 
   background-color: $transparent;
-  border-radius: 3px;
+  border-radius: 4px;
   outline: none;
 
   user-select: none;

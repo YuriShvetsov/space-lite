@@ -81,8 +81,8 @@
                 v-on:click="emitDuplicate(), closeMenu()"
               >
                 <span>Duplicate</span>
-                <svg class="button__icon button__icon_stroke">
-                  <use xlink:href="#copy"></use>
+                <svg class="button__icon button__icon_fill">
+                  <use xlink:href="#duplicate"></use>
                 </svg>
               </button>
             </li>
@@ -350,7 +350,7 @@ export default {
 }
 
 .task__name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   color: get-light($baseTextColor);
   word-break: break-word;
@@ -359,7 +359,7 @@ export default {
 .task__notes-pre {
   margin: 0;
   font-family: $fontMain;
-  font-size: 13px;
+  font-size: 12px;
   color: get-light($secondaryTextColor);
   white-space: pre-wrap;
   word-break: break-word;
@@ -391,8 +391,8 @@ export default {
 
 .task__priority {
   display: none;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   margin-left: 8px;
 
   &_visible { display: block; }
@@ -418,7 +418,8 @@ export default {
 .task__menu-button {
   opacity: 0;
   pointer-events: none;
-  transition: opacity .15s ease-in-out;
+  transform: translateX(-20px);
+  transition: opacity .15s ease-in-out, transform .15s ease-in-out;
 }
 
 .task__menu {
@@ -429,6 +430,7 @@ export default {
 .task:hover .task__menu-button {
   pointer-events: all;
   opacity: 1;
+  transform: translateX(0);
 }
 
 .task_selected:hover .task__replace-button,

@@ -69,7 +69,7 @@ export default {
 }
 
 .radio:not(:last-child) {
-  margin-right: 14px;
+  margin-right: 18px;
 }
 
 .radio__marker {
@@ -109,7 +109,7 @@ export default {
 
 .radio__text {
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 // Dark theme

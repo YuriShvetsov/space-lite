@@ -2,13 +2,13 @@
   <div class="lists-view">
 
     <div class="lists-view__header">
-      <div class="lists-view__title title title_size_s">My lists</div>
-      <button class="lists-view__add-button button button_type_text-icon"
+      <div class="lists-view__title title title_size_m">My lists</div>
+      <button class="lists-view__add-button button button_type_icon-text"
         v-on:click="openModalAddList"
       >
-        <span>ADD LIST</span>
+        <span>List</span>
         <svg class="button__icon button__icon_stroke">
-          <use xlink:href="#add-list"></use>
+          <use xlink:href="#plus"></use>
         </svg>
       </button>
     </div>
@@ -282,12 +282,12 @@ export default {
   justify-content: stretch;
 
   height: 100%;
-  padding-top: 51px;
+  padding-top: 52px;
 
   position: relative;
 }
 .lists-view__header {
-  height: 51px;
+  height: 52px;
   width: 100%;
   display: flex;
   justify-content: space-between;

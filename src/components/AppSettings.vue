@@ -2,7 +2,7 @@
   <div :class="containerClassNames">
 
     <div class="app-settings__header">
-      <div class="app-settings__title title title_size_s title_color_primary">Settings</div>
+      <div class="app-settings__title title title_size_m title_color_primary">Settings</div>
       <button class="app-settings__close-button button button_type_icon button_color_black"
         v-on:click="emitClose"
       >
@@ -109,7 +109,7 @@ export default {
 }
 
 .app-settings__text {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .app-settings__close-button {
@@ -150,7 +150,7 @@ export default {
 
 .app-settings__section-title {
   margin-bottom: 8px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
 }
 

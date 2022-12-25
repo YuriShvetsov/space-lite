@@ -2,7 +2,7 @@
   display: block;
   padding: 7px 12px;
   font-family: 'Open Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   line-height: 1;
   color: $primaryColor;
@@ -10,7 +10,7 @@
   white-space: nowrap;
   background-color: $transparent;
   border: 1px solid $transparent;
-  border-radius: 3px;
+  border-radius: 4px;
   outline: none;
   appearance: none;
   cursor: pointer;
@@ -46,16 +46,29 @@
 }
 
 .button_type_text-icon {
-  padding-right: 33px;
+  padding-right: 32px;
   position: relative;
 }
 
 .button_type_text-icon .button__icon {
-  width: 15px;
-  height: 15px;
-  right: 13px;
+  width: 17px;
+  height: 17px;
+  right: 10px;
   top: 50%;
-  transform: translate(0, calc(-50% - 1px));
+  transform: translateY(-50%);
+}
+
+.button_type_icon-text {
+  padding-left: 30px;
+  position: relative;
+}
+
+.button_type_icon-text .button__icon {
+  width: 17px;
+  height: 17px;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .button_type_icon {
@@ -148,11 +161,11 @@
 
 .button_fill_violet {
   color: #fff;
-  background-color: $primaryColor;
+  background-color: lighten($primaryColor, 4%);
 
   &:hover,
   &:focus {
-    background-color: darken($primaryColor, 3%);
+    background-color: $primaryColor;
   }
 
   .button__icon_fill {
@@ -287,11 +300,11 @@
     }
 
     .button__icon_fill {
-      fill: $primaryColor;
+      fill: get-dark($baseTextColor);
     }
   
     .button__icon_stroke {
-      stroke: $primaryColor;
+      stroke: get-dark($baseTextColor);
     }
   }
 

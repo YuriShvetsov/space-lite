@@ -58,13 +58,13 @@ $taskPriorityBgColor: (
   )
 );
 $taskHoverBg: (
-  'light': linear-gradient(to bottom, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.025)),
+  'light': linear-gradient(to bottom, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.04)),
   'dark': linear-gradient(to bottom, rgba(30, 30, 30, 0.5), rgba(30, 30, 30, 0.55))
 );
 
 /* Fonts */
 
-$fontLogo: 'Galada', sans-serif;
+$fontLogo: 'Leckerli One', sans-serif;
 $fontMain: 'Open Sans', sans-serif;
 
 /* Layers */

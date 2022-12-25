@@ -4,8 +4,8 @@
       download="todos.json"
     >
     <span>Download</span>
-    <svg class="button__icon button__icon_fill">
-      <use xlink:href="#export"></use>
+    <svg class="button__icon button__icon_stroke">
+      <use xlink:href="#download"></use>
     </svg>
   </a>
 </template>

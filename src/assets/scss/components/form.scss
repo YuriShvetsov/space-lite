@@ -39,7 +39,7 @@
 }
 
 .form__label-name {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 2;
   white-space: nowrap;
   color: get-light($secondaryTextColor);
@@ -51,9 +51,9 @@
 
 .form__input {
   font-family: 'Open Sans';
-  font-size: 13px;
+  font-size: 12px;
   color: #464646;
-  line-height: 20px;
+  line-height: 1em;
   border: none;
   outline: none;
 }
@@ -61,9 +61,9 @@
 .form__input_type_text {
   display: block;
   width: 100%;
-  padding: 6px;
+  padding: 8px;
   background-color: #f0f2f5;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .form__input_type_file {
@@ -74,9 +74,10 @@
 .form__textarea {
   display: block;
   width: 100%;
-  padding: 6px;
+  padding: 8px;
+  line-height: 18px;
   background-color: #f0f2f5;
-  border-radius: 3px;
+  border-radius: 4px;
   resize: none;
 }
 
@@ -99,14 +100,21 @@
 }
 
 .form__input-warning {
-  display: none;
   font-size: 11px;
   color: $red;
   text-align: right;
   position: absolute;
   right: 6px;
   top: -6px;
-  transform: translateY(-100%);
+  transform: translate(10px, -100%);
+  user-select: none;
+  opacity: 0;
+  transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+
+  &_active {
+    transform: translate(0, -100%);
+    opacity: 1;
+  }
 }
 
 .form__input_warn ~ .form__input-warning {
@@ -114,7 +122,7 @@
 }
 
 .form__control-button {
-  min-width: 100px;
+  min-width: 90px;
 }
 
 .form__control-button:not(:last-of-type) {

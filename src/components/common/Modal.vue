@@ -181,7 +181,7 @@ export default {
 @keyframes fade-scale-in {
   0% {
     opacity: 0;
-    transform: translate(-50%, 0) scale(0.95);
+    transform: translate(-50%, 0) scale(1.1);
   }
   100% {
     opacity: 1;
@@ -196,7 +196,7 @@ export default {
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, 0) scale(0.95);
+    transform: translate(-50%, 0) scale(0.9);
   }
 }
 

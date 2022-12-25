@@ -9,10 +9,9 @@
         <div class="app__current-date">{{ currentDateString }}</div>
         
         <div class="app__logo">
-          <div class="app__logo-text">Todolist</div>
-          <svg class="app__logo-icon">
-            <use xlink:href="#quill"></use>
-          </svg>
+          <div class="app__logo-text">Todos</div>
+          <img class="app__logo-icon app__logo-icon_default" src="../assets/images/stylus.png" alt="stylus">
+          <img class="app__logo-icon app__logo-icon_white" src="../assets/images/stylus-white.png" alt="stylus">
         </div>
 
         <div class="app__settings">
@@ -187,7 +186,7 @@ export default {
 .app__header {
   display: flex;
   justify-content: flex-end;
-  height: 88px;
+  height: 80px;
   padding: 16px;
   position: relative;
   background-color: get-light($bgColor, 'main');
@@ -200,7 +199,7 @@ export default {
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   color: lighten(get-light($secondaryTextColor), 12%);
   white-space: nowrap;
@@ -209,7 +208,7 @@ export default {
 .app__logo {
   display: block;
   margin: 0 auto;
-  padding: 15px 38px 5px 5px;
+  padding: 10px 48px 5px 5px;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -220,23 +219,31 @@ export default {
 
 .app__logo-text {
   font-family: $fontLogo;
-  font-size: 36px;
+  font-size: 30px;
+  font-weight: bold;
   line-height: 1;
-  color: $primaryColor;
+  color: darken( $primaryColor, 40%);
   text-transform: capitalize;
-  text-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+  text-shadow: 0 3px 3px rgba(0, 0, 0, .05);
 }
 
 .app__logo-icon {
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 42px;
+  height: 42px;
   position: absolute;
   right: 5px;
-  top: calc(50% - 3px);
-  transform: translate(0, -50%);
-  fill: $primaryColor;
-  filter: drop-shadow(0 3px 3px rgba(0,0,0,.15));
+  top: 50%;
+  transform: translate(0, calc(-50% - 2px));
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .05));
+
+  &_default {
+    opacity: 1;
+  }
+
+  &_white {
+    opacity: 0;
+  }
 }
 
 .app__settings {
@@ -246,7 +253,7 @@ export default {
 
 .app__body {
   display: flex;
-  height: calc(100% - 88px);
+  height: calc(100% - 80px);
   padding-bottom: 16px;
   background-color: get-light($bgColor, 'main');
   border-radius: 0 0 8px 8px;
@@ -294,8 +301,12 @@ export default {
     color: get-dark($baseTextColor);
   }
 
-  .app__logo-icon {
-    fill: get-dark($baseTextColor);
+  .app__logo-icon_default {
+    opacity: 0;
+  }
+
+  .app__logo-icon_white {
+    opacity: 1;
   }
 
   .app__body {
@@ -321,6 +332,14 @@ export default {
   .app__header,
   .app__body {
     border-radius: 0;
+  }
+
+  .app__section_side {
+    max-width: 300px;
+  }
+
+  .app__section_main {
+    max-width: calc(100% - 300px);
   }
 }
 </style>

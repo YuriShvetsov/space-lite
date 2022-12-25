@@ -24,7 +24,7 @@ export default {
   props: {
     name: {
       type: String,
-      default: 'UPLOAD FILE'
+      default: 'Upload'
     },
     classNames: {
       type: Object,

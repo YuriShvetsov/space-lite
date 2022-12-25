@@ -89,8 +89,9 @@ export default {
 @import '../assets/scss/env';
 
 .list-item {
-  position: relative;
   width: 100%;
+  margin: 2px 0;
+  position: relative;
   list-style: none;
 }
 

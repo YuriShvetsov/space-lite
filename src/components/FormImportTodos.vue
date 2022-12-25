@@ -3,7 +3,7 @@
     v-on:submit.prevent
   >
     <div class="form__header">
-      <div class="form__title title title_size_s title_color_primary">Import of tasks</div>
+      <div class="form__title title title_size_m title_color_primary">Import of tasks</div>
     </div>
 
     <div class="form__body">
@@ -77,11 +77,11 @@
           class="form__control-button button button_fill_violet"
           v-bind:disabled="!selectedTodos.length"
           v-on:click="emitSuccess"
-        >OK</button>
+        >Import</button>
         <button
           class="form__control-button button"
           v-on:click="emitCancel"
-        >CANCEL</button>
+        >Cancel</button>
       </div>
     </div>
 

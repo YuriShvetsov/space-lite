@@ -77,12 +77,12 @@ export default {
   width: 100%;
   padding: 7px 12px;
 
-  font-size: 12px;
+  font-size: 11px;
   text-transform: uppercase;
 
   background-color: #f0f2f5;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   outline: none;
   appearance: none;
 

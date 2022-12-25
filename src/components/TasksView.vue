@@ -3,86 +3,82 @@
 
     <div class="tasks-view__header">
 
-      <div class="tasks-view__title title title_size_s">{{ name }}</div>
+      <div class="tasks-view__title title title_size_m" :title="name">{{ name }}</div>
 
-      <popup ref="menu">
+      <div class="tasks-view__controls">
 
-        <template v-slot:opener>
-          <button class="popup__opener button button_type_icon button_color_black"
-            v-on:click="toggleMenu"
-          >
-            <span>Menu</span>
-            <svg class="button__icon button__icon_stroke">
-              <use xlink:href="#menu"></use>
-            </svg>
-          </button>
-        </template>
-
-        <template v-slot:content>
-          <ul class="popup__action-list">
-            <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_color_black"
-                v-on:click="openModalRenameList(), closeMenu()"
-              >
-                <span>Rename</span>
-                <svg class="button__icon button__icon_fill">
-                  <use xlink:href="#edit"></use>
-                </svg>
-              </button>
-            </li>
-            <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_color_black"
-                v-on:click="openModalImportTodos(), closeMenu()"
-              >
-                <span>Import</span>
-                <svg class="button__icon button__icon_fill">
-                  <use xlink:href="#import"></use>
-                </svg>
-              </button>
-            </li>
-            <li class="popup__action">
-              <button class="popup__action-button button button_type_popup button_color_red"
-                v-on:click="openModalDeleteList(), closeMenu()"
-              >
-                <span>Delete</span>
-                <svg class="button__icon button__icon_stroke">
-                  <use xlink:href="#delete"></use>
-                </svg>
-              </button>
-            </li>
-          </ul>
-        </template>
-
-      </popup>
-
-    </div>
-
-    <div class="tasks-view__controls">
-
-      <div class="tasks-view__controls-col">
-        <button class="button button_type_text-icon"
-          v-on:click="openModalAddTask"
-        >
-          <span>ADD TASK</span>
-          <svg class="button__icon button__icon_stroke">
-            <use xlink:href="#add-task"></use>
-          </svg>
-        </button>
-      </div>
-
-      <div class="tasks-view__controls-col">
-        <button class="button button_type_text-icon button_color_red"
+        <button class="button button_type_icon-text button_color_red"
           v-bind:class="{ 'button_type_disabled': !haveCompletedTasks }"
           v-bind:disabled="!haveCompletedTasks"
           v-on:click="removeCompletedTodos(id)"
         >
-          <span>CLEAR LIST</span>
+          <span>Clear</span>
           <svg class="button__icon button__icon_stroke">
-            <use xlink:href="#minus"></use>
+            <use xlink:href="#backspace"></use>
           </svg>
         </button>
+
+        <button class="button button_type_icon-text button_fill_violet"
+          v-on:click="openModalAddTask"
+        >
+          <span>Task</span>
+          <svg class="button__icon button__icon_stroke">
+            <use xlink:href="#plus"></use>
+          </svg>
+        </button>
+
+        <popup ref="menu">
+
+          <template v-slot:opener>
+            <button class="popup__opener button button_type_icon button_color_black"
+              v-on:click="toggleMenu"
+            >
+              <span>Menu</span>
+              <svg class="button__icon button__icon_stroke">
+                <use xlink:href="#menu"></use>
+              </svg>
+            </button>
+          </template>
+
+          <template v-slot:content>
+            <ul class="popup__action-list">
+              <li class="popup__action">
+                <button class="popup__action-button button button_type_popup button_color_black"
+                  v-on:click="openModalRenameList(), closeMenu()"
+                >
+                  <span>Rename</span>
+                  <svg class="button__icon button__icon_fill">
+                    <use xlink:href="#edit"></use>
+                  </svg>
+                </button>
+              </li>
+              <li class="popup__action">
+                <button class="popup__action-button button button_type_popup button_color_black"
+                  v-on:click="openModalImportTodos(), closeMenu()"
+                >
+                  <span>Import</span>
+                  <svg class="button__icon button__icon_stroke">
+                    <use xlink:href="#upload"></use>
+                  </svg>
+                </button>
+              </li>
+              <li class="popup__action">
+                <button class="popup__action-button button button_type_popup button_color_red"
+                  v-on:click="openModalDeleteList(), closeMenu()"
+                >
+                  <span>Delete</span>
+                  <svg class="button__icon button__icon_stroke">
+                    <use xlink:href="#delete"></use>
+                  </svg>
+                </button>
+              </li>
+            </ul>
+          </template>
+
+        </popup>
+
       </div>
-      
+
     </div>
 
     <div class="tasks-view__body scrollable-wrapper">
@@ -113,6 +109,18 @@
           ></task>
         </transition-group>
       </ul>
+
+      <div class="tasks-view__no-tasks" v-show="isEmpty">
+        <div class="icon">
+          <svg class="icon__document">
+            <use xlink:href="#document-large"></use>
+          </svg>
+          <svg class="icon__pencil">
+            <use xlink:href="#pencil-large"></use>
+          </svg>
+        </div>
+        <span class="text">No tasks yet :(</span>
+      </div>
 
     </div>
 
@@ -211,6 +219,9 @@ export default {
       }
 
       return this.openedList.todos.filter(todo => !todo.hidden)
+    },
+    isEmpty() {
+      return !this.todos.length
     },
     dataIsValid() {
       return (
@@ -594,7 +605,7 @@ export default {
 .tasks-view__controls {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
+  gap: 10px;
 }
 
 .tasks-view__body {
@@ -605,6 +616,48 @@ export default {
   height: 100%;
 
   position: relative;
+}
+
+.tasks-view__no-tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: .4;
+  user-select: none;
+
+  & .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-right: 10px;
+    position: relative;
+    fill: rgba(255, 255, 255, 0);
+    stroke:  #000;
+
+    &__document {
+      width: 64px;
+      height: 64px;
+    }
+
+    &__pencil {
+      width: 32px;
+      height: 32px;
+      position: absolute;
+      top: calc(50% + 18px);
+      right: 6px;
+      transform: rotate(-45deg) translate(100%, -50%);
+    }
+  }
+
+  & .text {
+    font-size: 12px;
+    font-weight: bold;
+  }
 }
 
 .scroll-trigger {
@@ -640,5 +693,9 @@ export default {
 }
 .flip-list-move {
   transition: transform .3s ease;
+}
+
+.app_theme_dark .tasks-view__no-tasks .icon {
+  stroke: #fff;
 }
 </style>

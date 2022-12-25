@@ -58,8 +58,8 @@ export default {
       this.value = translateHtmlToStr(event.target.innerHTML)
     },
     setHeight() {
-      const lineHeight = 20
-      const padding = 6
+      const lineHeight = 18
+      const padding = 8
       const minHeight = this.rows * lineHeight + padding * 2
 
       this.$refs.input.style.minHeight = minHeight + 'px'

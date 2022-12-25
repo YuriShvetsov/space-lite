@@ -4,7 +4,7 @@
   >
     
     <div class="form__header">
-      <div class="form__title title title_size_s title_color_primary">Renaming of list</div>
+      <div class="form__title title title_size_m title_color_primary">Renaming of list</div>
     </div>
 
     <div class="form__body">
@@ -24,7 +24,7 @@
             <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
               <use xlink:href="#warning"></use>
             </svg>
-            <div class="form__input-warning">{{ nameWarningText }}</div>
+            <div class="form__input-warning" :class="nameWarningClasses">{{ nameWarningText }}</div>
           </div>
         </label>
       </div>
@@ -32,10 +32,10 @@
       <div class="form__row form__row_x_center">
         <button class="form__control-button button button_fill_violet"
           v-on:click="emitSuccess"
-        >OK</button>
+        >Save</button>
         <button class="form__control-button button"
           v-on:click="emitCancel"
-        >CANCEL</button>
+        >Cancel</button>
       </div>
 
     </div>
@@ -70,6 +70,11 @@ export default {
 
       return {
         name: this._name
+      }
+    },
+    nameWarningClasses() {
+      return {
+        'form__input-warning_active': !!this.nameWarningText
       }
     }
   },
