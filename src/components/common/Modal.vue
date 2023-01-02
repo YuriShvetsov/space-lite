@@ -80,8 +80,8 @@ export default {
   width: calc(100% - 64px);
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 80px;
+  transform: translate(-50%, 0);
 
   display: flex;
   flex-direction: column;
@@ -198,22 +198,22 @@ export default {
 @keyframes fade-scale-in {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, 0) scale(1.1);
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, 0) scale(1);
   }
 }
 
 @keyframes fade-scale-out {
   0% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, 0) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, 0) scale(0.9);
   }
 }
 
