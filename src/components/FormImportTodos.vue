@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { catchFocus } from '../js/focusForm'
+import { catchFocus, execWhenShiftEnter } from '../js/focusForm'
 import { isValidImportedTodos } from '../js/isValidImportedTodos'
 
 export default {
@@ -182,7 +182,12 @@ export default {
     }
   },
   mounted() {
+    this.removeShiftEnter = execWhenShiftEnter(this.emitSuccess)
+
     catchFocus(this.$el)
+  },
+  beforeUnmount() {
+    this.removeShiftEnter()
   }
 }
 </script>

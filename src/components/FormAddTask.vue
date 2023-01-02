@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { focusFirstElement, catchFocus } from '../js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from '../js/focusForm'
 
 export default {
   name: 'form-add-task',
@@ -202,8 +202,13 @@ export default {
   },
   mounted() {
     this.isMounted = true
+    this.removeShiftEnter = execWhenShiftEnter(this.emitSuccess)
+
     focusFirstElement(this.$el)
     catchFocus(this.$el)
+  },
+  beforeUnmount() {
+    this.removeShiftEnter()
   }
 }
 </script>

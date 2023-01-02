@@ -25,3 +25,18 @@ export function catchFocus(form) {
     }
   })
 }
+
+export function execWhenShiftEnter(callback) {
+  const handler = (e) => {
+    if (e.shiftKey && e.key === 'Enter') {
+      e.preventDefault()
+      callback()
+    }
+  }
+
+  document.addEventListener('keydown', handler)
+
+  return function() {
+    document.removeEventListener('keydown', handler)
+  }
+}

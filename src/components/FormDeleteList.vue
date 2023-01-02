@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { catchFocus } from '../js/focusForm'
+import { catchFocus, execWhenShiftEnter } from '../js/focusForm'
 
 export default {
   name: 'form-delete-list',
@@ -43,8 +43,13 @@ export default {
     }
   },
   mounted() {
+    this.removeShiftEnter = execWhenShiftEnter(this.emitSuccess)
+
     this.focusOnCancelButton()
     catchFocus(this.$el)
+  },
+  beforeUnmount() {
+    this.removeShiftEnter()
   }
 }
 </script>
