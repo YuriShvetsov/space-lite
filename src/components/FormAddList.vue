@@ -4,13 +4,22 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_m title_color_primary">Creating of list</div>
+      <div class="form__title title title_size_l">Create a new list</div>
+      <button class="form__cancel-button button button_type_icon button_color_black"
+        v-on:click="emitCancel"
+      >
+        <span>Cancel</span>
+        <svg class="button__icon button__icon_fill">
+          <use xlink:href="#close"></use>
+        </svg>
+      </button>
     </div>
 
     <div class="form__body">
-      <div class="form__row form__row_padding_bottom">
+
+      <div class="form__row form__row_input">
         <label class="form__label">
-          <span class="form__label-name">Name*</span>
+          <span class="form__label-name">Name <span class="form__required-sign">*</span></span>
           <div class="form__input-wrapper">
             <input type="text"
               spellcheck="false"
@@ -28,16 +37,11 @@
         </label>
       </div>
 
-      <div class="form__row form__row_x_center">
-        <input class="form__control-button button button_fill_violet"
+      <div class="form__row form__row_controls">
+        <input class="form__control-button form__control-button_scale_max button button_fill_violet"
           type="submit"
           v-on:click.prevent="emitSuccess"
-          value="Create"
-        >
-        <input class="form__control-button button"
-          type="button"
-          v-on:click="emitCancel"
-          value="Cancel"
+          value="Create list"
         >
       </div>
 

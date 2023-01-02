@@ -136,7 +136,7 @@
       </modal>
 
       <modal ref="modalRenameList"
-        v-bind:classNames="['modal_size_sm']"
+        v-bind:classNames="['modal_size_xsm']"
       >
         <form-rename-list
           v-bind:name="name"
@@ -606,6 +606,7 @@ export default {
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  margin-left: 6px;
 }
 
 .tasks-view__body {

@@ -2,7 +2,7 @@
   <div :class="containerClassNames">
 
     <div class="app-settings__header">
-      <div class="app-settings__title title title_size_m title_color_primary">Settings</div>
+      <div class="app-settings__title title title_size_l">Settings</div>
       <button class="app-settings__close-button button button_type_icon button_color_black"
         v-on:click="emitClose"
       >
@@ -89,7 +89,7 @@ export default {
 
 .app-settings__header {
   width: 100%;
-  padding: 18px 30px;
+  padding: 16px 20px;
   position: relative;
   background-color: get-light($bgColor, 'main');
   border-radius: 8px 8px 0 0;
@@ -100,7 +100,7 @@ export default {
 }
 
 .app-settings__body {
-  padding: 8px 30px;
+  padding: 4px 20px;
   background-color: get-light($bgColor, 'main');
   border-right: 1px solid transparent;
   border-bottom: 1px solid transparent;
@@ -110,6 +110,7 @@ export default {
 
 .app-settings__text {
   font-size: 12px;
+  line-height: 1em;
 }
 
 .app-settings__close-button {
@@ -150,7 +151,7 @@ export default {
 
 .app-settings__section-title {
   margin-bottom: 8px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
 }
 

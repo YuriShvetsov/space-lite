@@ -4,14 +4,14 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_m title_color_primary">Editing of task</div>
+      <div class="form__title title title_size_l">Edit this task</div>
     </div>
 
     <div class="form__body">
 
-      <div class="form__row">
+      <div class="form__row form__row_input">
         <label class="form__label">
-          <span class="form__label-name">Name*</span>
+          <span class="form__label-name">Name <span class="form__required-sign">*</span></span>
           <div class="form__input-wrapper">
             <input type="text"
               spellcheck="false"
@@ -29,18 +29,18 @@
         </label>
       </div>
 
-      <div class="form__row">
+      <div class="form__row form__row_input">
         <label class="form__label">
           <span class="form__label-name">Notes</span>
           <TextBox
-            v-bind:rows="5"
+            v-bind:rows="7"
             v-bind:spellcheck="false"
             v-model="_notes"
           ></TextBox>
         </label>
       </div>
 
-      <div class="form__row form__row_padding_bottom">
+      <div class="form__row form__row_input">
         <label class="form__label">
           <span class="form__label-name">Priority</span>
         </label>
@@ -50,15 +50,14 @@
         />
       </div>
 
-      <div class="form__row form__row_x_center">
-        <button
-          class="form__control-button button button_fill_violet"
-          v-on:click="emitSuccess"
-        >Save</button>
-        <button
-          class="form__control-button button"
+      <div class="form__row form__row_controls">
+        <button class="form__control-button form__control-button_scale_2-5 button"
           v-on:click="emitCancel"
         >Cancel</button>
+        <button
+          class="form__control-button form__control-button_scale_3-5 button button_fill_violet"
+          v-on:click="emitSuccess"
+        >Save changes</button>
       </div>
 
     </div>

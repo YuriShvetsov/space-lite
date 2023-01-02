@@ -40,6 +40,14 @@
   color: get-light($secondaryTextColor);
 }
 
+.text_color_red {
+  color: $redLight;
+}
+
+.text_weight_bold {
+  font-weight: 700;
+}
+
 // Dark theme
 
 .app_theme_dark {

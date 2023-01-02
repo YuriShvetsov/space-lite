@@ -80,8 +80,8 @@ export default {
   width: calc(100% - 64px);
   position: absolute;
   left: 50%;
-  top: 0;
-  transform: translate(-50%, 0);
+  top: 50%;
+  transform: translate(-50%, -50%);
 
   display: flex;
   flex-direction: column;
@@ -94,27 +94,26 @@ export default {
 
 .modal_size_default .modal__container {
   width: unset;
-  top: 65px;
+}
+
+.modal_size_xsm .modal__container {
+  max-width: 320px;
 }
 
 .modal_size_sm .modal__container {
   max-width: 420px;
-  top: 65px;
 }
 
 .modal_size_md .modal__container {
   max-width: 640px;
-  top: 65px;
 }
 
 .modal_size_lg .modal__container {
   max-width: 720px;
-  top: 65px;
 }
 
-.modal_size_lgx .modal__container {
+.modal_size_xlg .modal__container {
   max-width: 992px;
-  top: 65px;
 }
 
 .modal_size_full .modal__container {  
@@ -160,6 +159,24 @@ export default {
   animation-fill-mode: both;
 }
 
+// Dark theme
+
+.app_theme_dark {
+
+  .modal__overlay {
+    background-color: rgba(31, 31, 31, .30);
+  }
+
+  .modal__overlay:hover {
+    background-color: rgba(31, 31, 31, .45);
+  }
+
+  .modal__container {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  }
+
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -181,41 +198,23 @@ export default {
 @keyframes fade-scale-in {
   0% {
     opacity: 0;
-    transform: translate(-50%, 0) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, 0) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
 @keyframes fade-scale-out {
   0% {
     opacity: 1;
-    transform: translate(-50%, 0) scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, 0) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.9);
   }
-}
-
-// Dark theme
-
-.app_theme_dark {
-
-  .modal__overlay {
-    background-color: rgba(31, 31, 31, .30);
-  }
-
-  .modal__overlay:hover {
-    background-color: rgba(31, 31, 31, .45);
-  }
-
-  .modal__container {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-  }
-
 }
 
 </style>

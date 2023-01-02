@@ -1,6 +1,7 @@
 export function focusFirstElement(form) {
-  const elements = form.elements
-  const firstElement = elements[0]
+  const elements = Array.from(form.elements);
+  const importantElements = elements.filter(item => item.hasAttribute('important'));
+  const firstElement = importantElements.length ? importantElements[0] : elements[0];
 
   firstElement.focus()
 }

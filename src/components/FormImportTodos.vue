@@ -3,23 +3,29 @@
     v-on:submit.prevent
   >
     <div class="form__header">
-      <div class="form__title title title_size_m title_color_primary">Import of tasks</div>
+      <div class="form__title title title_size_l">Import tasks</div>
+      <div class="form__desc text text_color_gray">Upload the file of tasks in <span class="text_weight_bold">json</span> format and select the required items</div>
+      <button class="form__cancel-button button button_type_icon button_color_black"
+        v-on:click="emitCancel"
+      >
+        <span>Cancel</span>
+        <svg class="button__icon button__icon_fill">
+          <use xlink:href="#close"></use>
+        </svg>
+      </button>
     </div>
 
     <div class="form__body">
-      
-      <div class="form__row">
-        <label class="form__label">
-          <span class="form__label-name">Choose json file</span>
-          <upload-file
-            class="form-import__upload"
-            v-on:change="getData"
-            ref="uploadFile"
-          ></upload-file>
-        </label>
+
+      <div class="form__row form__row_input">
+        <upload-file
+          class="form-import__upload form__control-button"
+          ref="uploadFile"
+          v-on:change="getData"
+        ></upload-file>
       </div>
 
-      <div class="form__row form__row_padding_bottom">
+      <div class="form__row form__row_input">
 
         <div class="select-todos">
           <div class="select-todos__list"
@@ -72,16 +78,12 @@
 
       </div>
 
-      <div class="form__row form__row_x_center">
+      <div class="form-import__controls form__row form__row_controls">
         <button
-          class="form__control-button button button_fill_violet"
+          class="form__control-button form__control-button_scale_min button button_fill_violet"
           v-bind:disabled="!selectedTodos.length"
           v-on:click="emitSuccess"
         >Import</button>
-        <button
-          class="form__control-button button"
-          v-on:click="emitCancel"
-        >Cancel</button>
       </div>
     </div>
 
@@ -89,7 +91,7 @@
 </template>
 
 <script>
-import { focusFirstElement, catchFocus } from '../js/focusForm'
+import { catchFocus } from '../js/focusForm'
 import { isValidImportedTodos } from '../js/isValidImportedTodos'
 
 export default {
@@ -180,7 +182,6 @@ export default {
     }
   },
   mounted() {
-    focusFirstElement(this.$el)
     catchFocus(this.$el)
   }
 }
@@ -197,9 +198,12 @@ export default {
   flex-direction: column;
   align-items: stretch;
 }
+
 .form-import__upload {
-  margin: 0 8px;
+  margin: 0 auto;
+  padding: 0;
 }
+
 .select-todos {
   height: 100%;
   min-height: 200px;
@@ -210,20 +214,24 @@ export default {
   border-radius: 6px;
   overflow-y: auto;
 }
+
 .select-todos__list {
   padding: 12px;
   border-radius: 6px;
 }
+
 .select-todos__list-name {
   padding: 8px 12px;
   font-size: 16px;
   font-weight: bold;
 }
+
 .select-todos__items-list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 .select-todos__item {
   padding: 8px 12px;
   display: flex;
@@ -233,29 +241,37 @@ export default {
   border: 1px solid #eee;
   border-radius: 6px;
 }
+
 .select-todos__inner-row {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  align-items: stretch;
 }
+
 .select-todos__inner-row_between {
   justify-content: space-between;
 }
+
 .select-todos__items-list > .select-todos__item:not(:last-child) {
   margin-bottom: 6px;
 }
+
 .select-todos__item-select {
   margin-right: 12px;
 }
+
 .select-todos__checker {
   display: block;
   width: 18px;
   height: 18px;
   cursor: pointer;
 }
+
 .select-todos__checkbox {
   display: none;
 }
+
 .select-todos__check-icon {
   display: block;
   width: 18px;
@@ -263,32 +279,38 @@ export default {
   fill: none;
   stroke: $gray;
 }
+
 .select-todos__checkbox:checked + .select-todos__check-icon {
   stroke: $green;
 }
+
 .select-todos__item-content {
   width: 100%;
 }
+
 .select-todos__item-name {
   width: 100%;
   margin-right: 12px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   word-break: break-word;
 }
+
 .select-todos__item-notes {
   margin: 0;
   font-family: $fontMain;
-  font-size: 13px;
+  font-size: 12px;
   color: #888;
   word-break: break-word;
   white-space: pre-wrap;
 }
+
 .select-todos__item-icons {
   display: flex;
   align-items: center;
   height: 20px;
 }
+
 .select-todos__item-hidden-status {
   display: block;
   width: 16px;
@@ -296,6 +318,7 @@ export default {
   opacity: .4;
   pointer-events: none;
 }
+
 .select-todos__item-priority {
   display: none;
   width: 16px;
