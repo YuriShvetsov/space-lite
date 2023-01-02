@@ -79,10 +79,13 @@ export default {
   },
   computed: {
     ...mapGetters(['lists', 'curThemeIsDark', 'curThemeIsAuto', 'systemAppearanceIsDark']),
+    isThemeDark() {
+      return this.curThemeIsDark || (this.curThemeIsAuto && this.systemAppearanceIsDark)
+    },
     appClassNames() {
       return {
         'app': true,
-        'app_theme_dark': this.curThemeIsDark || (this.curThemeIsAuto && this.systemAppearanceIsDark)
+        'app_theme_dark': this.isThemeDark
       }
     },
     currentDateString() {
@@ -127,6 +130,11 @@ export default {
       return `${ weekday }, ${ day }${ dayEnding } ${ month }`
     }
   },
+  watch: {
+    isThemeDark() {
+      this.updateBodyStyles()
+    },
+  },
   methods: {
     ...mapActions(['migrate']),
     updateCurrentDate() {
@@ -140,6 +148,9 @@ export default {
         this.scheduleUpdateCurrentDate()
       }, timeout)
     },
+    updateBodyStyles() {
+      document.body.style.backgroundColor = this.isThemeDark ? '#333' : '#fff'
+    },
     openModalAppSettings() {
       this.$refs.modalAppSettings.open()
     },
@@ -151,6 +162,9 @@ export default {
     // this.migrate()
     this.updateCurrentDate()
     this.scheduleUpdateCurrentDate();
+  },
+  mounted() {
+    this.updateBodyStyles()
   }
 }
 </script>
