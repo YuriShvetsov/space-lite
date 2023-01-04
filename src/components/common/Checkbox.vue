@@ -39,7 +39,7 @@
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/scss/env';
+@import 'assets/scss/env';
 
 .checkbox {
   display: block;

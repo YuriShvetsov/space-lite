@@ -28,6 +28,7 @@
               important
               class="form__input form__input_type_text js-input"
               v-model.trim="_name"
+              @keydown.enter.prevent
             >
             <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
               <use xlink:href="#warning"></use>
@@ -50,7 +51,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from '../js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from 'js/focusForm'
 
 export default {
   name: 'form-rename-list',

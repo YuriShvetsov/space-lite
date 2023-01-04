@@ -52,8 +52,7 @@ export default {
 
       if (toWinLowerBound < minDistance) {
         this.$refs.content.classList.add('popup__content_pos_bottom')
-      }
-      else if (toWinLowerBound >= maxDistance) {
+      } else if (toWinLowerBound >= maxDistance) {
         this.$refs.content.classList.remove('popup__content_pos_bottom')
       }
     }

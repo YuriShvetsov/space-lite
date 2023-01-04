@@ -80,7 +80,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import 'assets/scss/env';
 
 .app-settings {
   width: 100%;

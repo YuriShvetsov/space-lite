@@ -4,8 +4,8 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_l title_color_red">Delete this list</div>
-      <div class="form__desc text text_color_gray">Do you really want to delete this list along with all tasks?</div>
+      <div class="form__title title title_size_l title_color_red title_align_center">Are you sure you want to delete this list?</div>
+      <div class="form__desc text text_color_gray text_align_center">You can't undo this action</div>
     </div>
 
     <div class="form__body">
@@ -14,10 +14,10 @@
         <button class="form__control-button form__control-button_scale_max button button_color_red"
           ref="cancelButton"
           v-on:click="emitCancel"
-        >No</button>
+        >Cancel</button>
         <button class="form__control-button form__control-button_scale_max button button_fill_red"
           v-on:click="emitSuccess"
-        >Yes</button>
+        >Delete list</button>
       </div>
       
     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { catchFocus, execWhenShiftEnter } from '../js/focusForm'
+import { catchFocus, execWhenShiftEnter } from 'js/focusForm'
 
 export default {
   name: 'form-delete-list',

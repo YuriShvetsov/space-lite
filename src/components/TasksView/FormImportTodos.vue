@@ -91,8 +91,8 @@
 </template>
 
 <script>
-import { catchFocus, execWhenShiftEnter } from '../js/focusForm'
-import { isValidImportedTodos } from '../js/isValidImportedTodos'
+import { catchFocus, execWhenShiftEnter } from 'js/focusForm'
+import { isValidImportedTodos } from 'js/isValidImportedTodos'
 
 export default {
   name: 'form-import-todos',
@@ -193,7 +193,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import 'assets/scss/env';
 
 .form-import {
   width: 100%;

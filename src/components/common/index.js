@@ -5,7 +5,7 @@ import LineSelect from './LineSelect.vue'
 import Modal from './Modal.vue'
 import Popup from './Popup.vue'
 import TextBox from './TextBox.vue'
-import UploadFile from '../UploadFile.vue'
+import UploadFile from './UploadFile.vue'
 
 export default {
   Checkbox,

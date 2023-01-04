@@ -4,15 +4,7 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_l">Create a new list</div>
-      <button class="form__cancel-button button button_type_icon button_color_black"
-        v-on:click="emitCancel"
-      >
-        <span>Cancel</span>
-        <svg class="button__icon button__icon_fill">
-          <use xlink:href="#close"></use>
-        </svg>
-      </button>
+      <div class="form__title title title_size_l">Edit this task</div>
     </div>
 
     <div class="form__body">
@@ -27,7 +19,8 @@
               name="name"
               important
               class="form__input form__input_type_text js-input"
-              v-model.trim="name"
+              v-model.trim="_name"
+              @keydown.enter.prevent
             >
             <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
               <use xlink:href="#warning"></use>
@@ -37,12 +30,35 @@
         </label>
       </div>
 
+      <div class="form__row form__row_input">
+        <label class="form__label">
+          <span class="form__label-name">Notes</span>
+          <TextBox
+            v-bind:rows="7"
+            v-bind:spellcheck="false"
+            v-model="_notes"
+          ></TextBox>
+        </label>
+      </div>
+
+      <div class="form__row form__row_input">
+        <label class="form__label">
+          <span class="form__label-name">Priority</span>
+        </label>
+        <LineSelect
+          v-model="_priority"
+          v-bind="prioritySelectSettings"
+        />
+      </div>
+
       <div class="form__row form__row_controls">
-        <input class="form__control-button form__control-button_scale_max button button_fill_violet"
-          type="submit"
-          v-on:click.prevent="emitSuccess"
-          value="Create list"
-        >
+        <button class="form__control-button form__control-button_scale_2-5 button"
+          v-on:click="emitCancel"
+        >Cancel</button>
+        <button
+          class="form__control-button form__control-button_scale_3-5 button button_fill_violet"
+          v-on:click="emitSuccess"
+        >Save changes</button>
       </div>
 
     </div>
@@ -51,27 +67,49 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from '../js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from 'js/focusForm'
 
 export default {
-  name: 'form-add-list',
+  name: 'form-edit-task',
   emits: ['success', 'cancel'],
+  props: {
+    id: String,
+    done: Boolean,
+    name: String,
+    notes: String,
+    priority: String
+  },
   data() {
     return {
-      name: '',
+      _name: '',
+      _notes: '',
+      _priority: '',
       isMounted: false,
+      prioritySelectSettings: {
+        options: [
+          {
+            name: 'Low',
+            value: 'low'
+          },
+          {
+            name: 'Middle',
+            value: 'middle'
+          },
+          {
+            name: 'High',
+            value: 'high'
+          }
+        ]
+      },
       nameWarningText: ''
     }
   },
   computed: {
-    ...mapGetters(['lists']),
-    listNames() {
-      return this.lists.map(list => list.name)
-    },
     inputData() {
       return {
-        name: this.name
+        name: this._name,
+        notes: this._notes,
+        priority: this._priority
       }
     },
     nameWarningClasses() {
@@ -93,30 +131,27 @@ export default {
     },
     getImportantInputs() {
       const inputs = this.getInputs()
+      const importantInputs = Array.from(inputs).filter(input => input.hasAttribute('important'))
 
-      return Array.from(inputs).filter(input => input.hasAttribute('important'))
+      return importantInputs
     },
     getInvalidImportantInputs() {
       const importantInputs = this.getImportantInputs()
 
       return importantInputs.filter(input => {
         const inputName = input.getAttribute('name')
+        const inputValue = input.value
 
         switch (inputName) {
           case 'name':
-            if (!input.value.length) {
+            if (!inputValue) {
               this.nameWarningText = 'Name can\'t be empty';
-              return true
-            }
-
-            if (this.listNames.includes(this.name)) {
-              this.nameWarningText = 'This name is already exists';
               return true
             }
         }
       })
     },
-    importantInputsValid() {
+    importantInputsAreFilled() {
       const invalidImportantInputs = this.getInvalidImportantInputs()
 
       return invalidImportantInputs.length === 0
@@ -126,12 +161,12 @@ export default {
 
       invalidImportantInputs.forEach(input => {
         input.classList.add('form__input_warn')
-      })
+      });
     },
     hideWarnOnImportantInput(input) {
       input.classList.remove('form__input_warn')
     },
-    focusOnFirstInvalidImportantInput() {
+    focusOnFirstEmptyImportantInput() {
       const firstInvalidImportantInput = this.getInvalidImportantInputs()[0]
 
       firstInvalidImportantInput.focus()
@@ -148,23 +183,26 @@ export default {
     },
 
     emitSuccess() {
-      if (!this.isMounted) return
-
-      if (!this.importantInputsValid()) {
+      if (!this.importantInputsAreFilled()) {
         this.showWarnOnImportantInputs()
-        this.focusOnFirstInvalidImportantInput()
+        this.focusOnFirstEmptyImportantInput()
         return
       }
 
-      this.$emit('success', this.name)
-      this.isMounted = false
+      this.$emit('success', {
+        name: this._name,
+        notes: this._notes,
+        priority: this._priority
+      })
     },
     emitCancel() {
-      if (!this.isMounted) return
-
       this.$emit('cancel')
-      this.isMounted = false
     }
+  },
+  created() {
+    this._name = this.name
+    this._notes = this.notes
+    this._priority = this.priority
   },
   mounted() {
     this.isMounted = true

@@ -20,7 +20,7 @@
               important
               class="form__input form__input_type_text js-input"
               v-model.trim="name"
-              v-on:keydown="onKeydownInput"
+              @keydown.enter.prevent
             >
             <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
               <use xlink:href="#warning"></use>
@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from '../js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from 'js/focusForm'
 
 export default {
   name: 'form-add-task',
@@ -172,9 +172,6 @@ export default {
           this.nameWarningText = ''
         }
       })
-    },
-    onKeydownInput(e) {
-      if (e.key === 'Enter') e.preventDefault()
     },
 
     emitSuccess() {

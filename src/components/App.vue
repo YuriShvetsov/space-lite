@@ -60,9 +60,9 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import Sprite from './Sprite.vue'
-import AppSettings from './AppSettings.vue'
-import ListsView from './ListsView.vue'
-import TasksView from './TasksView.vue'
+import AppSettings from './AppSettings/AppSettings.vue'
+import ListsView from './ListsView/ListsView.vue'
+import TasksView from './TasksView/TasksView.vue'
 
 export default {
   name: 'app',
@@ -170,7 +170,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import 'assets/scss/env';
 
 .app {
   font-family: $fontMain;

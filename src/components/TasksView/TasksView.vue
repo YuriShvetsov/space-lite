@@ -177,7 +177,7 @@ import FormRenameList from './FormRenameList.vue'
 import FormImportTodos from './FormImportTodos.vue'
 import FormDeleteList from './FormDeleteList.vue'
 
-import Scrollable from '../js/scrollable'
+import Scrollable from 'js/scrollable'
 
 export default {
   name: 'tasks-view',
@@ -579,7 +579,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import 'assets/scss/env';
 
 .tasks-view {
   display: flex;

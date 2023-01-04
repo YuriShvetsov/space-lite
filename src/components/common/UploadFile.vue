@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../assets/scss/env';
+@import 'assets/scss/env';
 
 .upload-file {
   display: inline-block;

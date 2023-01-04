@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
-import App from './components/App.vue'
-import commonComponents from './components/common'
+import App from 'components/App.vue'
+import commonComponents from 'components/common'
 import store from './store'
 
 const app = createApp(App)
