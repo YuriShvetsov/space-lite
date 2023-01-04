@@ -1,0 +1,77 @@
+.tooltip {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  position: relative;
+  
+  &__icon {
+    width: 18px;
+    height: 18px;
+    fill: rgba(255, 255, 255, 0);
+    stroke: $gray;
+    cursor: pointer;
+    transition: stroke .15s ease-in-out;
+  }
+
+  &__icon:hover {
+    stroke: $primaryColor;
+  }
+
+  &__content {
+    padding: 12px;
+    position: absolute;
+    left: 50%;
+    top: -12px;
+    transform: translate(-50%, calc(-100% + 4px));
+    font-size: 12px;
+    background-color: #fff;
+    border: 1px solid #fafafc;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+    transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 9px;
+      height: 9px;
+      position: absolute;
+      left: 50%;
+      bottom: -5px;
+      transform: translate(-50%, 0) rotate(-45deg);
+      background-color: #fff;
+      border-bottom: 1px solid #fafafc;
+      border-left: 1px solid #fafafc;
+      box-shadow: -4px 4px 4px rgba(0, 0, 0, .05);
+      z-index: -1;
+    }
+  }
+
+  &__icon:hover ~ &__content {
+    transform: translate(-50%, -100%);
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+// Dark theme
+
+.app_theme_dark {
+
+  .tooltip__content {
+    background-color: get-dark($bgColor, 'main');
+    border: 1px solid get-dark($sectionBorderColor);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+
+    &::before {
+      background-color: get-dark($bgColor, 'main');
+      border-bottom: 1px solid get-dark($sectionBorderColor);
+      border-left: 1px solid get-dark($sectionBorderColor);
+      box-shadow: -4px 4px 4px rgba(0, 0, 0, .05);
+    }
+  }
+
+}

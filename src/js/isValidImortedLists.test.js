@@ -1,4 +1,4 @@
-import { isValidImportedTodos } from './isValidImportedTodos'
+import { isValidImportedLists } from './isValidImportedLists'
 
 const testValues = [
   {
@@ -103,14 +103,14 @@ const testValues = [
 
 ]
 
-describe('Test of isValidImportedTodos function:', () => {
+describe('Test of isValidImportedLists function:', () => {
 
   for (let index in testValues) {
     test(`Test ${ +index + 1 }: ${testValues[index].input}`, () => {
       const input = testValues[index].input
       const output = testValues[index].output
 
-      expect(isValidImportedTodos(input)).toBe(output)
+      expect(isValidImportedLists(input)).toBe(output)
     })
   }
 

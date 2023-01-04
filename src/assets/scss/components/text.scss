@@ -40,6 +40,10 @@
   font-size: 12px;
 }
 
+.text_color_primary {
+  color: $primaryColor;
+}
+
 .text_color_gray {
   color: get-light($secondaryTextColor);
 }
@@ -56,6 +60,10 @@
   text-align: center;
 }
 
+.text_decor_underline {
+  text-decoration: underline;
+}
+
 // Dark theme
 
 .app_theme_dark {
@@ -68,6 +76,10 @@
 
   .title_color_red {
     color: $red;
+  }
+
+  .text_color_primary {
+    color: get-dark($baseTextColor);
   }
 
 }

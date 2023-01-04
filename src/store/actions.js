@@ -90,6 +90,10 @@ export default {
     commit('IMPORT_TODOS', payload)
     dispatch('writeToLS')
   },
+  autoImportTodos({ commit, dispatch }, todos) {
+    commit('AUTO_IMPORT_TODOS', todos)
+    dispatch('writeToLS')
+  },
   toggleTodo({ commit, dispatch }, payload) {
     commit('TOGGLE_TODO', payload)
     dispatch('writeToLS')

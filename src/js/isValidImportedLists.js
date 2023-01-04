@@ -1,4 +1,4 @@
-export const isValidImportedTodos = data => {
+export const isValidImportedLists = data => {
   if (!Array.isArray(data)) return false
 
   for (let item of data) {

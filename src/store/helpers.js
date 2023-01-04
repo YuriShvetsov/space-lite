@@ -1,4 +1,4 @@
-export const generateId = prefix => prefix + '_' + Date.now().toString(36)
+export const generateId = prefix => prefix + '-' + Date.now().toString(36)
 
 export const getTargetFromProxy = proxy => {
   const constructor = Object.getPrototypeOf(proxy).constructor()

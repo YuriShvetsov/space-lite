@@ -112,7 +112,7 @@ export default {
 
     for (let i = 0; i < todos.length; i++) {
       timestamp += 1
-      ids.push('todo_' + timestamp.toString(36))
+      ids.push(`todo-${ timestamp.toString(36) }`)
     }
 
     // Adding imported todos to current list
@@ -127,6 +127,36 @@ export default {
         notes: todo.notes,
         priority: todo.priority
       })
+    })
+  },
+  AUTO_IMPORT_TODOS(state, todos) {
+    let listNumberId = Date.now()
+    let todoNumberId = Date.now()
+    
+    todos.forEach(todo => {
+      const list = state.lists.find(list => list.name === todo.listName)
+      const newTodo = {
+        id: `todo-${ todoNumberId.toString(36) }`,
+        done: false,
+        hidden:todo.hidden,
+        name: todo.name,
+        notes: todo.notes,
+        priority: todo.priority
+      }
+
+      if (list) {
+        list.todos.push(newTodo)
+      } else {
+        state.lists.push({
+          id: `list-${ todoNumberId.toString(36) }`,
+          name: todo.listName,
+          todos: [ newTodo ]
+        })
+
+        listNumberId += 1
+      }
+
+      todoNumberId += 1
     })
   },
   TOGGLE_TODO(state, { listId, todoId }) {

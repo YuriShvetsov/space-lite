@@ -4,7 +4,7 @@
   >
     <div class="form__header">
       <div class="form__title title title_size_l">Import tasks</div>
-      <div class="form__desc text text_color_gray">Upload the file of tasks in <span class="text_weight_bold">json</span> format and select the required items</div>
+      <div class="form__desc text text_color_gray">Upload the file of tasks in <span class="text_weight_bold text_color_primary">json</span> format and select the required items</div>
       <button class="form__cancel-button button button_type_icon button_color_black"
         v-on:click="emitCancel"
       >
@@ -17,19 +17,35 @@
 
     <div class="form__body">
 
-      <div class="form__row form__row_input">
+      <div class="form-import__multiple-row form__row form__row_input">
         <upload-file
           class="form-import__upload form__control-button"
           ref="uploadFile"
           v-on:change="getData"
         ></upload-file>
+        <div class="form-import__auto-mode auto-mode">
+          <checkbox
+            class="auto-mode__checkbox"
+            :checked="isAutoMode"
+            @change="onToggleAutoMode"
+          ></checkbox>
+          <span class="auto-mode__text text text_color_gray">Insert to associated lists</span>
+          <!-- <div class="auto-mode__tooltip">
+            <svg class="auto-mode__tooltip-icon">
+              <use xlink:href="#information-circle"></use>
+            </svg>
+            <div class="auto-mode__tooltip-content text text_color_gray">
+              <span>The items will be added to the lists in which they are located</span>
+            </div>
+          </div> -->
+        </div>
       </div>
 
       <div class="form__row form__row_input">
 
         <div class="select-todos">
           <div class="select-todos__list"
-            v-for="list of importedTodos"
+            v-for="list of renderedLists"
             v-bind:key="list.id"
           >
 
@@ -42,7 +58,8 @@
                 <div class="select-todos__item-select">
                   <label class="select-todos__checker">
                     <input type="checkbox" class="select-todos__checkbox"
-                      v-on:change="onToggleTodo($event, todo.id)"
+                      v-bind:checked="todo.isSelected"
+                      v-on:change="onToggleTodo($event, list.id, todo.id)"
                     >
                     <svg class="select-todos__check-icon">
                       <use xlink:href="#check"></use>
@@ -81,8 +98,8 @@
       <div class="form-import__controls form__row form__row_controls">
         <button
           class="form__control-button form__control-button_scale_min button button_fill_violet"
-          v-bind:disabled="!selectedTodos.length"
-          v-on:click="emitSuccess"
+          :disabled="isSubmitButtonDisabled"
+          @click="emitSuccess"
         >Import</button>
       </div>
     </div>
@@ -92,7 +109,8 @@
 
 <script>
 import { catchFocus, execWhenShiftEnter } from 'js/focusForm'
-import { isValidImportedTodos } from 'js/isValidImportedTodos'
+import { isValidImportedLists } from 'js/isValidImportedLists'
+import { flat } from 'js/helpers'
 
 export default {
   name: 'form-import-todos',
@@ -102,20 +120,29 @@ export default {
   },
   data() {
     return {
-      importedTodos: [],
-      renderedTodos: []
+      renderedLists: [],
+      isAutoMode: false
     }
   },
   computed: {
     selectedTodos() {
-      return this.renderedTodos.filter(todo => todo.isSelected).map(todo => {
-        return {
-          name: todo.name,
-          notes: todo.notes,
-          priority: todo.priority,
-          hidden: todo.hidden
-        }
-      })
+      const allTodos = flat(this.renderedLists.map(list => {
+        return list.todos.map(todo => {
+          return {
+            isSelected: todo.isSelected,
+            listName: todo.listName,
+            name: todo.name,
+            notes: todo.notes,
+            priority: todo.priority,
+            hidden: todo.hidden
+          }
+        })
+      }))
+
+      return allTodos.filter(todo => todo.isSelected)
+    },
+    isSubmitButtonDisabled() {
+      return !this.selectedTodos.length
     }
   },
   methods: {
@@ -132,48 +159,55 @@ export default {
 
       new Response(file).json().then(json => {
         // Show message about invalid data
-        if (!isValidImportedTodos(json)) {
+        if (!isValidImportedLists(json)) {
           this.$refs.uploadFile.showErrorMsg('Invalid data')
           this.clear()
           throw new Error('Invalid data')
         }
 
         // Set...
-        this.importedTodos = json.filter(list => list.todos.length > 0)
-        this.renderedTodos = this.importedTodos.reduce((acc, list) => {
-          acc = acc.concat(...list.todos.map(todo => {
-            return {
-              id: todo.id,
-              isSelected: false,
-              name: todo.name,
-              notes: todo.notes,
-              priority: todo.priority,
-              hidden: todo.hidden
-            }
-          }))
-          return acc
-        }, [])
+        this.renderedLists = json.map(list => {
+          return {
+            ...list,
+            todos: list.todos.map(todo => {
+              return {
+                ...todo,
+                listName: list.name,
+                isSelected: this.isAutoMode
+              }
+            })
+          }
+        })
       }, err => {
         console.warn(err)
       })
     },
 
     emitSuccess() {
-      this.$emit('success', this.selectedTodos)
+      this.$emit('success', this.selectedTodos, this.isAutoMode)
     },
     emitCancel() {
       this.$emit('cancel')
     },
-    onToggleTodo(event, todoId) {
-      const todo = this.renderedTodos.find(todo => todo.id === todoId)
+    onToggleTodo(event, listId, todoId) {
+      const list = this.renderedLists.find(list => list.id === listId)
+      const todo = list.todos.find(todo => todo.id === todoId)
 
       todo.isSelected = !todo.isSelected
+    },
+    onToggleAutoMode() {
+      this.isAutoMode = !this.isAutoMode
+
+      if (this.isAutoMode) {
+        this.renderedLists.forEach(list => list.todos.forEach(todo => todo.isSelected = true))
+      } else {
+        this.renderedLists.forEach(list => list.todos.forEach(todo => todo.isSelected = false))
+      }
     },
 
     // Helpers
     clear() {
-      this.importedTodos = []
-      this.renderedTodos = []
+      this.renderedLists = []
     },
     priorityClassName(todo) {
       if (!todo.priority) return ''
@@ -202,11 +236,81 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+
+  &__multiple-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__upload {
+    margin: 0;
+    padding: 0;
+  }
 }
 
-.form-import__upload {
-  margin: 0 auto;
-  padding: 0;
+.auto-mode {
+  display: flex;
+  align-items: center;
+
+  &__text {
+    margin-left: 8px;
+    font-size: 12px;
+    line-height: 1em;
+  }
+
+  // &__tooltip {
+  //   display: flex;
+  //   align-items: center;
+  //   margin-left: 4px;
+  //   position: relative;
+  // }
+
+  // &__tooltip-icon {
+  //   width: 18px;
+  //   height: 18px;
+  //   fill: rgba(255, 255, 255, 0);
+  //   stroke: $gray;
+  // }
+
+  // &__tooltip-content {
+  //   width: 220px;
+  //   padding: 12px;
+  //   position: absolute;
+  //   left: 50%;
+  //   top: -10px;
+  //   transform: translate(-50%, calc(-100% + 4px));
+  //   font-size: 12px;
+  //   background-color: #fff;
+  //   border: 1px solid #fafafc;
+  //   border-radius: 5px;
+  //   box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
+  //   opacity: 0;
+  //   user-select: none;
+  //   pointer-events: none;
+  //   transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+
+  //   &::before {
+  //     content: '';
+  //     display: block;
+  //     width: 10px;
+  //     height: 10px;
+  //     position: absolute;
+  //     left: 50%;
+  //     bottom: -5px;
+  //     transform: translate(-50%, 0) rotate(-45deg);
+  //     background-color: #fff;
+  //     border-bottom: 1px solid #fafafc;
+  //     border-left: 1px solid #fafafc;
+  //     box-shadow: -4px 4px 4px rgba(0, 0, 0, .05);
+  //     z-index: -1;
+  //   }
+  // }
+
+  // &__tooltip-icon:hover ~ &__tooltip-content {
+  //   transform: translate(-50%, -100%);
+  //   opacity: 1;
+  //   pointer-events: all;
+  // }
 }
 
 .select-todos {
@@ -227,7 +331,7 @@ export default {
 
 .select-todos__list-name {
   padding: 8px 12px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 

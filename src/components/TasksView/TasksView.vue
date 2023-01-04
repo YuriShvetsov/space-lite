@@ -247,6 +247,7 @@ export default {
       'removeList',
       'addTodo',
       'importTodos',
+      'autoImportTodos',
       'toggleTodo',
       'updateTodo',
       'removeTodo',
@@ -341,8 +342,13 @@ export default {
       })
       this.closeModalRenameList()
     },
-    onSuccessFormImportTodos(todos) {
-      this.importTodos({ listId: this.id, todos })
+    onSuccessFormImportTodos(todos, isAuto) {
+      if (isAuto) {
+        this.autoImportTodos(todos)
+      } else {
+        this.importTodos({ listId: this.id, todos })
+      }
+
       this.closeModalImportTodos()
     },
     onSuccessFormDeleteList() {

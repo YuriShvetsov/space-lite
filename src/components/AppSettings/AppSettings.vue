@@ -36,8 +36,16 @@
         </div>
 
         <div class="app-settings__section-row app-settings__download-todos">
-          <div class="app-settings__text app-settings__text_left-pos text">Save your tasks in a json file</div>
+          <div class="app-settings__text app-settings__text_left-pos text">Save your tasks in a json file:</div>
           <download-tasks-button />
+          <div class="app-settings__tooltip tooltip">
+            <svg class="tooltip__icon">
+              <use xlink:href="#information-circle"></use>
+            </svg>
+            <div class="tooltip__content text text_color_gray" style="width: 300px;">
+              <span>You can import your tasks in another browser or if you have cleared the local storage</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -186,6 +194,10 @@ export default {
 .app-settings__download-todos {
   display: flex;
   align-items: center;
+}
+
+.app-settings__tooltip {
+  margin-left: 6px;
 }
 
 // Dark theme
