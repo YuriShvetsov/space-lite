@@ -30,21 +30,20 @@
 
         <div class="app-settings__section-title">Data</div>
 
-        <div class="app-settings__section-row app-settings__hidden-todos">
-          <hidden-todos-switcher />
-          <div class="app-settings__text app-settings__text_right-pos text">Show hidden tasks</div>
+        <div class="app-settings__section-row">
+          <div class="app-settings__section-subrow">
+            <hidden-todos-switcher />
+            <div class="app-settings__text app-settings__text_right-pos text">Show hidden tasks</div>
+          </div>
         </div>
 
-        <div class="app-settings__section-row app-settings__download-todos">
-          <div class="app-settings__text app-settings__text_left-pos text">Save your tasks in a json file:</div>
-          <download-tasks-button />
-          <div class="app-settings__tooltip tooltip">
-            <svg class="tooltip__icon">
-              <use xlink:href="#information-circle"></use>
-            </svg>
-            <div class="tooltip__content text text_color_gray" style="width: 300px;">
-              <span>You can import your tasks in another browser or if you have cleared the local storage</span>
-            </div>
+        <div class="app-settings__section-row">
+          <div class="app-settings__section-subrow">
+            <div class="app-settings__text app-settings__text_left-pos text">Save your tasks in a json file:</div>
+            <download-tasks-button />
+          </div>
+          <div class="app-settings__section-subrow">
+            <div class="app-settings__subtext">Import your tasks in another browser or if you have cleared the local storage</div>
           </div>
         </div>
 
@@ -121,6 +120,13 @@ export default {
   line-height: 1em;
 }
 
+.app-settings__subtext {
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1em;
+  color: get-light($secondaryTextColor);
+}
+
 .app-settings__close-button {
   position: absolute;
   right: 0;
@@ -164,7 +170,12 @@ export default {
 }
 
 .app-settings__section-row:not(:last-child) {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.app-settings__section-subrow {
+  display: flex;
+  align-items: center;
 }
 
 .app-settings__text_left-pos {
@@ -184,16 +195,6 @@ export default {
 
 .app-settings__theme-switcher {
   padding: 0 10px;
-}
-
-.app-settings__hidden-todos {
-  display: flex;
-  align-items: center;
-}
-
-.app-settings__download-todos {
-  display: flex;
-  align-items: center;
 }
 
 .app-settings__tooltip {
@@ -232,6 +233,13 @@ export default {
 
   .app-settings__section-title {
     color: #fff;
+  }
+
+  .app-settings__subtext {
+    margin-top: 4px;
+    font-size: 10px;
+    line-height: 1em;
+    color: get-dark($secondaryTextColor);
   }
 
 }

@@ -18,27 +18,36 @@
     <div class="form__body">
 
       <div class="form-import__multiple-row form__row form__row_input">
+
         <upload-file
           class="form-import__upload form__control-button"
           ref="uploadFile"
           v-on:change="getData"
         ></upload-file>
-        <div class="form-import__auto-mode auto-mode">
+
+        <div class="form-import__col form-import__selector">
+          <div
+            class="form-import__select"
+            :class="selectorClasses"
+            @click="onToggleSelector"
+            tabindex="1"
+          >
+            <svg class="form-import__select-icon">
+              <use xlink:href="#check-bold"></use>
+            </svg>
+          </div>
+          <span class="form-import__input-text text text_color_gray">Select all</span>
+        </div>
+
+        <div class="form-import__col">
           <checkbox
             class="auto-mode__checkbox"
             :checked="isAutoMode"
             @change="onToggleAutoMode"
           ></checkbox>
-          <span class="auto-mode__text text text_color_gray">Insert to associated lists</span>
-          <!-- <div class="auto-mode__tooltip">
-            <svg class="auto-mode__tooltip-icon">
-              <use xlink:href="#information-circle"></use>
-            </svg>
-            <div class="auto-mode__tooltip-content text text_color_gray">
-              <span>The items will be added to the lists in which they are located</span>
-            </div>
-          </div> -->
+          <span class="form-import__input-text text text_color_gray">Insert to associated lists</span>
         </div>
+
       </div>
 
       <div class="form__row form__row_input">
@@ -121,12 +130,12 @@ export default {
   data() {
     return {
       renderedLists: [],
-      isAutoMode: false
+      isAutoMode: false,
     }
   },
   computed: {
-    selectedTodos() {
-      const allTodos = flat(this.renderedLists.map(list => {
+    allTodos() {
+      return flat(this.renderedLists.map(list => {
         return list.todos.map(todo => {
           return {
             isSelected: todo.isSelected,
@@ -138,11 +147,27 @@ export default {
           }
         })
       }))
+    },
+    selectedTodos() {
+      return this.allTodos.filter(todo => todo.isSelected)
+    },
+    isSelectedAll() {
+      if (this.allTodos.length === 0) return false
 
-      return allTodos.filter(todo => todo.isSelected)
+      return this.allTodos.length === this.selectedTodos.length
+    },
+    isSelectedPartly() {
+      return !this.isSelectedAll && this.selectedTodos.length > 0
     },
     isSubmitButtonDisabled() {
       return !this.selectedTodos.length
+    },
+    selectorClasses() {
+      return {
+        'form-import__select_all': this.isSelectedAll,
+        'form-import__select_partly': this.isSelectedPartly,
+        'form-import__select_disabled': this.allTodos.length === 0
+      }
     }
   },
   methods: {
@@ -173,7 +198,7 @@ export default {
               return {
                 ...todo,
                 listName: list.name,
-                isSelected: this.isAutoMode
+                isSelected: false
               }
             })
           }
@@ -195,14 +220,15 @@ export default {
 
       todo.isSelected = !todo.isSelected
     },
+    onToggleSelector() {
+      if (this.isSelectedPartly || this.isSelectedAll) {
+        this.renderedLists.forEach(list => list.todos.forEach(todo => todo.isSelected = false))
+      } else {
+        this.renderedLists.forEach(list => list.todos.forEach(todo => todo.isSelected = true))
+      }
+    },
     onToggleAutoMode() {
       this.isAutoMode = !this.isAutoMode
-
-      if (this.isAutoMode) {
-        this.renderedLists.forEach(list => list.todos.forEach(todo => todo.isSelected = true))
-      } else {
-        this.renderedLists.forEach(list => list.todos.forEach(todo => todo.isSelected = false))
-      }
     },
 
     // Helpers
@@ -248,69 +274,100 @@ export default {
   }
 }
 
-.auto-mode {
+.form-import__selector {
+  margin-left: auto;
+}
+
+.form-import__select {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+    border: 1px solid $gray;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .08);
+    transition: background-color .15s ease, border .15s ease, box-shadow .15s ease;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 2px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    background-color: #fff;
+    border-radius: 1px;
+    opacity: 0;
+    transition: transform .15s ease, opacity .15s ease;
+  }
+
+  &-icon {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    stroke: #fff;
+    opacity: 0;
+    transition: transform .15s ease, opacity .15s ease;
+  }
+
+  &_all::before,
+  &_partly::before {
+    background-color: $primaryColor;
+    border: 1px solid $primaryColor;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15);
+  }
+
+  &_all .form-import__select-icon {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  &_partly::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  &_disabled {
+    opacity: .5;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  &_disabled ~ .form-import__input-text {
+    opacity: .5;
+  }
+}
+
+.form-import__col {
   display: flex;
   align-items: center;
 
-  &__text {
-    margin-left: 8px;
-    font-size: 12px;
-    line-height: 1em;
+  &:not(:last-of-type) {
+    margin-right: 20px;
   }
+}
 
-  // &__tooltip {
-  //   display: flex;
-  //   align-items: center;
-  //   margin-left: 4px;
-  //   position: relative;
-  // }
-
-  // &__tooltip-icon {
-  //   width: 18px;
-  //   height: 18px;
-  //   fill: rgba(255, 255, 255, 0);
-  //   stroke: $gray;
-  // }
-
-  // &__tooltip-content {
-  //   width: 220px;
-  //   padding: 12px;
-  //   position: absolute;
-  //   left: 50%;
-  //   top: -10px;
-  //   transform: translate(-50%, calc(-100% + 4px));
-  //   font-size: 12px;
-  //   background-color: #fff;
-  //   border: 1px solid #fafafc;
-  //   border-radius: 5px;
-  //   box-shadow: 0 5px 10px rgba(0, 0, 0, .15);
-  //   opacity: 0;
-  //   user-select: none;
-  //   pointer-events: none;
-  //   transition: opacity .15s ease-in-out, transform .15s ease-in-out;
-
-  //   &::before {
-  //     content: '';
-  //     display: block;
-  //     width: 10px;
-  //     height: 10px;
-  //     position: absolute;
-  //     left: 50%;
-  //     bottom: -5px;
-  //     transform: translate(-50%, 0) rotate(-45deg);
-  //     background-color: #fff;
-  //     border-bottom: 1px solid #fafafc;
-  //     border-left: 1px solid #fafafc;
-  //     box-shadow: -4px 4px 4px rgba(0, 0, 0, .05);
-  //     z-index: -1;
-  //   }
-  // }
-
-  // &__tooltip-icon:hover ~ &__tooltip-content {
-  //   transform: translate(-50%, -100%);
-  //   opacity: 1;
-  //   pointer-events: all;
-  // }
+.form-import__input-text {
+  margin-left: 8px;
+  font-size: 12px;
+  line-height: 1em;
 }
 
 .select-todos {
@@ -452,6 +509,18 @@ export default {
 // Dark theme
 
 .app_theme_dark {
+
+  .form-import__select::before {
+    background-color: get-dark($bgColor, 'main');
+    border: 1px solid get-dark($formBorderColor);
+  }
+
+  .form-import__select_all::before,
+  .form-import__select_partly::before {
+    background-color: $primaryColor;
+    border: 1px solid $primaryColor;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .15);
+  }
 
   .select-todos {
     background-color: get-dark($bgColor, 'main');
