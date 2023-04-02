@@ -1,14 +1,16 @@
-## Todolist-vue
-Learning project on JavaScript and Vue.js
+## Todos
+Pet project. Simple task manager.
 
 Author: Yuri Shvetsov
 
-Date: 01/05/21
+Created date: 01/05/21
 
 ------------
-Objectives:
-- learning of **Vue** framework of version 3
-- at using Vuex
+Technologies
+
+- Vite
+- Vue 3
+- Vuex
 
 ------------
 
@@ -16,14 +18,12 @@ Objectives:
 # Install dependencies:
 npm i
 
-# Server with hot reload at http://localhost:9000/
-npm start
+# Server with hot reload at http://localhost:5173/
+npm run dev
 
 # Output will be at dist directory
 npm run build
+
+# Preview project
+npm run preview
 ```
-
-------------
-Screenshot:
-
-![Image alt](https://github.com/YuriShvetsov/todolist-vue/blob/master/screenshots/main.png)

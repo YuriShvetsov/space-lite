@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { translateHtmlToStr, translateStrToHtml } from 'js/contentEditableTranslators'
+import { translateHtmlToStr, translateStrToHtml } from '@/js/contentEditableTranslators'
 
 export default {
   props: {
@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/scss/env/index';
+@import '@/assets/scss/env/index';
 
 .text-box__input {
   width: 100%;

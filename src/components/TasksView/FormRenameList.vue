@@ -51,7 +51,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from 'js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/js/focusForm'
 
 export default {
   name: 'form-rename-list',

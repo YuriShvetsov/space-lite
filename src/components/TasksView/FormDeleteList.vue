@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { catchFocus, execWhenShiftEnter } from 'js/focusForm'
+import { catchFocus, execWhenShiftEnter } from '@/js/focusForm'
 
 export default {
   name: 'form-delete-list',

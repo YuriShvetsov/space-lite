@@ -58,7 +58,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import ListItem from './ListItem.vue'
 import FormAddList from './FormAddList.vue'
 
-import Scrollable from 'js/scrollable'
+import Scrollable from '@/js/scrollable'
 
 export default {
   name: 'lists-view',
@@ -274,7 +274,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/scss/env';
+@import '@/assets/scss/env';
 
 .lists-view {
   display: flex;

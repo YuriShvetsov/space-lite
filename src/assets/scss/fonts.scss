@@ -1,9 +1,9 @@
 /* Open Sans */
 
-@include font-face('Open Sans', '../fonts/open-sans/OpenSans-Regular.ttf', normal, normal );
-@include font-face('Open Sans', '../fonts/open-sans/OpenSans-SemiBold.ttf', bold, normal );
-@include font-face('Open Sans', '../fonts/open-sans/OpenSans-Italic.ttf', normal, italic );
+@include font-face('Open Sans', '@/assets/fonts/open-sans/OpenSans-Regular.ttf', normal, normal );
+@include font-face('Open Sans', '@/assets/fonts/open-sans/OpenSans-SemiBold.ttf', bold, normal );
+@include font-face('Open Sans', '@/assets/fonts/open-sans/OpenSans-Italic.ttf', normal, italic );
 
 /* Leckerli One */
 
-@include font-face('Leckerli One', '../fonts/leckerli-one/LeckerliOne-Regular.ttf', normal, normal );
+@include font-face('Leckerli One', '@/assets/fonts/leckerli-one/LeckerliOne-Regular.ttf', normal, normal );

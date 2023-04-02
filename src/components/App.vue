@@ -10,8 +10,8 @@
         
         <div class="app__logo">
           <div class="app__logo-text">Todos</div>
-          <img class="app__logo-icon app__logo-icon_default" src="../assets/images/stylus.png" alt="stylus">
-          <img class="app__logo-icon app__logo-icon_white" src="../assets/images/stylus-white.png" alt="stylus">
+          <img class="app__logo-icon app__logo-icon_default" src="/images/stylus.png" alt="stylus">
+          <img class="app__logo-icon app__logo-icon_white" src="/images/stylus-white.png" alt="stylus">
         </div>
 
         <div class="app__settings">
@@ -170,7 +170,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/scss/env';
+@import '@/assets/scss/env';
 
 .app {
   font-family: $fontMain;

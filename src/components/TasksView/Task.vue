@@ -247,7 +247,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'assets/scss/env';
+@import '@/assets/scss/env';
 
 .task {
   margin: 2px 0;
