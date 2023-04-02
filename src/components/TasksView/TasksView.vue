@@ -8,8 +8,8 @@
       <div class="tasks-view__controls">
 
         <button class="button button_type_icon-text button_color_red"
-          v-bind:class="{ 'button_type_disabled': !haveCompletedTasks }"
-          v-bind:disabled="!haveCompletedTasks"
+          v-bind:class="{ 'button_type_disabled': !hasCompletedTodos }"
+          v-bind:disabled="!hasCompletedTodos"
           v-on:click="removeCompletedTodos(id)"
         >
           <span>Clear</span>
@@ -62,11 +62,21 @@
                   </svg>
                 </button>
               </li>
+              <li v-if="hasTodos" class="popup__action">
+                <button class="popup__action-button button button_type_popup button_color_red"
+                  v-on:click="openModalDeleteTasks(), closeMenu()"
+                >
+                  <span>Delete all tasks</span>
+                  <svg class="button__icon button__icon_stroke">
+                    <use xlink:href="#list"></use>
+                  </svg>
+                </button>
+              </li>
               <li class="popup__action">
                 <button class="popup__action-button button button_type_popup button_color_red"
                   v-on:click="openModalDeleteList(), closeMenu()"
                 >
-                  <span>Delete</span>
+                  <span>Delete list</span>
                   <svg class="button__icon button__icon_stroke">
                     <use xlink:href="#delete"></use>
                   </svg>
@@ -155,6 +165,13 @@
         </form-import-todos>
       </modal>
 
+      <modal ref="modalDeleteTasks">
+        <form-delete-tasks
+          v-on:success="onSuccessFormDeleteTasks"
+          v-on:cancel="closeModalDeleteTasks"
+        ></form-delete-tasks>
+      </modal>
+
       <modal ref="modalDeleteList">
         <form-delete-list
           v-on:success="onSuccessFormDeleteList"
@@ -175,6 +192,7 @@ import FormAddTask from './FormAddTask.vue'
 import FormEditTask from './FormEditTask.vue'
 import FormRenameList from './FormRenameList.vue'
 import FormImportTodos from './FormImportTodos.vue'
+import FormDeleteTasks from './FormDeleteTasks.vue'
 import FormDeleteList from './FormDeleteList.vue'
 
 import Scrollable from '@/js/scrollable'
@@ -187,6 +205,7 @@ export default {
     FormEditTask,
     FormRenameList,
     FormImportTodos,
+    FormDeleteTasks,
     FormDeleteList
   },
   data() {
@@ -230,7 +249,10 @@ export default {
         this.todos
       )
     },
-    haveCompletedTasks() {
+    hasTodos() {
+      return !!this.todos.length
+    },
+    hasCompletedTodos() {
       return this.todos.find(todo => todo.done)
     }
   },
@@ -244,6 +266,7 @@ export default {
     ...mapActions([
       'updateListName',
       'removeCompletedTodos',
+      'removeTodos',
       'removeList',
       'addTodo',
       'importTodos',
@@ -273,6 +296,12 @@ export default {
     },
     closeModalImportTodos() {
       this.$refs.modalImportTodos.close()
+    },
+    openModalDeleteTasks() {
+      this.$refs.modalDeleteTasks.open()
+    },
+    closeModalDeleteTasks() {
+      this.$refs.modalDeleteTasks.close()
     },
     openModalDeleteList() {
       this.$refs.modalDeleteList.open()
@@ -350,6 +379,13 @@ export default {
       }
 
       this.closeModalImportTodos()
+    },
+    onSuccessFormDeleteTasks() {
+      const listId = this.id
+      const todosIds = this.todos.map(todo => todo.id)
+
+      this.removeTodos({ listId, todosIds })
+      this.closeModalDeleteTasks()
     },
     onSuccessFormDeleteList() {
       this.removeList(this.id)

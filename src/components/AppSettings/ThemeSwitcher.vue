@@ -2,7 +2,7 @@
   <radio
     :items="modifiedThemesList"
     :current="curTheme"
-    @update="changeCurTheme"
+    @update="onUpdateRadio"
   />
 </template>
 
@@ -23,7 +23,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['changeCurTheme'])
+    ...mapActions(['changeCurTheme']),
+    onUpdateRadio(value) {
+      if (value === this.curTheme) return;
+      this.changeCurTheme(value)
+    }
   }
 }
 </script>

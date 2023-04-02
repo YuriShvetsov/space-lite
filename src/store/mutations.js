@@ -90,6 +90,12 @@ export default {
 
     list.todos = todos.filter(todo => !todo.done)
   },
+  REMOVE_TODOS(state, { listId, todosIds }) {
+    const list = state.lists.find(list => list.id === listId)
+    const todos = getTargetFromProxy(list.todos)
+
+    list.todos = todos.filter(todo => !todosIds.includes(todo.id))
+  },
   ADD_TODO(state, { id, name, notes, priority }) {
     if (!name) throw new Error('The name cannot be empty')
 

@@ -236,7 +236,7 @@ export default {
   font-size: 30px;
   font-weight: bold;
   line-height: 1;
-  color: darken( $primaryColor, 40%);
+  color: darken( $primaryColor, 35%);
   text-transform: capitalize;
   text-shadow: 0 3px 3px rgba(0, 0, 0, .05);
 }

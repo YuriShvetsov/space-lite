@@ -82,6 +82,10 @@ export default {
     commit('REMOVE_COMPLETED_TODOS', id)
     dispatch('writeToLS')
   },
+  removeTodos({ commit, dispatch }, payload) {
+    commit('REMOVE_TODOS', payload)
+    dispatch('writeToLS')
+  },
   addTodo({ commit, dispatch }, payload) {
     commit('ADD_TODO', payload)
     dispatch('writeToLS')

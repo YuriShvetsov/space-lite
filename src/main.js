@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 
+import './assets/scss/main.scss'
+
 import App from './components/App.vue'
 import commonComponents from './components/common'
 import store from './store'
-import './js'
-import './assets/scss/main.scss'
 
 const app = createApp(App)
 
