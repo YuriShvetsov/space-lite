@@ -282,17 +282,17 @@ export default {
   justify-content: stretch;
 
   height: 100%;
-  padding-top: 52px;
+  padding-top: 44px;
 
   position: relative;
 }
 .lists-view__header {
-  height: 52px;
+  height: 44px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 4px 0 12px;
   position: absolute;
   left: 0;
   top: 0;

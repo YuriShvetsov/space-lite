@@ -6,7 +6,12 @@
 
       <div class="app__header">
 
-        <div class="app__current-date">{{ currentDateString }}</div>
+        <div class="app__current-date">
+          <svg class="app__current-date-icon">
+            <use xlink:href="#calendar"></use>
+          </svg>
+          <span class="app__current-date-value">{{ currentDateString }}</span>
+        </div>
         
         <div class="app__logo">
           <div class="app__logo-text">Todos</div>
@@ -181,7 +186,7 @@ export default {
 .app {
   width: 100vw;
   height: 100vh;
-  padding: 16px;
+  padding: 0 16px 16px;
   background-image: get-light($mainBg);
 }
 
@@ -192,9 +197,6 @@ export default {
   max-width: 990px;
   height: 100%;
   margin: 0 auto;
-  
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
 }
 
 .app__header {
@@ -203,20 +205,29 @@ export default {
   height: 80px;
   padding: 16px;
   position: relative;
-  background-color: get-light($bgColor, 'main');
-  border-bottom: 1px solid get-light($sectionBorderColor);
-  border-radius: 8px 8px 0 0;
 }
 
 .app__current-date {
+  padding-left: 24px;
   position: absolute;
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
+
   font-size: 12px;
   font-weight: bold;
   color: lighten(get-light($secondaryTextColor), 12%);
   white-space: nowrap;
+
+  &-icon {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    stroke: $primaryColor;
+  }
 }
 
 .app__logo {
@@ -268,14 +279,16 @@ export default {
 .app__body {
   display: flex;
   height: calc(100% - 80px);
-  padding-bottom: 16px;
+
   background-color: get-light($bgColor, 'main');
-  border-radius: 0 0 8px 8px;
+  border: 1px solid get-light($sectionBorderColor);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.03);
 }
 
 .app__section {
   width: 100%;
-  padding: 0 16px;
+  padding: 20px;
 }
 
 .app__section_side {
@@ -286,7 +299,7 @@ export default {
   flex-direction: column;
   justify-content: stretch;
   position: relative;
-  border-right: 2px solid get-light($sectionBorderColor);
+  border-right: 1px solid get-light($sectionBorderColor);
 }
 
 .app__section_main {
@@ -297,22 +310,19 @@ export default {
 // Dark theme
 
 .app_theme_dark {
+  background-color: #000000;
   background-image: get-dark($mainBg);
 }
 
 .app_theme_dark {
 
-  .app__header {
-    background-color: get-dark($bgColor, 'second');
-    border-bottom: 1px solid get-dark($sectionBorderColor);
-  }
-
   .app__current-date {
-    color: get-dark($secondaryTextColor);
+    color: get-dark($baseTextColor);
   }
 
   .app__logo-text {
     color: get-dark($baseTextColor);
+    text-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
   }
 
   .app__logo-icon_default {
@@ -321,14 +331,16 @@ export default {
 
   .app__logo-icon_white {
     opacity: 1;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.2));
   }
 
   .app__body {
     background-color:get-dark($bgColor, 'main');
+    border: 1px solid get-dark($sectionBorderColor);
   }
 
   .app__section_side {
-    border-right: 2px solid get-dark($sectionBorderColor);
+    border-right: 1px solid get-dark($sectionBorderColor);
   }
 
 }
@@ -345,7 +357,11 @@ export default {
 
   .app__header,
   .app__body {
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
     border-radius: 0;
+    box-shadow: none;
   }
 
   .app__section_side {
@@ -354,6 +370,18 @@ export default {
 
   .app__section_main {
     max-width: calc(100% - 300px);
+  }
+
+  // Dark theme
+
+  .app_theme_dark {
+
+    .app__body {
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+    }
+
   }
 }
 </style>

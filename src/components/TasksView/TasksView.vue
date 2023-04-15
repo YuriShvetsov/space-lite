@@ -634,7 +634,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 4px 0 12px;
 }
 
 .tasks-view__title {

@@ -80,7 +80,7 @@ export default {
   width: calc(100% - 64px);
   position: absolute;
   left: 50%;
-  top: 70px;
+  top: 100px;
   transform: translate(-50%, 0);
 
   display: flex;
@@ -215,14 +215,6 @@ export default {
     opacity: 0;
     transform: translate(-50%, 0) scale(0.9);
   }
-}
-
-@media screen and (max-width: 1024px) {
-
-  .modal__container {
-    top: 56px;
-  }
-
 }
 
 </style>
