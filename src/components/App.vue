@@ -203,14 +203,14 @@ export default {
   display: flex;
   justify-content: flex-end;
   height: 80px;
-  padding: 16px;
+  padding: 16px 20px;
   position: relative;
 }
 
 .app__current-date {
   padding-left: 24px;
   position: absolute;
-  left: 16px;
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
 
@@ -226,7 +226,7 @@ export default {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    stroke: $primaryColor;
+    stroke: lighten(get-light($secondaryTextColor), 12%);
   }
 }
 
@@ -318,6 +318,10 @@ export default {
 
   .app__current-date {
     color: get-dark($baseTextColor);
+
+    &-icon {
+      stroke: get-dark($baseTextColor);
+    }
   }
 
   .app__logo-text {

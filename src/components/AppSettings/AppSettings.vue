@@ -100,18 +100,18 @@ export default {
   position: relative;
   background-color: get-light($bgColor, 'main');
   border-radius: 8px 8px 0 0;
+  border-top: 1px solid get-light($sectionBorderColor);
+  border-right: 1px solid get-light($sectionBorderColor);
   border-bottom: 1px solid get-light($sectionBorderColor);
-  border-top: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-left: 1px solid transparent;
+  border-left: 1px solid get-light($sectionBorderColor);
 }
 
 .app-settings__body {
   padding: 4px 20px;
   background-color: get-light($bgColor, 'main');
-  border-right: 1px solid transparent;
-  border-bottom: 1px solid transparent;
-  border-left: 1px solid transparent;
+  border-right: 1px solid get-light($sectionBorderColor);
+  border-bottom: 1px solid get-light($sectionBorderColor);
+  border-left: 1px solid get-light($sectionBorderColor);
   border-radius: 0 0 8px 8px;
 }
 

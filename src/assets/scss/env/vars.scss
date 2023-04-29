@@ -32,8 +32,8 @@ $formBorderColor: (
 // Backgrounds
 
 $mainBg: (
-  'light': linear-gradient(67deg, rgba(249, 239, 250, 0.549), transparent, rgba(118, 96, 232, 0.129)),
-  'dark': radial-gradient(circle at 48% 31%, rgba(0, 187, 255, 0.9) 4%, rgba(106, 44, 215, 0.9) 100%)
+  'light': linear-gradient(67deg, #fdf9fd, #ffffff, #f6f5fe),
+  'dark': radial-gradient(circle at 48% 31%, #00a8e6 4%, #5f28c2 100%)
 );
 $bgColor: (
   'light': (

@@ -6,6 +6,7 @@ import Modal from './Modal.vue'
 import Popup from './Popup.vue'
 import TextBox from './TextBox.vue'
 import UploadFile from './UploadFile.vue'
+import IconSelector from './IconSelector.vue'
 
 export default {
   Checkbox,
@@ -15,5 +16,6 @@ export default {
   Modal,
   Popup,
   TextBox,
-  UploadFile
+  UploadFile,
+  IconSelector
 }

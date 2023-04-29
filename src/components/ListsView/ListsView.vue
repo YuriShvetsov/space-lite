@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 import ListItem from './ListItem.vue'
 import FormAddList from './FormAddList.vue'
@@ -79,10 +79,8 @@ export default {
     }
   },
   computed: {
-    ...mapState([
-      'lists'
-    ]),
     ...mapGetters([
+      'lists',
       'openedList'
     ])
   },
@@ -113,8 +111,8 @@ export default {
       this.scrollableLists = new Scrollable(this.$refs.lists)
       this.scrollableLists.initListener()
     },
-    onSuccessFormAddList(name) {
-      this.addList(name)
+    onSuccessFormAddList({ name, icon }) {
+      this.addList({ name, icon })
       this.closeModalAddList()
       this.$nextTick(this.scrollToLastList)
       this.$nextTick(this.animateNewList)

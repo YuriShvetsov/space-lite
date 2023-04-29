@@ -9,6 +9,9 @@
       v-on:mouseup="handleMouseUp"
       v-on:mouseout="handleMouseOut"
     >
+      <svg class="list-item__icon">
+        <use :xlink:href="formatIconId(icon)"></use>
+      </svg>
       <span class="list-item__name">{{ name }}</span>
       <span class="list-item__count">{{ countTodos }}</span>
     </button>
@@ -18,12 +21,23 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons'
 
 export default {
   name: 'list-item',
   props: {
     id: String,
     name: String,
+    icon: {
+      type: String,
+      default: (value) => {
+        if (!value || !LIST_ICONS.includes(value)) {
+          return DEFAULT_LIST_ICON
+        }
+
+        return value
+      }
+    },
     todos: Array,
     isActive: {
       type: Boolean,
@@ -80,6 +94,9 @@ export default {
     },
     handleMouseOut(event) {
       clearTimeout(this.timerStartMoving)
+    },
+    formatIconId(icon) {
+      return `#${ icon }`
     }
   }
 }
@@ -133,11 +150,24 @@ export default {
 .list-item__button {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  padding: 8px 12px;
+  height: 32px;
+  padding: 8px 12px 8px 32px;
+  position: relative;
 
-  line-height: 1.2;
+  line-height: 1.2em;
   color: get-light($baseTextColor);
+}
+
+.list-item__icon {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  stroke: get-light($baseTextColor);
 }
 
 .list-item__name {
@@ -169,6 +199,10 @@ export default {
     &:hover {
       background-color: darken(get-dark($bgColor, 'main'), 6%);
     }
+  }
+
+  .list-item__icon {
+    stroke: get-dark($baseTextColor);
   }
 
   .list-item_pointer_top .list-item__button:hover,

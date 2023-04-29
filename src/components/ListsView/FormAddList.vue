@@ -1,5 +1,5 @@
 <template>
-  <form class="form"
+  <form class="form form_type_input"
     v-on:submit.prevent
   >
 
@@ -38,6 +38,18 @@
         </label>
       </div>
 
+      <div class="form__row form__row_input">
+        <label class="form__label">
+          <span class="form__label-name">Icon</span>
+          <div class="form__input-wrapper">
+            <icon-selector
+              v-model="icon"
+              :icons="listIcons"
+            />
+          </div>
+        </label>
+      </div>
+
       <div class="form__row form__row_controls">
         <input class="form__control-button form__control-button_scale_max button button_fill_violet"
           type="submit"
@@ -53,7 +65,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/js/focusForm'
+import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons'
 
 export default {
   name: 'form-add-list',
@@ -61,6 +75,7 @@ export default {
   data() {
     return {
       name: '',
+      icon: DEFAULT_LIST_ICON,
       isMounted: false,
       nameWarningText: ''
     }
@@ -157,7 +172,10 @@ export default {
         return
       }
 
-      this.$emit('success', this.name)
+      this.$emit('success', {
+        name: this.name,
+        icon: this.icon
+      })
       this.isMounted = false
     },
     emitCancel() {
@@ -166,6 +184,9 @@ export default {
       this.$emit('cancel')
       this.isMounted = false
     }
+  },
+  created() {
+    this.listIcons = LIST_ICONS
   },
   mounted() {
     this.isMounted = true

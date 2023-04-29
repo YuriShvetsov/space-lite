@@ -1,10 +1,10 @@
 <template>
-  <form class="form"
+  <form class="form form_type_input"
     v-on:submit.prevent
   >
     
     <div class="form__header">
-      <div class="form__title title title_size_l">Rename this list</div>
+      <div class="form__title title title_size_l">Rename list</div>
       <button class="form__cancel-button button button_type_icon button_color_black"
         v-on:click="emitCancel"
       >
@@ -38,6 +38,19 @@
         </label>
       </div>
 
+      <div class="form__row form__row_input">
+        <label class="form__label">
+          <span class="form__label-name">Icon</span>
+          <div class="form__input-wrapper">
+            <icon-selector
+              class="form__icon-selector"
+              v-model="_icon"
+              :icons="listIcons"
+            />
+          </div>
+        </label>
+      </div>
+
       <div class="form__row form__row_controls">
         <button class="form__control-button form__control-button_scale_max button button_fill_violet"
           v-on:click="emitSuccess"
@@ -51,17 +64,21 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/js/focusForm'
+import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons'
 
 export default {
   name: 'form-rename-list',
   emits: ['success', 'cancel'],
   props: {
-    name: String
+    name: String,
+    icon: [String, null]
   },
   data() {
     return {
       _name: '',
+      _icon: null,
       isMounted: false,
       nameWarningText: ''
     }
@@ -75,7 +92,8 @@ export default {
       if (!this.isMounted) return
 
       return {
-        name: this._name
+        name: this._name,
+        icon: this._icon
       }
     },
     nameWarningClasses() {
@@ -91,7 +109,9 @@ export default {
   },
   methods: {
     init() {
+      this.listIcons = LIST_ICONS
       this._name = this.name
+      this._icon = this.icon ? this.icon : DEFAULT_LIST_ICON
     },
 
     getInputs() {
@@ -160,7 +180,10 @@ export default {
         return
       }
 
-      this.$emit('success', this._name)
+      this.$emit('success', {
+        name: this._name,
+        icon: this._icon
+      })
     },
     emitCancel() {
       this.$emit('cancel')

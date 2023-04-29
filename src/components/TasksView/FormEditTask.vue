@@ -1,10 +1,10 @@
 <template>
-  <form class="form"
+  <form class="form form_type_input"
     v-on:submit.prevent
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_l">Edit this task</div>
+      <div class="form__title title title_size_l">Edit task</div>
     </div>
 
     <div class="form__body">

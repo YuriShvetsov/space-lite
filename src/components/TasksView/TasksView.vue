@@ -3,7 +3,12 @@
 
     <div class="tasks-view__header">
 
-      <div class="tasks-view__title title title_size_m" :title="name">{{ name }}</div>
+      <div class="tasks-view__title title title_size_m" :title="name">
+        <svg class="tasks-view__icon">
+          <use :xlink:href="formattedIcon"></use>
+        </svg>
+        <span>{{ name }}</span>
+      </div>
 
       <div class="tasks-view__controls">
 
@@ -67,8 +72,8 @@
                   v-on:click="openModalDeleteTasks(), closeMenu()"
                 >
                   <span>Delete all tasks</span>
-                  <svg class="button__icon button__icon_stroke">
-                    <use xlink:href="#list"></use>
+                  <svg class="button__icon button__icon_fill">
+                    <use xlink:href="#list-alternative"></use>
                   </svg>
                 </button>
               </li>
@@ -76,7 +81,7 @@
                 <button class="popup__action-button button button_type_popup button_color_red"
                   v-on:click="openModalDeleteList(), closeMenu()"
                 >
-                  <span>Delete list</span>
+                  <span>Delete{{ hasTodos ? ' list' : '' }}</span>
                   <svg class="button__icon button__icon_stroke">
                     <use xlink:href="#delete"></use>
                   </svg>
@@ -150,6 +155,7 @@
       >
         <form-rename-list
           v-bind:name="name"
+          v-bind:icon="icon"
           v-on:success="onSuccessFormRenameList"
           v-on:cancel="closeModalRenameList"
         ></form-rename-list>
@@ -231,6 +237,12 @@ export default {
     },
     name() {
       return this.openedList.name
+    },
+    icon() {
+      return this.openedList.icon
+    },
+    formattedIcon() {
+      return `#${ this.icon }`
     },
     todos() {
       if (this.hiddenTodosVisible) {
@@ -364,10 +376,11 @@ export default {
       this.closeModalAddTask()
       this.$nextTick(this.scrollToLastTask)
     },
-    onSuccessFormRenameList(name) {
+    onSuccessFormRenameList({ name, icon }) {
       this.updateListName({
         id: this.id,
         name,
+        icon
       })
       this.closeModalRenameList()
     },
@@ -639,9 +652,22 @@ export default {
 
 .tasks-view__title {
   max-width: calc(100% - 40px);
+  padding-left: 26px;
+  position: relative;
+
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.tasks-view__icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  stroke: get-light($baseTextColor);
 }
 
 .tasks-view__controls {
@@ -738,7 +764,17 @@ export default {
   transition: transform .3s ease;
 }
 
-.app_theme_dark .tasks-view__no-tasks .icon {
-  stroke: #fff;
+// Dark theme
+
+.app_theme_dark {
+
+  .tasks-view__icon {
+    stroke: #ffffff;
+  }
+
+  .tasks-view__no-tasks .icon {
+    stroke: #fff;
+  }
+
 }
 </style>

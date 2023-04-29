@@ -1,5 +1,5 @@
 <template>
-  <form class="form"
+  <form class="form form_type_input"
     v-on:submit.prevent
   >
 

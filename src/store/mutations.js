@@ -1,5 +1,6 @@
 import { generateId, getTargetFromProxy } from './helpers'
 import * as themes from './themes'
+import { DEFAULT_LIST_ICON } from '@/js/static/listIcons'
 
 export default {
   MIGRATE(state) {
@@ -18,6 +19,7 @@ export default {
     state.lists.push({
       id: generateId('list'),
       name: 'Main',
+      icon: DEFAULT_LIST_ICON || null,
       todos: []
     })
   },
@@ -40,23 +42,25 @@ export default {
   OPEN_LIST(state, id) {
     state.openedListId = id
   },
-  ADD_LIST(state, name) {
+  ADD_LIST(state, { name, icon}) {
     if (!name) throw new Error('The name cannot be empty')
 
     const newList = {
       id: generateId('list'),
       name,
+      icon,
       todos: []
     }
 
     state.lists.push(newList)
   },
-  UPDATE_LIST_NAME(state, { id, name }) {
+  UPDATE_LIST_NAME(state, { id, name, icon }) {
     if (!name) throw new Error('The name cannot be empty')
 
     const list = state.lists.find(l => l.id === id)
 
     list.name = name
+    list.icon = icon
   },
   SET_DEFAULT_HIDDEN_TODOS_VISIBLE(state) {
     state.hiddenTodosVisible = false

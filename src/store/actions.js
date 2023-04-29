@@ -46,8 +46,8 @@ export default {
     commit('OPEN_LIST', id)
     dispatch('writeToLS')
   },
-  addList({ commit, dispatch }, name) {
-    commit('ADD_LIST', name)
+  addList({ commit, dispatch }, payload) {
+    commit('ADD_LIST', payload)
     commit('OPEN_LAST_LIST')
     dispatch('writeToLS')
   },

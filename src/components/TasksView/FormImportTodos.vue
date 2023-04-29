@@ -1,5 +1,5 @@
 <template>
-  <form class="form form-import"
+  <form class="form form_type_input form-import"
     v-on:submit.prevent
   >
     <div class="form__header">
