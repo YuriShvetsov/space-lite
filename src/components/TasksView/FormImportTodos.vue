@@ -58,7 +58,12 @@
             v-bind:key="list.id"
           >
 
-            <div class="select-todos__list-name">{{ list.name }} ({{ list.todos.length }})</div>
+            <div class="select-todos__list-name">
+              <svg class="select-todos__list-icon">
+                <use :xlink:href="getListIconId(list.icon)"></use>
+              </svg>
+              <span>{{ list.name }} ({{ list.todos.length }})</span>
+            </div>
             <ul class="select-todos__items-list">
               <li class="select-todos__item"
                 v-for="todo of list.todos"
@@ -120,6 +125,7 @@
 import { catchFocus, execWhenShiftEnter } from '@/js/focusForm'
 import { isValidImportedLists } from '@/js/isValidImportedLists'
 import { flat } from '@/js/helpers'
+import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons';
 
 export default {
   name: 'form-import-todos',
@@ -140,6 +146,7 @@ export default {
           return {
             isSelected: todo.isSelected,
             listName: todo.listName,
+            listIcon: list.icon,
             name: todo.name,
             notes: todo.notes,
             priority: todo.priority,
@@ -239,6 +246,10 @@ export default {
       if (!todo.priority) return ''
 
       return `select-todos__item-priority_visible select-todos__item-priority_${ todo.priority.toLowerCase() }`
+    },
+    getListIconId(iconName) {
+      const name = LIST_ICONS.includes(iconName) ? iconName : DEFAULT_LIST_ICON
+      return `#${ name }`
     }
   },
   mounted() {
@@ -386,8 +397,19 @@ export default {
   border-radius: 6px;
 }
 
+.select-todos__list-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  stroke: #333333;
+}
+
 .select-todos__list-name {
-  padding: 8px 12px;
+  padding: 8px 12px 8px 42px;
+  position: relative;
   font-size: 14px;
   font-weight: bold;
 }

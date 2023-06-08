@@ -160,6 +160,7 @@ export default {
         state.lists.push({
           id: `list-${ todoNumberId.toString(36) }`,
           name: todo.listName,
+          icon: todo.listIcon,
           todos: [ newTodo ]
         })
 
