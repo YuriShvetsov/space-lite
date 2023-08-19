@@ -88,6 +88,14 @@ export default {
 
   // Tasks (todos)
 
+  // FIND_TASK(state, { listId, todoId }) {
+  //   const list = state.lists.find(list => list.id === listId)
+  //   const todo = list.todos.find(todo => todo.id === todoId)
+
+  //   console.log(todo)
+    
+  //   return todo || null
+  // },
   REMOVE_COMPLETED_TODOS(state, id) {
     const list = state.lists.find(list => list.id === id)
     const todos = getTargetFromProxy(list.todos)

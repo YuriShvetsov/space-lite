@@ -78,6 +78,10 @@ export default {
 
   // Tasks (todos)
 
+  // findTask({ commit }, payload) {
+  //   console.log(payload)
+  //   return commit('FIND_TASK', payload)
+  // },
   removeCompletedTodos({ commit, dispatch }, id) {
     commit('REMOVE_COMPLETED_TODOS', id)
     dispatch('writeToLS')

@@ -1,0 +1,23 @@
+@import '@/assets/scss/env/index';
+
+.task-editor {
+
+  &__headline {
+    width: 100%;
+    padding: 16px 20px;
+    position: relative;
+    background-color: get-light($bgColor, 'main');
+    border-radius: 8px 8px 0 0;
+    border-top: 1px solid get-light($sectionBorderColor);
+    border-right: 1px solid get-light($sectionBorderColor);
+    border-bottom: 1px solid get-light($sectionBorderColor);
+    border-left: 1px solid get-light($sectionBorderColor);
+  }
+  
+  &__close-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

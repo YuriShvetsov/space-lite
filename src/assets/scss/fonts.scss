@@ -7,3 +7,10 @@
 /* Leckerli One */
 
 @include font-face('Leckerli One', '@/assets/fonts/leckerli-one/LeckerliOne-Regular.ttf', normal, normal );
+
+/* Hack (monospace) */
+
+@include font-face('Hack', '@/assets/fonts/hack/Hack-Regular.ttf', normal, normal );
+@include font-face('Hack', '@/assets/fonts/hack/Hack-Bold.ttf', bold, normal );
+@include font-face('Hack', '@/assets/fonts/hack/Hack-Italic.ttf', normal, italic );
+@include font-face('Hack', '@/assets/fonts/hack/Hack-BoldItalic.ttf', bold, italic );

@@ -40,8 +40,9 @@
       </ul>
     </div>
 
-    <modal ref="modalAddList"
-      v-bind:classNames="['modal_size_xsm']"
+    <modal
+      class="modal_size_xsm"
+      ref="modalAddList"
     >
       <form-add-list
         v-on:success="onSuccessFormAddList"

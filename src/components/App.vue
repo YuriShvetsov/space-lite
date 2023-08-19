@@ -30,8 +30,9 @@
             </svg>
           </button>
 
-          <modal ref="modalAppSettings"
-            v-bind:classNames="['modal_size_sm']"
+          <modal
+            class="modal_size_sm"
+            ref="modalAppSettings"
           >
             <template v-slot:default>
               <app-settings
@@ -59,6 +60,8 @@
     </div>
 
   </div>
+
+  <DialogsWrapper />
 </template>
 
 <script>
@@ -178,15 +181,14 @@ export default {
 @import '@/assets/scss/env';
 
 .app {
-  font-family: $fontMain;
-  font-size: 14px;
-  z-index: get-layer('page');
-}
-
-.app {
   width: 100vw;
   height: 100vh;
   padding: 0 16px 16px;
+  z-index: get-layer('page');
+
+  font-family: $fontMain;
+  font-size: 14px;
+
   background-image: get-light($mainBg);
 }
 

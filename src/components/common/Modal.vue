@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" v-bind:class="classNames">
+  <div class="modal" :class="classes">
 
     <transition name="fade">
       <div class="modal__overlay"
@@ -22,15 +22,18 @@
 <script>
 export default {
   name: 'modal',
-  props: {
-    classNames: {
-      type: Array,
-      default: ['modal_size_default']
-    }
-  },
+  emits: ['opened', 'closed'],
   data() {
     return {
+      isMounted: false,
       isVisible: false
+    }
+  },
+  computed: {
+    classes() {
+      if (!this.isMounted) return []
+      const classList = this.$el.classList.value
+      return classList.match(/modal_size_/) ? [] : ['modal_size_default']
     }
   },
   methods: {
@@ -57,6 +60,7 @@ export default {
     }
   },
   mounted() {
+    this.isMounted = true
     this.onKeydownDocument()
   }
 }

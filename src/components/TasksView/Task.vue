@@ -68,7 +68,7 @@
           <ul class="popup__action-list">
             <li class="popup__action">
               <button class="popup__action-button button button_type_popup button_color_black"
-                v-on:click="openModalEditTask(), closeMenu()"
+                v-on:click="openTaskEditor(), closeMenu()"
               >
                 <span>Edit</span>
                 <svg class="button__icon button__icon_fill">
@@ -116,34 +116,33 @@
     <div class="pointer pointer_pos_top js-top-pointer"></div>
     <div class="pointer pointer_pos_bottom js-bottom-pointer"></div>
 
-    <div class="task__outer">
-      <modal ref="modalEditTask"
-        v-bind:classNames="['modal_size_sm']"
-      >
-        <form-edit-task
-          v-bind="dataForEditing"
-          v-on:success="onSuccessFormEditTask"
-          v-on:cancel="closeModalEditTask"
-        ></form-edit-task>
-      </modal>
-    </div>
+    <!-- <div class="task__outer">
+      <task-editor mode="edit" ref="taskEditor" />
+    </div> -->
 
   </li>
 </template>
 
 <script>
-import FormEditTask from './FormEditTask.vue'
+import { createConfirmDialog } from 'vuejs-confirm-dialog'
+import { mapActions } from 'vuex'
+
+import TaskEditor from '@/components/TaskEditor/TaskEditor.vue'
 
 export default {
   name: 'task',
   components: {
-    FormEditTask
+    TaskEditor
   },
   emits: ['change-done', 'update', 'remove', 'start-moving', 'duplicate'],
   props: {
     id: {
       type: String,
-      default: Date.now().toString()
+      default: () => Date.now().toString()
+    },
+    listId: {
+      type: String,
+      default: () => Date.now().toString()
     },
     done: {
       type: Boolean,
@@ -159,7 +158,7 @@ export default {
     },
     name: {
       type: String,
-      default: 'Default name'
+      default: ''
     },
     notes: {
       type: String,
@@ -190,12 +189,26 @@ export default {
     }
   },
   methods: {
-    // Modals
-    openModalEditTask() {
-      this.$refs.modalEditTask.open()
-    },
-    closeModalEditTask() {
-      this.$refs.modalEditTask.close()
+    ...mapActions(['updateTodo']),
+    async openTaskEditor() {
+      const dialog = createConfirmDialog(TaskEditor, {
+        chore: true,
+        keepInitial: true
+      })
+      const todo = {
+        todoId: this.id,
+        listId: this.listId,
+        name: this.name,
+        notes: this.notes,
+        priority: this.priority,
+        hidden: this.hidden
+      }
+      const options = { mode: 'edit', todo }
+      const { data, isCanceled } = await dialog.reveal(options)
+
+      if (isCanceled) return
+
+      this.updateTodo(data)
     },
 
     // Popups
@@ -206,22 +219,22 @@ export default {
       this.$refs.menu.close()
     },
 
-    onSuccessFormEditTask(data) {
-      this.emitUpdate(data)
-      this.closeModalEditTask()
-    },
+    // onSuccessFormEditTask(data) {
+    //   this.emitUpdate(data)
+    //   this.closeModalEditTask()
+    // },
 
     emitChangeDone() {
       this.$emit('change-done', this.id)
     },
-    emitUpdate({ name, notes, priority }) {
-      this.$emit('update', {
-        id: this.id,
-        name,
-        notes,
-        priority
-      })
-    },
+    // emitUpdate({ name, notes, priority }) {
+    //   this.$emit('update', {
+    //     id: this.id,
+    //     name,
+    //     notes,
+    //     priority
+    //   })
+    // },
     emitDuplicate() {
       this.$emit('duplicate', this.id)
     },
@@ -270,6 +283,7 @@ export default {
 
 .task__container {
   position: relative;
+  cursor: pointer;
 }
 
 .task__hover-bg {
@@ -318,9 +332,11 @@ export default {
 }
 
 .task__done-label {
-  display: block;
-  width: 18px;
-  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
 
   cursor: pointer;
   z-index: get-layer('page');

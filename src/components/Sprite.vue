@@ -156,6 +156,12 @@
       </g>
     </symbol>
 
+    <symbol id="document-text" viewBox="0 0 24 24" stroke-width="2" fill="none">
+      <g>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </g>
+    </symbol>
+
     <symbol id="duplicate" viewBox="0 0 24 24">
       <g>
         <path d="M7.5 3.375c0-1.036.84-1.875 1.875-1.875h.375a3.75 3.75 0 013.75 3.75v1.875C13.5 8.161 14.34 9 15.375 9h1.875A3.75 3.75 0 0121 12.75v3.375C21 17.16 20.16 18 19.125 18h-9.75A1.875 1.875 0 017.5 16.125V3.375z" />

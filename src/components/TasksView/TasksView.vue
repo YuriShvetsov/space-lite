@@ -13,9 +13,9 @@
       <div class="tasks-view__controls">
 
         <button class="button button_type_icon-text button_color_red"
-          v-bind:class="{ 'button_type_disabled': !hasCompletedTodos }"
-          v-bind:disabled="!hasCompletedTodos"
-          v-on:click="removeCompletedTodos(id)"
+          :class="{ 'button_type_disabled': !hasCompletedTodos }"
+          :disabled="!hasCompletedTodos"
+          @click="removeCompletedTodos(id)"
         >
           <span>Clear</span>
           <svg class="button__icon button__icon_stroke">
@@ -24,7 +24,7 @@
         </button>
 
         <button class="button button_type_icon-text button_fill_violet"
-          v-on:click="openModalAddTask"
+          @click="openTaskEditor"
         >
           <span>Task</span>
           <svg class="button__icon button__icon_stroke">
@@ -36,7 +36,7 @@
 
           <template v-slot:opener>
             <button class="popup__opener button button_type_icon button_color_black"
-              v-on:click="toggleMenu"
+              @click="toggleMenu"
             >
               <span>Menu</span>
               <svg class="button__icon button__icon_stroke">
@@ -49,7 +49,7 @@
             <ul class="popup__action-list">
               <li class="popup__action">
                 <button class="popup__action-button button button_type_popup button_color_black"
-                  v-on:click="openModalRenameList(), closeMenu()"
+                  @click="openModalRenameList(), closeMenu()"
                 >
                   <span>Rename</span>
                   <svg class="button__icon button__icon_fill">
@@ -59,7 +59,7 @@
               </li>
               <li class="popup__action">
                 <button class="popup__action-button button button_type_popup button_color_black"
-                  v-on:click="openModalImportTodos(), closeMenu()"
+                  @click="openModalImportTodos(), closeMenu()"
                 >
                   <span>Import</span>
                   <svg class="button__icon button__icon_stroke">
@@ -69,7 +69,7 @@
               </li>
               <li v-if="hasTodos" class="popup__action">
                 <button class="popup__action-button button button_type_popup button_color_red"
-                  v-on:click="openModalDeleteTasks(), closeMenu()"
+                  @click="openModalDeleteTasks(), closeMenu()"
                 >
                   <span>Delete all tasks</span>
                   <svg class="button__icon button__icon_fill">
@@ -79,7 +79,7 @@
               </li>
               <li class="popup__action">
                 <button class="popup__action-button button button_type_popup button_color_red"
-                  v-on:click="openModalDeleteList(), closeMenu()"
+                  @click="openModalDeleteList(), closeMenu()"
                 >
                   <span>Delete{{ hasTodos ? ' list' : '' }}</span>
                   <svg class="button__icon button__icon_stroke">
@@ -111,16 +111,16 @@
           <task
             class="js-task"
             v-for="todo in todos"
-            v-bind:key="todo.id"
-            v-bind:data-id="todo.id"
+            :key="todo.id"
+            :data-id="todo.id"
             v-bind="todo"
-            v-on:change-done="onChangeDoneTodo"
-            v-on:update="onUpdateTodo"
-            v-on:start-moving="onStartTaskMoving"
-            v-on:duplicate="onDuplicateTodo"
-            v-on:hide="onHideTodo"
-            v-on:show="onShowTodo"
-            v-on:remove="onRemoveTodo"
+            @:change-done="onChangeDoneTodo"
+            @:update="onUpdateTodo"
+            @:start-moving="onStartTaskMoving"
+            @:duplicate="onDuplicateTodo"
+            @:hide="onHideTodo"
+            @:show="onShowTodo"
+            @:remove="onRemoveTodo"
           ></task>
         </transition-group>
       </ul>
@@ -141,47 +141,42 @@
 
     <div class="tasks-view__outer">
 
-      <modal ref="modalAddTask"
-        v-bind:classNames="['modal_size_sm']"
-      >
-        <form-add-task
-          v-on:success="onSuccessFormAddTask"
-          v-on:cancel="closeModalAddTask"
-        ></form-add-task>
-      </modal>
+      <!-- <task-editor ref="taskEditor" mode="add" /> -->
 
-      <modal ref="modalRenameList"
-        v-bind:classNames="['modal_size_xsm']"
+      <modal
+        class="modal_size_xsm"
+        ref="modalRenameList"
       >
         <form-rename-list
-          v-bind:name="name"
-          v-bind:icon="icon"
-          v-on:success="onSuccessFormRenameList"
-          v-on:cancel="closeModalRenameList"
+          :name="name"
+          :icon="icon"
+          @:success="onSuccessFormRenameList"
+          @:cancel="closeModalRenameList"
         ></form-rename-list>
       </modal>
 
-      <modal ref="modalImportTodos"
-        v-bind:classNames="['modal_size_lg']"
+      <modal
+        class="modal_size_lg"
+        ref="modalImportTodos"
       >
         <form-import-todos
-          v-on:success="onSuccessFormImportTodos"
-          v-on:cancel="closeModalImportTodos"
+          @:success="onSuccessFormImportTodos"
+          @:cancel="closeModalImportTodos"
         >  
         </form-import-todos>
       </modal>
 
       <modal ref="modalDeleteTasks">
         <form-delete-tasks
-          v-on:success="onSuccessFormDeleteTasks"
-          v-on:cancel="closeModalDeleteTasks"
+          @:success="onSuccessFormDeleteTasks"
+          @:cancel="closeModalDeleteTasks"
         ></form-delete-tasks>
       </modal>
 
       <modal ref="modalDeleteList">
         <form-delete-list
-          v-on:success="onSuccessFormDeleteList"
-          v-on:cancel="closeModalDeleteList"
+          @:success="onSuccessFormDeleteList"
+          @:cancel="closeModalDeleteList"
         ></form-delete-list>
       </modal>
 
@@ -194,7 +189,7 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import Task from './Task.vue'
-import FormAddTask from './FormAddTask.vue'
+import TaskEditor from '@/components/TaskEditor/TaskEditor.vue'
 import FormEditTask from './FormEditTask.vue'
 import FormRenameList from './FormRenameList.vue'
 import FormImportTodos from './FormImportTodos.vue'
@@ -207,7 +202,7 @@ export default {
   name: 'tasks-view',
   components: {
     Task,
-    FormAddTask,
+    TaskEditor,
     FormEditTask,
     FormRenameList,
     FormImportTodos,
@@ -245,11 +240,14 @@ export default {
       return `#${ this.icon }`
     },
     todos() {
-      if (this.hiddenTodosVisible) {
-        return this.openedList.todos
-      }
+      const modifiedTodos = this.openedList.todos.map(todo => ({
+        listId: this.openedList.id,
+        ...todo
+      }))
 
-      return this.openedList.todos.filter(todo => !todo.hidden)
+      if (this.hiddenTodosVisible) return modifiedTodos
+
+      return modifiedTodos.filter(todo => !todo.hidden)
     },
     isEmpty() {
       return !this.todos.length
@@ -291,11 +289,17 @@ export default {
       'hideTodo',
       'showTodo'
     ]),
-    openModalAddTask() {
-      this.$refs.modalAddTask.open()
+    // openModalAddTask() {
+    //   this.$refs.modalAddTask.open()
+    // },
+    // closeModalAddTask() {
+      //   this.$refs.modalAddTask.close()
+      // },
+    openTaskEditor() {
+      this.$refs.taskEditor.open()
     },
-    closeModalAddTask() {
-      this.$refs.modalAddTask.close()
+    closeTaskEditor() {
+      this.$refs.taskEditor.close()
     },
     openModalRenameList() {
       this.$refs.modalRenameList.open()

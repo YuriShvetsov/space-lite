@@ -82,6 +82,7 @@ export default {
   width: 100%;
   max-height: 212px;
 
+  font-family: 'Hack', monospace;
   white-space: pre-wrap;
   word-break: break-word;
 
