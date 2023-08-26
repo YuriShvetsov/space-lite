@@ -67,6 +67,7 @@
                   </svg>
                 </button>
               </li>
+              <div class="popup__devider"></div>
               <li v-if="hasTodos" class="popup__action">
                 <button class="popup__action-button button button_type_popup button_color_red"
                   v-on:click="openModalDeleteTasks(), closeMenu()"

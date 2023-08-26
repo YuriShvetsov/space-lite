@@ -96,6 +96,7 @@
                 </svg>
               </button>
             </li>
+            <div class="popup__devider"></div>
             <li class="popup__action">
               <button class="popup__action-button button button_type_popup button_color_red"
                 v-on:click="emitRemove(), closeMenu()"
@@ -255,7 +256,6 @@ export default {
   list-style: none;
   background-color: $transparent;
   border-radius: 5px;
-  user-select: none;
   transition: background-color .15s ease-in-out;
 }
 

@@ -1,29 +1,39 @@
-## Todos
-Pet project. Simple task manager.
+Space Lite
+==========
 
-Author: Yuri Shvetsov
+This is a simple todolist system implemented with Vue.
 
-Created date: 01/05/21
+## Features
 
-------------
-Technologies
+- Folders
+- Task editing
+- Hidden tasks
+- Export/import to json
+- Dark theme
 
-- Vite
-- Vue 3
-- Vuex
 
-------------
+## Build setup
 
+Install dependencies
 ``` zsh
-# Install dependencies:
 npm i
+```
 
-# Server with hot reload at http://localhost:5173/
+Server with hot reload at http://localhost:5173/
+```
 npm run dev
+```
 
-# Output will be at dist directory
+Output will be at dist directory
+```
 npm run build
+```
 
-# Preview project
+Preview project
+```
 npm run preview
 ```
+
+## Status
+
+- developing

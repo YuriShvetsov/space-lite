@@ -1,20 +1,22 @@
 <template>
-  <div class="modal" v-bind:class="classNames">
+  <div class="modal" :class="classNames">
 
-    <transition name="fade">
-      <div class="modal__overlay"
+    <Transition name="fade">
+      <div
         v-if="isVisible"
-        v-on:click="close"
+        class="modal__overlay"
+        @click="close"
       ></div>
-    </transition>
+    </Transition>
 
-    <transition name="fade-scale">
-      <div class="modal__container"
+    <Transition name="fade-scale">
+      <div
         v-if="isVisible"
+        class="modal__container"
       >
         <slot></slot>
       </div>
-    </transition>
+    </Transition>
     
   </div>
 </template>

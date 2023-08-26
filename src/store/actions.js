@@ -75,6 +75,12 @@ export default {
     commit('REMOVE_LIST', id)
     dispatch('writeToLS')
   },
+  removeAllLists({ commit, dispatch }) {
+    commit('REMOVE_ALL_LISTS')
+    commit('ADD_EMPTY_LIST')
+    commit('OPEN_LAST_LIST')
+    dispatch('writeToLS')
+  },
 
   // Tasks (todos)
 

@@ -54,7 +54,7 @@
       <div class="form__row form__row_controls">
         <button class="form__control-button form__control-button_scale_max button button_fill_violet"
           v-on:click="emitSuccess"
-        >Save changes</button>
+        >Save Changes</button>
       </div>
 
     </div>

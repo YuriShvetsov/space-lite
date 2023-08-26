@@ -58,7 +58,12 @@
             v-bind:key="list.id"
           >
 
-            <div class="select-todos__list-name">{{ list.name }} ({{ list.todos.length }})</div>
+            <div class="select-todos__name-wrapper" @click="onToggleList(list.id)">
+              <svg class="select-todos__list-icon">
+                <use :xlink:href="getListIcon(list.icon)"></use>
+              </svg>
+              <div class="select-todos__list-name">{{ list.name }} ({{ list.todos.length }})</div>
+            </div>
             <ul class="select-todos__items-list">
               <li class="select-todos__item"
                 v-for="todo of list.todos"
@@ -68,7 +73,7 @@
                   <label class="select-todos__checker">
                     <input type="checkbox" class="select-todos__checkbox"
                       v-bind:checked="todo.isSelected"
-                      v-on:change="onToggleTodo($event, list.id, todo.id)"
+                      v-on:change="onToggleTodo(list.id, todo.id)"
                     >
                     <svg class="select-todos__check-icon">
                       <use xlink:href="#check"></use>
@@ -120,6 +125,7 @@
 import { catchFocus, execWhenShiftEnter } from '@/js/focusForm'
 import { isValidImportedLists } from '@/js/isValidImportedLists'
 import { flat } from '@/js/helpers'
+import { DEFAULT_LIST_ICON } from '@/js/static/listIcons'
 
 export default {
   name: 'form-import-todos',
@@ -140,6 +146,7 @@ export default {
           return {
             isSelected: todo.isSelected,
             listName: todo.listName,
+            listIcon: list.icon,
             name: todo.name,
             notes: todo.notes,
             priority: todo.priority,
@@ -214,11 +221,21 @@ export default {
     emitCancel() {
       this.$emit('cancel')
     },
-    onToggleTodo(event, listId, todoId) {
+    onToggleTodo(listId, todoId) {
       const list = this.renderedLists.find(list => list.id === listId)
       const todo = list.todos.find(todo => todo.id === todoId)
 
       todo.isSelected = !todo.isSelected
+    },
+    onToggleList(listId) {
+      const list = this.renderedLists.find(list => list.id === listId)
+      const hasSelectedTodos = list.todos.find(todo => todo.isSelected)
+
+      if (hasSelectedTodos) {
+        list.todos.forEach(todo => todo.isSelected = false)
+      } else {
+        list.todos.forEach(todo => todo.isSelected = true)
+      }
     },
     onToggleSelector() {
       if (this.isSelectedPartly || this.isSelectedAll) {
@@ -234,6 +251,10 @@ export default {
     // Helpers
     clear() {
       this.renderedLists = []
+    },
+    getListIcon(icon) {
+      if (!icon) return `#${ DEFAULT_LIST_ICON }`
+      return `#${ icon }`
     },
     priorityClassName(todo) {
       if (!todo.priority) return ''
@@ -386,8 +407,30 @@ export default {
   border-radius: 6px;
 }
 
+.select-todos__name-wrapper {
+  display: inline-block;
+  margin-bottom: 4px;
+  padding: 8px 12px 8px 42px;
+  position: relative;
+  cursor: pointer;
+  transition: opacity 150ms ease-in-out;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.select-todos__list-icon {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  stroke: get-light($baseTextColor);
+}
+
 .select-todos__list-name {
-  padding: 8px 12px;
   font-size: 14px;
   font-weight: bold;
 }
@@ -525,6 +568,10 @@ export default {
   .select-todos {
     background-color: get-dark($bgColor, 'main');
     border: 1px solid get-dark($formBorderColor);
+  }
+
+  .select-todos__list-icon {
+    stroke: get-dark($baseTextColor);
   }
 
   .select-todos__list-name {

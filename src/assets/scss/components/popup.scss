@@ -47,6 +47,13 @@
   text-transform: uppercase;
 }
 
+.popup__devider {
+  width: calc(100% - 12px);
+  height: 1px;
+  margin: 4px auto;
+  background-color: get-light($sectionBorderColor);
+}
+
 .fade-translate-enter-active {
   animation-fill-mode: both;
   animation: fade-translate-in 150ms ease-in-out;
@@ -77,6 +84,10 @@
     background-color: get-dark($bgColor, 'main');
     border: 1px solid get-dark($sectionBorderColor);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .popup__devider {
+    background-color: get-dark($sectionBorderColor);
   }
 
 }

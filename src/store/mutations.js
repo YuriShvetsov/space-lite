@@ -82,8 +82,10 @@ export default {
   },
   REMOVE_LIST(state, id) {
     const listIndex = state.lists.findIndex(l => l.id === id)
-
     state.lists.splice(listIndex, 1)
+  },
+  REMOVE_ALL_LISTS(state) {
+    state.lists.splice(0, state.lists.length)
   },
 
   // Tasks (todos)
@@ -158,8 +160,9 @@ export default {
         list.todos.push(newTodo)
       } else {
         state.lists.push({
-          id: `list-${ todoNumberId.toString(36) }`,
+          id: `list-${ listNumberId.toString(36) }`,
           name: todo.listName,
+          icon: todo.listIcon || DEFAULT_LIST_ICON,
           todos: [ newTodo ]
         })
 
