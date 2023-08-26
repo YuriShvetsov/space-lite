@@ -54,7 +54,7 @@
         <input class="form__control-button form__control-button_scale_max button button_fill_violet"
           type="submit"
           v-on:click.prevent="emitSuccess"
-          value="Create list"
+          value="Create List"
         >
       </div>
 

@@ -1,7 +1,8 @@
 {
-  "name": "todos",
+  "name": "space-lite",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "author": "Yuri Shvetsov",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,12 +11,12 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "vue": "^3.2.47",
+    "vue": "^3.3.4",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.1.0",
-    "sass": "^1.60.0",
-    "vite": "^4.2.0"
+    "@vitejs/plugin-vue": "^4.3.3",
+    "sass": "^1.66.1",
+    "vite": "^4.4.9"
   }
 }

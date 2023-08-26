@@ -57,7 +57,7 @@
         >Cancel</button>
         <button class="form__control-button form__control-button_scale_3-5 button button_fill_violet"
           v-on:click="emitSuccess"
-        >Create task</button>
+        >Create Task</button>
       </div>
     </div>
 

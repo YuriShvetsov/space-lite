@@ -38,15 +38,15 @@ export default {
     emitCancel() {
       this.$emit('cancel')
     },
-    focusOnCancelButton() {
+    activateFocus() {
       this.$refs.cancelButton.focus()
+      this.$refs.cancelButton.blur()
     }
   },
   mounted() {
     this.removeShiftEnter = execWhenShiftEnter(this.emitSuccess)
-
-    this.focusOnCancelButton()
     catchFocus(this.$el)
+    this.activateFocus()
   },
   beforeUnmount() {
     this.removeShiftEnter()

@@ -4,7 +4,7 @@
     <div class="app-settings__header">
       <div class="app-settings__title title title_size_l">Settings</div>
       <button class="app-settings__close-button button button_type_icon button_color_black"
-        v-on:click="emitClose"
+        @click="emitClose"
       >
         <span>Close</span>
         <svg class="button__icon button__icon_fill">
@@ -39,11 +39,11 @@
 
         <div class="app-settings__section-row">
           <div class="app-settings__section-subrow">
-            <div class="app-settings__text app-settings__text_left-pos text">Save your tasks in a json file:</div>
-            <download-tasks-button />
+            <download-tasks-button class="app-settings__download-button" />
+            <clear-data-button />
           </div>
           <div class="app-settings__section-subrow">
-            <div class="app-settings__subtext">Import your tasks in another browser or if you have cleared the local storage</div>
+            <div class="app-settings__subtext">Import your tasks in another browser or if you have cleared the data</div>
           </div>
         </div>
 
@@ -59,6 +59,7 @@ import { mapGetters } from 'vuex'
 
 import ThemeSwitcher from './ThemeSwitcher.vue'
 import HiddenTodosSwitcher from './HiddenTodosSwitcher.vue'
+import ClearDataButton from './ClearDataButton.vue'
 import DownloadTasksButton from './DownloadTasksButton.vue'
 
 export default {
@@ -66,6 +67,7 @@ export default {
   components: {
     ThemeSwitcher,
     HiddenTodosSwitcher,
+    ClearDataButton,
     DownloadTasksButton
   },
   emits: ['close'],
@@ -81,6 +83,12 @@ export default {
   methods: {
     emitClose() {
       this.$emit('close')
+    },
+    emitShow() {
+      this.$emit('show')
+    },
+    emitHide() {
+      this.$emit('hide')
     }
   }
 }
@@ -121,7 +129,7 @@ export default {
 }
 
 .app-settings__subtext {
-  margin-top: 4px;
+  margin-top: 6px;
   font-size: 10px;
   line-height: 1em;
   color: get-light($secondaryTextColor);
@@ -135,6 +143,9 @@ export default {
 }
 
 .app-settings__section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   padding: 12px 0;
 }
 
@@ -184,6 +195,10 @@ export default {
 
 .app-settings__text_right-pos {
   margin-left: 8px;
+}
+
+.app-settings__download-button {
+  margin-right: 8px;
 }
 
 // Modules

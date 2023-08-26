@@ -58,7 +58,7 @@
         <button
           class="form__control-button form__control-button_scale_3-5 button button_fill_violet"
           v-on:click="emitSuccess"
-        >Save changes</button>
+        >Save Changes</button>
       </div>
 
     </div>

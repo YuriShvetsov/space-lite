@@ -1,5 +1,6 @@
 <template>
-  <div :class="appClassNames">
+  <div class="app" :class="appClasses">
+
     <sprite></sprite>
 
     <div class="app__container">
@@ -14,7 +15,7 @@
         </div>
         
         <div class="app__logo">
-          <div class="app__logo-text">Todos</div>
+          <div class="app__logo-text">Space Lite</div>
           <img class="app__logo-icon app__logo-icon_default" src="/images/stylus.png" alt="stylus">
           <img class="app__logo-icon app__logo-icon_white" src="/images/stylus-white.png" alt="stylus">
         </div>
@@ -24,19 +25,18 @@
           <button class="app__settings-button button button_type_icon button_color_black"
             v-on:click="openModalAppSettings"
           >
-            <span>SETTINGS</span>
+            <span>Settings</span>
             <svg class="button__icon button__icon_stroke">
               <use xlink:href="#settings"></use>
             </svg>
           </button>
 
-          <modal ref="modalAppSettings"
-            v-bind:classNames="['modal_size_sm']"
+          <modal
+            :classNames="['modal_size_sm']"
+            ref="modalAppSettings"
           >
             <template v-slot:default>
-              <app-settings
-                v-on:close="closeModalAppSettings"
-              ></app-settings>
+              <app-settings @close="closeModalAppSettings" />
             </template>
           </modal>
 
@@ -87,11 +87,8 @@ export default {
     isThemeDark() {
       return this.curThemeIsDark || (this.curThemeIsAuto && this.systemAppearanceIsDark)
     },
-    appClassNames() {
-      return {
-        'app': true,
-        'app_theme_dark': this.isThemeDark
-      }
+    appClasses() {
+      return { 'app_theme_dark': this.isThemeDark }
     },
     currentDateString() {
       const weekdayNames = [
@@ -161,7 +158,7 @@ export default {
     },
     closeModalAppSettings() {
       this.$refs.modalAppSettings.close()
-    }
+    },
   },
   created() {
     // this.migrate()
@@ -178,15 +175,14 @@ export default {
 @import '@/assets/scss/env';
 
 .app {
-  font-family: $fontMain;
-  font-size: 14px;
-  z-index: get-layer('page');
-}
-
-.app {
   width: 100vw;
   height: 100vh;
   padding: 0 16px 16px;
+  z-index: get-layer('page');
+
+  font-family: $fontMain;
+  font-size: 14px;
+
   background-image: get-light($mainBg);
 }
 
@@ -257,7 +253,7 @@ export default {
   width: 42px;
   height: 42px;
   position: absolute;
-  right: 5px;
+  right: 0;
   top: 50%;
   transform: translate(0, calc(-50% - 2px));
   filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .05));
@@ -339,7 +335,7 @@ export default {
   }
 
   .app__body {
-    background-color:get-dark($bgColor, 'main');
+    background-color: get-dark($bgColor, 'main');
     border: 1px solid get-dark($sectionBorderColor);
   }
 
