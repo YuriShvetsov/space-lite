@@ -1,17 +1,26 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-import './assets/scss/main.scss'
+import { startupLoader } from '@/js/startup'
+import db from './database'
 
 import App from './components/App.vue'
 import commonComponents from './components/common'
-import store from './store'
 
-const app = createApp(App)
+import './assets/scss/main.scss'
 
-Object.entries(commonComponents).forEach(item => {
-  const [name, component] = item
-  app.component(name, component)
+db.onReady(() => {
+  startupLoader.hide()
+
+  const pinia = createPinia()
+  const app = createApp(App)
+
+  app.use(pinia)
+
+  Object.entries(commonComponents).forEach(item => {
+    const [name, component] = item
+    app.component(name, component)
+  })
+
+  app.mount('#app')
 })
-
-app.use(store)
-app.mount('#app')
