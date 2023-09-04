@@ -184,9 +184,7 @@
   transform: translate(0, -50%);
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .form__header {
     background-color: get-dark($bgColor, 'main');

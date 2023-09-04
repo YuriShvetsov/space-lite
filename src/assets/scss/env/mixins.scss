@@ -80,3 +80,13 @@
   }
 
 }
+
+// Dark theme
+
+@mixin dark-theme() {
+
+  [data-theme="dark"] {
+    @content;
+  }
+
+}

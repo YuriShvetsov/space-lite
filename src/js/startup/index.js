@@ -3,6 +3,8 @@ const startupLoader = {
   show() {
     this.loader.src = '/gif/rhombus.gif'
     this.loader.style.cssText = `
+      width: 56px;
+      height: 56px;
       position: fixed;
       top: 50%;
       left: 50%;

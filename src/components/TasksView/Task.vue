@@ -474,9 +474,7 @@ export default {
   bottom: 100%;
 }
 
-// Dark theme 
-
-.app_theme_dark {
+@include dark-theme {
 
   .task_selected {
     background-color: $primaryColor;

@@ -1,186 +1,90 @@
 <template>
-  <!--<div class="app" :class="appClasses">-->
-
-  <!--  <sprite></sprite>-->
-
-  <!--  <div class="app__container">-->
-
-  <!--    <div class="app__header">-->
-
-  <!--      <div class="app__current-date">-->
-  <!--        <svg class="app__current-date-icon">-->
-  <!--          <use xlink:href="#calendar"></use>-->
-  <!--        </svg>-->
-  <!--        <span class="app__current-date-value">{{ currentDateString }}</span>-->
-  <!--      </div>-->
-  <!--      -->
-  <!--      <div class="app__logo">-->
-  <!--        <div class="app__logo-text">Space Lite</div>-->
-  <!--        <img class="app__logo-icon app__logo-icon_default" src="/images/stylus.png" alt="stylus">-->
-  <!--        <img class="app__logo-icon app__logo-icon_white" src="/images/stylus-white.png" alt="stylus">-->
-  <!--      </div>-->
-
-  <!--      <div class="app__settings">-->
-
-  <!--        <button class="app__settings-button button button_type_icon button_color_black"-->
-  <!--          v-on:click="openModalAppSettings"-->
-  <!--        >-->
-  <!--          <span>Settings</span>-->
-  <!--          <svg class="button__icon button__icon_stroke">-->
-  <!--            <use xlink:href="#settings"></use>-->
-  <!--          </svg>-->
-  <!--        </button>-->
-
-  <!--        <modal-->
-  <!--          :classNames="['modal_size_sm']"-->
-  <!--          ref="modalAppSettings"-->
-  <!--        >-->
-  <!--          <template v-slot:default>-->
-  <!--            <app-settings @close="closeModalAppSettings" />-->
-  <!--          </template>-->
-  <!--        </modal>-->
-
-  <!--      </div>-->
-
-  <!--    </div>-->
-
-  <!--    <div class="app__body">-->
-
-  <!--      <div class="app__section app__section_side">-->
-  <!--        <lists-view></lists-view>-->
-  <!--      </div>-->
-
-  <!--      <div class="app__section app__section_main">-->
-  <!--        <tasks-view></tasks-view>-->
-  <!--      </div>-->
-
-  <!--    </div>-->
-
-  <!--  </div>-->
-
-  <!--</div>-->
-
   <div class="app">
-    <h2>{{ userSettings.userId }}</h2>
-    <p>{{ userSettings.theme }}</p>
-    <p>{{ userSettings.showHiddenTasks ? 'visible' : 'hidden' }}</p>
+    <Sprite />
+    <div class="app__container"><p>{{ userSettings.userId }}</p>
+
+      <div class="app__header">
+
+        <div class="app__current-date">
+          <svg class="app__current-date-icon">
+            <use xlink:href="#calendar"></use>
+          </svg>
+          <span class="app__current-date-value">{{ currentDateString }}</span>
+        </div>
+
+        <div class="app__logo">
+          <div class="app__logo-text">Space Lite</div>
+          <img class="app__logo-icon app__logo-icon_default" src="/images/stylus.png" alt="stylus">
+          <img class="app__logo-icon app__logo-icon_white" src="/images/stylus-white.png" alt="stylus">
+        </div>
+
+        <div class="app__settings">
+
+          <button
+            class="app__settings-button button button_type_icon button_color_black"
+            @:click="openSettingsModal"
+          >
+            <span>Settings</span>
+            <svg class="button__icon button__icon_stroke">
+              <use xlink:href="#settings"></use>
+            </svg>
+          </button>
+
+          <teleport to="#dialog">
+            <Modal
+              v-if="isModalSettingsOpened"
+              class="modal_size_sm"
+              @closed="onCloseSettingsModal"
+            >
+              <AppSettings />
+            </Modal>
+          </teleport>
+
+        </div>
+
+      </div>
+
+      <div class="app__body">
+
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script setup>
-//import { mapGetters, mapActions } from 'vuex'
-//
-//import Sprite from './Sprite.vue'
-//import AppSettings from './AppSettings/AppSettings.vue'
-//import ListsView from './ListsView/ListsView.vue'
-//import TasksView from './TasksView/TasksView.vue'
-//
-//export default {
-//  name: 'app',
-//  components: {
-//    Sprite,
-//    AppSettings,
-//    ListsView,
-//    TasksView
-//  },
-//  data() {
-//    return {
-//      currentDate: null
-//    }
-//  },
-//  computed: {
-//    ...mapGetters(['lists', 'curThemeIsDark', 'curThemeIsAuto', 'systemAppearanceIsDark']),
-//    isThemeDark() {
-//      return this.curThemeIsDark || (this.curThemeIsAuto && this.systemAppearanceIsDark)
-//    },
-//    appClasses() {
-//      return { 'app_theme_dark': this.isThemeDark }
-//    },
-//    currentDateString() {
-//      const weekdayNames = [
-//        'Sunday',
-//        'Monday',
-//        'Tuesday',
-//        'Wednesday',
-//        'Thursday',
-//        'Friday',
-//        'Saturday'
-//      ]
-//      const monthNames = [
-//        'January',
-//        'February',
-//        'March',
-//        'April',
-//        'May',
-//        'June',
-//        'July',
-//        'August',
-//        'September',
-//        'October',
-//        'November',
-//        'December'
-//      ]
-//
-//      const day = this.currentDate.getDate()
-//      const dayEnding = getDayEnding(day)
-//      const weekday = weekdayNames[this.currentDate.getDay()]
-//      const month = monthNames[this.currentDate.getMonth()]
-//
-//      function getDayEnding(num) {
-//        if (num >= 11 && num <= 19) return 'th'
-//        if (+num.toString().slice(-1) === 1) return 'st'
-//        if (+num.toString().slice(-1) === 2) return 'nd'
-//        if (+num.toString().slice(-1) === 3) return 'rd'
-//
-//        return 'th'
-//      }
-//
-//      return `${ weekday }, ${ day }${ dayEnding } ${ month }`
-//    }
-//  },
-//  watch: {
-//    isThemeDark() {
-//      this.updateBodyStyles()
-//    },
-//  },
-//  methods: {
-//    ...mapActions(['migrate']),
-//    updateCurrentDate() {
-//      this.currentDate = new Date()
-//    },
-//    scheduleUpdateCurrentDate() {
-//      const timeout = 1000
-//
-//      setTimeout(() => {
-//        this.updateCurrentDate()
-//        this.scheduleUpdateCurrentDate()
-//      }, timeout)
-//    },
-//    updateBodyStyles() {
-//      document.body.style.backgroundColor = this.isThemeDark ? '#333' : '#fff'
-//    },
-//    openModalAppSettings() {
-//      this.$refs.modalAppSettings.open()
-//    },
-//    closeModalAppSettings() {
-//      this.$refs.modalAppSettings.close()
-//    },
-//  },
-//  created() {
-//    // this.migrate()
-//    this.updateCurrentDate()
-//    this.scheduleUpdateCurrentDate();
-//  },
-//  mounted() {
-//    this.updateBodyStyles()
-//  }
-//}
+import { ref, reactive, computed, watch } from 'vue'
+import { useConfirmDialog } from '@vueuse/core'
+import dayjs from 'dayjs'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
 
 import { useUserSettingsStore } from '@/stores/userSettings'
 
+import Sprite from './Sprite.vue'
+import AppSettings from './AppSettings/AppSettings.vue'
+
+dayjs.extend(advancedFormat)
+
 const userSettings = useUserSettingsStore()
+const updateAppTheme = () => {
+  if (userSettings.isDarkTheme) {
+    document.documentElement.setAttribute('data-theme', 'dark')
+  } else {
+    document.documentElement.removeAttribute('data-theme')
+  }
+}
 
+watch(userSettings, updateAppTheme, { deep: true })
 
+const currentDateString = ref(dayjs().format('dddd, Do MMMM, s'))
+
+// Settings modal
+
+const {
+  reveal: openSettingsModal,
+  cancel: onCloseSettingsModal,
+  isRevealed: isModalSettingsOpened
+} = useConfirmDialog()
 
 </script>
 
@@ -191,12 +95,14 @@ const userSettings = useUserSettingsStore()
   width: 100vw;
   height: 100vh;
   padding: 0 16px 16px;
+  position: relative;
   z-index: get-layer('page');
 
   font-family: $fontMain;
   font-size: 14px;
 
   background-image: get-light($mainBg);
+
 }
 
 .app__container {
@@ -316,14 +222,12 @@ const userSettings = useUserSettingsStore()
   max-width: calc(100% - 320px);
 }
 
-// Dark theme
+@include dark-theme {
 
-.app_theme_dark {
-  background-color: #000000;
-  background-image: get-dark($mainBg);
-}
-
-.app_theme_dark {
+  .app {
+    background-color: #000000;
+    background-image: get-dark($mainBg);
+  }
 
   .app__current-date {
     color: get-dark($baseTextColor);
@@ -359,6 +263,7 @@ const userSettings = useUserSettingsStore()
 }
 
 @include desktop-screen {
+
   .app {
     padding: 0;
   }
@@ -385,9 +290,7 @@ const userSettings = useUserSettingsStore()
     max-width: calc(100% - 300px);
   }
 
-  // Dark theme
-
-  .app_theme_dark {
+  @include dark-theme {
 
     .app__body {
       border-left: none;
@@ -396,5 +299,6 @@ const userSettings = useUserSettingsStore()
     }
 
   }
+
 }
 </style>

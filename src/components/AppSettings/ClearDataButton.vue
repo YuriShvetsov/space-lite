@@ -1,7 +1,7 @@
 <template>
   <button
     class="clear-all-data__btn button button_type_icon-text button_color_red"
-    @click="clearData"
+    @click="lists.removeAllLists"
   >
     <span>Clear data</span>
     <svg class="button__icon button__icon_stroke">
@@ -10,17 +10,7 @@
   </button>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-
-export default {
-  name: 'clear-data-button',
-  methods: {
-    ...mapActions(['removeAllLists']),
-    clearData() {
-      const isConfirm = confirm('Are you sure you want to clear all the data?')
-      if (isConfirm) this.removeAllLists()
-    }
-  }
-}
+<script setup>
+import { useListsStore } from '@/stores/lists'
+const lists = useListsStore()
 </script>

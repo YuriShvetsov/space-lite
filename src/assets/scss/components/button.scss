@@ -215,9 +215,7 @@
   border: 1px solid;
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   // Common
 

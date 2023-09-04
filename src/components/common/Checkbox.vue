@@ -94,9 +94,7 @@
   }
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .checkbox__bg {
     background-color: get-dark($bgColor, 'main');

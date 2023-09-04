@@ -161,48 +161,49 @@ export default {
   }
 }
 
-// Dark theme
+@include dark-theme {
 
-.app_theme_dark .icon-selector {
-
-  &__toggle-button {
-    background-color: get-dark($bgColor, 'main');
-  }
-
-  &__selected-icon {
-    stroke: #ffffff;
-  }
-
-  &__list-wrapper {
-    background-color: $transparent;
-  }
-
-  &__list {
-    background-color: get-dark($bgColor, 'main');
-    @include custom-scrollbar(get-dark($bgColor, 'main'));
-  }
-
-  &__item {
-    &:hover {
-      background-color: darken(get-dark($bgColor, 'main'), 4%);
+  .icon-selector {
+    &__toggle-button {
+      background-color: get-dark($bgColor, 'main');
+    }
+  
+    &__selected-icon {
+      stroke: #ffffff;
     }
 
-    &_active,
-    &_active:hover {
-      background-color: $primaryColor;
+    &__list-wrapper {
+      background-color: $transparent;
     }
-  }
 
-  &__item-icon {
-    stroke: #ffffff;
-  }
+    &__list {
+      background-color: get-dark($bgColor, 'main');
+      @include custom-scrollbar(get-dark($bgColor, 'main'));
+    }
 
-  &__item:hover .icon-selector__item-icon {
-    stroke: #ffffff;
-  }
+    &__item {
+      &:hover {
+        background-color: darken(get-dark($bgColor, 'main'), 4%);
+      }
 
-  &__item_active:hover .icon-selector__item-icon {
-    stroke: #ffffff;
+      &_active,
+      &_active:hover {
+        background-color: $primaryColor;
+      }
+    }
+
+    &__item-icon {
+      stroke: #ffffff;
+    }
+
+    &__item:hover .icon-selector__item-icon {
+      stroke: #ffffff;
+    }
+
+    &__item_active:hover .icon-selector__item-icon {
+      stroke: #ffffff;
+    }
+
   }
 
 }

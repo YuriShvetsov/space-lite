@@ -57,9 +57,7 @@
   }
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .tooltip__content {
     background-color: get-dark($bgColor, 'main');

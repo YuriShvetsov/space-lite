@@ -31,12 +31,7 @@ class Database {
 
     this._ready()
   }
-  
-  async getCurrentUser() {
-    console.log(this.users.collection.findOne({}))
-    return await this.users.collection.findOne({})
-  }
-  
+
   async _initUsersCollection() {
     this.users = new Users(this.db)
     await this.users.init()
@@ -80,6 +75,6 @@ class Database {
   }
 }
 
-const database = new Database()
-
-export default database
+export const db = new Database()
+export const users = db.users
+export const lists = db.lists

@@ -189,9 +189,7 @@ export default {
   margin-right: 10px;
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .list-item__button {
     color: get-dark($baseTextColor);

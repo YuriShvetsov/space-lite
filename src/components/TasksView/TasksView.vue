@@ -765,9 +765,7 @@ export default {
   transition: transform .3s ease;
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .tasks-view__icon {
     stroke: #ffffff;

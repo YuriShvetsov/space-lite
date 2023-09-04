@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" :class="classNames">
+  <div class="modal">
 
     <Transition name="fade">
       <div
@@ -9,7 +9,10 @@
       ></div>
     </Transition>
 
-    <Transition name="fade-scale">
+    <Transition name="fade-scale"
+      @after-leave="onAfterLeave"
+      @leave-cancelled="onLeaveCancelled"
+    >
       <div
         v-if="isVisible"
         class="modal__container"
@@ -24,12 +27,7 @@
 <script>
 export default {
   name: 'modal',
-  props: {
-    classNames: {
-      type: Array,
-      default: ['modal_size_default']
-    }
-  },
+  emits: ['closed'],
   data() {
     return {
       isVisible: false
@@ -56,9 +54,13 @@ export default {
             break
         }
       })
+    },
+    onAfterLeave() {
+      this.$emit('closed')
     }
   },
   mounted() {
+    this.open()
     this.onKeydownDocument()
   }
 }
@@ -161,9 +163,7 @@ export default {
   animation-fill-mode: both;
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .modal__overlay {
     background-color: rgba(31, 31, 31, .30);

@@ -4,8 +4,9 @@ export default {
   userId: null,
   
   theme: 'light',
-  availableThemes: [],
-  systemAppearance: false,
+  availableThemes: ['light', 'dark'],
+  systemAppearance: null,
   
+  showHiddenLists: false,
   showHiddenTasks: false
 }

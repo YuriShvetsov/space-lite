@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid'
 import { AsyncCollection } from '../lib'
 
 export default class Users extends AsyncCollection {
@@ -8,12 +7,11 @@ export default class Users extends AsyncCollection {
   
   async init() {
     await this.load()
-    const user = this.collection.findOne({})
+    const user = this.collection.findOne()
 
     if (user) return
 
     const DEFAULT_USER_DATA = {
-      _id: uuid(),
       lists: [],
       ui: {
         showHiddenLists: false,
@@ -22,7 +20,6 @@ export default class Users extends AsyncCollection {
       }
     }
 
-    this.collection.insert(DEFAULT_USER_DATA)
-    this.save()    
+    this.create(DEFAULT_USER_DATA)
   }
 }

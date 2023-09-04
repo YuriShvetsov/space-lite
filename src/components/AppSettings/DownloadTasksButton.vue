@@ -1,6 +1,7 @@
 <template>
-  <a class="download-todos__btn button button_type_icon-text"
-    :href="dataJSON"
+  <a
+    class="download-todos__btn button button_type_icon-text"
+    :href="json"
     :download="filename"
   >
     <span>Download tasks</span>
@@ -10,20 +11,24 @@
   </a>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { useUserSettingsStore } from '@/stores/userSettings'
+const userSettings = useUserSettingsStore()
 
-export default {
-  name: 'download-tasks',
-  computed: {
-    ...mapGetters(['lists']),
-    dataJSON() {
-      return `data:text/json;charset=utf-8,${ encodeURIComponent(JSON.stringify(this.lists)) }`
-    },
-    filename() {
-      const now = new Date().toISOString()
-      return `sl-tasks-${ now }.json`
-    }
-  }
-}
+const json = '{}'
+const filename = ''
+
+//export default {
+//  name: 'download-tasks',
+//  computed: {
+//    ...mapGetters(['lists']),
+//    dataJSON() {
+//      return `data:text/json;charset=utf-8,${ encodeURIComponent(JSON.stringify(this.lists)) }`
+//    },
+//    filename() {
+//      const now = new Date().toISOString()
+//      return `sl-tasks-${ now }.json`
+//    }
+//  }
+//}
 </script>

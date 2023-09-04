@@ -44,19 +44,21 @@
   }
 }
 
-// Dark theme
+@include dark-theme {
 
-.app_theme_dark .scrollable-child {
-  &::-webkit-scrollbar-thumb {
-    background: darken($gray, 10%);
-    border: 2.8px solid get-dark($bgColor, 'main');
+  .scrollable-child {
+    &::-webkit-scrollbar-thumb {
+      background: darken($gray, 10%);
+      border: 2.8px solid get-dark($bgColor, 'main');
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: darken($gray, 15%);
+    }
+
+    &_scrollbar-hidden::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
   }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: darken($gray, 15%);
-  }
-
-  &_scrollbar-hidden::-webkit-scrollbar-thumb {
-    background: transparent;
-  }
 }

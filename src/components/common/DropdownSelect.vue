@@ -423,9 +423,7 @@ export default {
   }
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .select__input {
     color: get-dark($baseTextColor);

@@ -1,5 +1,5 @@
 <template>
-  <div :class="containerClassNames">
+  <div class="app-settings" :class="containerClasses">
 
     <div class="app-settings__header">
       <div class="app-settings__title title title_size_l">Settings</div>
@@ -21,7 +21,7 @@
 
         <div class="app-settings__section-row app-settings__appearance">
           <div class="app-settings__text app-settings__text_left-pos text">Appearance:</div>
-          <theme-switcher class="app-settings__theme-switcher" />
+          <ThemeSwitcher class="app-settings__theme-switcher" />
         </div>
 
       </div>
@@ -32,15 +32,15 @@
 
         <div class="app-settings__section-row">
           <div class="app-settings__section-subrow">
-            <hidden-todos-switcher />
+            <HiddenTasksSwitcher />
             <div class="app-settings__text app-settings__text_right-pos text">Show hidden tasks</div>
           </div>
         </div>
 
         <div class="app-settings__section-row">
           <div class="app-settings__section-subrow">
-            <download-tasks-button class="app-settings__download-button" />
-            <clear-data-button />
+            <DownloadTasksButton class="app-settings__download-button" />
+            <ClearDataButton />
           </div>
           <div class="app-settings__section-subrow">
             <div class="app-settings__subtext">Import your tasks in another browser or if you have cleared the data</div>
@@ -54,44 +54,42 @@
   </div>  
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-
+<script setup>
 import ThemeSwitcher from './ThemeSwitcher.vue'
-import HiddenTodosSwitcher from './HiddenTodosSwitcher.vue'
-import ClearDataButton from './ClearDataButton.vue'
+import HiddenTasksSwitcher from './HiddenTasksSwitcher.vue'
 import DownloadTasksButton from './DownloadTasksButton.vue'
+import ClearDataButton from './ClearDataButton.vue'
 
-export default {
-  name: 'app-settings',
-  components: {
-    ThemeSwitcher,
-    HiddenTodosSwitcher,
-    ClearDataButton,
-    DownloadTasksButton
-  },
-  emits: ['close'],
-  computed: {
-    ...mapGetters(['curThemeIsDark']),
-    containerClassNames() {
-      return {
-        'app-settings': true,
-        'app-settings_theme_dark': this.curThemeIsDark
-      }
-    }
-  },
-  methods: {
-    emitClose() {
-      this.$emit('close')
-    },
-    emitShow() {
-      this.$emit('show')
-    },
-    emitHide() {
-      this.$emit('hide')
-    }
-  }
-}
+//export default {
+//  name: 'app-settings',
+//  components: {
+//    ThemeSwitcher,
+//    HiddenTodosSwitcher,
+//    ClearDataButton,
+//    DownloadTasksButton
+//  },
+//  emits: ['close'],
+//  computed: {
+//    ...mapGetters(['curThemeIsDark']),
+//    containerClassNames() {
+//      return {
+//        'app-settings': true,
+//        'app-settings_theme_dark': this.curThemeIsDark
+//      }
+//    }
+//  },
+//  methods: {
+//    emitClose() {
+//      this.$emit('close')
+//    },
+//    emitShow() {
+//      this.$emit('show')
+//    },
+//    emitHide() {
+//      this.$emit('hide')
+//    }
+//  }
+//}
 </script>
 
 <style lang="scss" scoped>
@@ -100,6 +98,7 @@ export default {
 .app-settings {
   width: 100%;
   height: auto;
+  font-family: $fontMain;
 }
 
 .app-settings__header {
@@ -216,9 +215,7 @@ export default {
   margin-left: 6px;
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .app-settings__header {
     background-color: get-dark($bgColor, 'main');

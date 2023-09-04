@@ -8,13 +8,13 @@ export const useUserSettingsStore = () => {
   const defineInnerStore = defineStore('userSettings', {
     state: () => state,
     getters,
-    actions  
+    actions
   })
   const store = defineInnerStore()
 
   if (store.isInitialized) return store
-  
+
   store.init()
-  
+
   return store
 }

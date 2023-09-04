@@ -549,9 +549,7 @@ export default {
   }
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .form-import__select::before {
     background-color: get-dark($bgColor, 'main');

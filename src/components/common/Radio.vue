@@ -112,10 +112,7 @@ export default {
   font-size: 12px;
 }
 
-// Dark theme
-
-.app_theme_dark {
-
+@include dark-theme {
   .radio__text {
     color: #fff;
   }

@@ -110,9 +110,7 @@ export default {
   background-color: lighten($primaryColor, 30%);
 }
 
-// Dark theme
-
-.app_theme_dark {
+@include dark-theme {
 
   .line-select__option {
     color: get-dark($baseTextColor);
