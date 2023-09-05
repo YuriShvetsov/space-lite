@@ -1,105 +1,133 @@
 <template>
-  <li class="list-item"
-    v-bind:class="{ 'list-item_active': isActive }"
+  <li
+    class="list-item"
+    :class="containerClasses"
   >
     <div class="list-item__pointer list-item__pointer_top"></div>
-    <button class="list-item__button button"
-      v-on:click="openCurList"
-      v-on:mousedown="handleMouseDown"
-      v-on:mouseup="handleMouseUp"
-      v-on:mouseout="handleMouseOut"
+    <button
+      class="list-item__button button"
+      @click="listsStore.openList(id)"
     >
-      <svg class="list-item__icon">
-        <use :xlink:href="formatIconId(icon)"></use>
-      </svg>
+      <Icon class="list-item__icon" :name="icon" />
       <span class="list-item__name">{{ name }}</span>
-      <span class="list-item__count">{{ countTodos }}</span>
+<!--      <span class="list-item__count">{{ countTodos }}</span>-->
     </button>
     <div class="list-item__pointer list-item__pointer_bottom"></div>
   </li>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
+<script setup>
+import { computed } from 'vue'
+
+import { useListsStore } from '@/stores/lists'
 import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons'
 
-export default {
-  name: 'list-item',
-  props: {
-    id: String,
-    name: String,
-    icon: {
-      type: String,
-      default: (value) => {
-        if (!value || !LIST_ICONS.includes(value)) {
-          return DEFAULT_LIST_ICON
-        }
-
-        return value
-      }
-    },
-    todos: Array,
-    isActive: {
-      type: Boolean,
-      default: false
-    }
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
   },
-  data() {
-    return {
-      timerStartMoving: null
-    }
+  name: {
+    type: String,
+    required: true
   },
-  computed: {
-    ...mapGetters([
-      'lists',
-      'openedList',
-      'hiddenTodosVisible'
-    ]),
-    isOpened() {
-      return this.openedList.id === this.id
-    },
-    countTodos() {
-      const countAllTodos = this.todos.length
-      const countVisibleTodos = this.todos.filter(todo => !todo.hidden ).length
-      const count = this.hiddenTodosVisible ? countAllTodos : countVisibleTodos
-
-      if (count > 99) return '99+'
-
-      return count
-    }
+  icon: {
+    type: String,
+    default: DEFAULT_LIST_ICON
   },
-  methods: {
-    ...mapActions([
-      'openList'
-    ]),
-    openCurList() {
-      if (this.isOpened) return
-
-      this.openList(this.id)
-    },
-    handleMouseDown(e) {
-      const leftButton = (e.which === 1)
-
-      if (!leftButton) return
-
-      this.timerStartMoving = setTimeout(() => {
-        if (!this.isOpened) this.openList(this.id)
-
-        this.$emit('start-moving', this.id)
-        clearTimeout(this.timerStartMoving)
-      }, 500)
-    },
-    handleMouseUp(event) {
-      clearTimeout(this.timerStartMoving)
-    },
-    handleMouseOut(event) {
-      clearTimeout(this.timerStartMoving)
-    },
-    formatIconId(icon) {
-      return `#${ icon }`
-    }
+  opened: {
+    type: Boolean,
+    default: false
   }
-}
+})
+
+const listsStore = useListsStore()
+
+const containerClasses = computed(() => {
+  return { 'list-item_active': props.opened }
+})
+
+// Handlers
+
+
+
+// export default {
+//   name: 'list-item',
+//   props: {
+//     id: String,
+//     name: String,
+//     icon: {
+//       type: String,
+//       default: (value) => {
+//         if (!value || !LIST_ICONS.includes(value)) {
+//           return DEFAULT_LIST_ICON
+//         }
+//
+//         return value
+//       }
+//     },
+//     todos: Array,
+//     isActive: {
+//       type: Boolean,
+//       default: false
+//     }
+//   },
+//   data() {
+//     return {
+//       timerStartMoving: null
+//     }
+//   },
+//   computed: {
+//     ...mapGetters([
+//       'lists',
+//       'openedList',
+//       'hiddenTodosVisible'
+//     ]),
+//     isOpened() {
+//       return this.openedList.id === this.id
+//     },
+//     countTodos() {
+//       const countAllTodos = this.todos.length
+//       const countVisibleTodos = this.todos.filter(todo => !todo.hidden ).length
+//       const count = this.hiddenTodosVisible ? countAllTodos : countVisibleTodos
+//
+//       if (count > 99) return '99+'
+//
+//       return count
+//     }
+//   },
+//   methods: {
+//     ...mapActions([
+//       'openList'
+//     ]),
+//     openCurList() {
+//       if (this.isOpened) return
+//
+//       this.openList(this.id)
+//     },
+//     handleMouseDown(e) {
+//       const leftButton = (e.which === 1)
+//
+//       if (!leftButton) return
+//
+//       this.timerStartMoving = setTimeout(() => {
+//         if (!this.isOpened) this.openList(this.id)
+//
+//         this.$emit('start-moving', this.id)
+//         clearTimeout(this.timerStartMoving)
+//       }, 500)
+//     },
+//     handleMouseUp(event) {
+//       clearTimeout(this.timerStartMoving)
+//     },
+//     handleMouseOut(event) {
+//       clearTimeout(this.timerStartMoving)
+//     },
+//     formatIconId(icon) {
+//       return `#${ icon }`
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>

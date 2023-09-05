@@ -1,9 +1,8 @@
 import { get, set } from 'lodash'
-import { v4 as uuid } from 'uuid'
 import ForerunnerDB from 'forerunnerdb'
 
-import Users from './collections/users'
-import Lists from './collections/lists'
+import UsersCollection from './collections/users'
+import ListsCollection from './collections/lists'
 
 const isDev = import.meta.env.DEV
 
@@ -25,7 +24,7 @@ class Database {
   async _initCollections(app, options) {
     await this._initUsersCollection()
     await this._initListsCollection()
-    //    this.initTasksCollection()
+    // await this.initTasksCollection()
     
     await sleep(1000)
 
@@ -33,7 +32,7 @@ class Database {
   }
 
   async _initUsersCollection() {
-    this.users = new Users(this.db)
+    this.users = new UsersCollection(this.db)
     await this.users.init()
   }
   
@@ -43,38 +42,20 @@ class Database {
 
     if (!userId) throw new Error('User not found')
     
-    this.lists = new Lists(this.db)
-    await this.lists.init(userId)
+    this.lists = new ListsCollection(this.db)
 
-    const list = this.lists.collection.findOne({ _id: userId })
-
-    if (list) return
-    
-    const DEFAULT_LIST_DATA = {
-      _id: uuid(),
-      userId,
-      name: 'Main',
-      icon: 'list',
-      tasks: []
-    }
-
-    this.lists.collection.insert(DEFAULT_LIST_DATA)
-    await this.lists.save()
+    await this.lists.init()
   }
   
   async _initTasksCollection() {
     
   }
   
-  _ready() {
-    this.readyHandler()
-  }
-  
   onReady(callback) {
-    this.readyHandler = callback ? callback : () => console.log('db_is_ready')
+    this._ready = callback ? callback : () => console.log('db_is_ready')
   }
 }
 
-export const db = new Database()
-export const users = db.users
-export const lists = db.lists
+const db = new Database()
+
+export default db

@@ -1,6 +1,6 @@
 <template>
-  <Checkbox
-    :checked="userStore.showHiddenTasks"
+  <checkbox
+    :checked="userStore.showHiddenLists"
     @change="onChangeCheckbox"
   />
 </template>
@@ -13,7 +13,7 @@ const emit = defineEmits(['saved'])
 const userStore = useUserStore()
 
 const onChangeCheckbox = async () => {
-  await userStore.toggleShowHiddenTasks()
+  await userStore.toggleShowHiddenLists()
   emit('saved')
 }
 </script>

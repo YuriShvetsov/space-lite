@@ -9,9 +9,7 @@
         v-on:click="emitCancel"
       >
         <span>Cancel</span>
-        <svg class="button__icon button__icon_fill">
-          <use xlink:href="#close"></use>
-        </svg>
+        <Icon class="button__icon button__icon_fill" name="close" />
       </button>
     </div>
 
@@ -32,9 +30,7 @@
             @click="onToggleSelector"
             tabindex="1"
           >
-            <svg class="form-import__select-icon">
-              <use xlink:href="#check-bold"></use>
-            </svg>
+            <Icon class="form-import__select-icon" name="check-bold" />
           </div>
           <span class="form-import__input-text text text_color_gray">Select all</span>
         </div>
@@ -59,9 +55,7 @@
           >
 
             <div class="select-todos__name-wrapper" @click="onToggleList(list.id)">
-              <svg class="select-todos__list-icon">
-                <use :xlink:href="getListIcon(list.icon)"></use>
-              </svg>
+              <Icon class="select-todos__list-icon" :name="getListIcon(list.icon)" />
               <div class="select-todos__list-name">{{ list.name }} ({{ list.todos.length }})</div>
             </div>
             <ul class="select-todos__items-list">
@@ -75,25 +69,15 @@
                       v-bind:checked="todo.isSelected"
                       v-on:change="onToggleTodo(list.id, todo.id)"
                     >
-                    <svg class="select-todos__check-icon">
-                      <use xlink:href="#check"></use>
-                    </svg>
+                    <Icon class="select-todos__check-icon" name="check" />
                   </label>
                 </div>
                 <div class="select-todos__item-content">
                   <div class="select-todos__inner-row select-todos__inner-row_between">
                     <div class="select-todos__item-name">{{ todo.name }}</div>
                     <div class="select-todos__item-icons">
-                      <svg class="select-todos__item-hidden-status"
-                        v-show="todo.hidden"
-                      >
-                        <use xlink:href="#eye-slash"></use>
-                      </svg>
-                      <svg class="select-todos__item-priority"
-                        v-bind:class="priorityClassName(todo)"
-                      >
-                        <use xlink:href="#flag"></use>
-                      </svg>
+                      <Icon v-show="todo.hidden" class="select-todos__item-hidden-status" name="eye-slash" />
+                      <Icon class="select-todos__item-priority" :class="priorityClassName(todo)" name="flag" />
                     </div>
                   </div>
                   <div class="select-todos__inner-row">

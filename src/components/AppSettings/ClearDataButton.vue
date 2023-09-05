@@ -2,11 +2,10 @@
   <button
     class="clear-all-data__btn button button_type_icon-text button_color_red"
     @click="lists.removeAllLists"
+    disabled
   >
     <span>Clear data</span>
-    <svg class="button__icon button__icon_stroke">
-      <use xlink:href="#delete"></use>
-    </svg>
+    <Icon class="button__icon button__icon_stroke" name="delete" />
   </button>
 </template>
 

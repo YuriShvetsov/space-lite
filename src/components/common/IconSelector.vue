@@ -2,9 +2,7 @@
   <div class="icon-selector">
     
     <button class="icon-selector__toggle-button">
-      <svg class="icon-selector__selected-icon">
-        <use :xlink:href="formatIconId(selectedIcon)"></use>
-      </svg>
+      <Icon class="icon-selector__selected-icon" :name="selectedIcon" />
     </button>
 
     <div class="icon-selector__list-wrapper">
@@ -16,9 +14,7 @@
           :key="index"
           @click="changeSelectedIcon(icon)"
         >
-          <svg class="icon-selector__item-icon">
-            <use :xlink:href="formatIconId(icon)"></use>
-          </svg>
+          <Icon class="icon-selector__item-icon" :name="icon" />
         </li>
       </ul>
     </div>

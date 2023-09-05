@@ -1,0 +1,65 @@
+// fade
+
+.fade-enter-active {
+  animation: fade-in 150ms ease-in-out;
+  animation-fill-mode: both;
+}
+
+.fade-leave-active {
+  animation: fade-out 150ms ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// fade-non-linear
+
+.fade-non-linear-enter-active {
+  animation: fade-non-linear-in 150ms ease-in-out;
+  animation-fill-mode: both;
+}
+
+.fade-non-linear-leave-active {
+  animation: fade-non-linear-out 150ms ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes fade-non-linear-in {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-non-linear-out {
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 0;
+  }
+}

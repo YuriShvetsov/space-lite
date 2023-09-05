@@ -6,9 +6,7 @@
       @change.stop="emitChange"
     >
     <div class="checkbox__bg">
-      <svg class="checkbox__icon">
-        <use xlink:href="#check-bold"></use>
-      </svg>
+      <Icon class="checkbox__icon" name="check-bold" />
     </div>
   </label>
 </template>

@@ -22,9 +22,7 @@
               v-model.trim="_name"
               @keydown.enter.prevent
             >
-            <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
-              <use xlink:href="#warning"></use>
-            </svg>
+            <Icon class="form__icon form__icon_fill_red form__icon_pos_right_center" name="warning" />
             <div class="form__input-warning" :class="nameWarningClasses">{{ nameWarningText }}</div>
           </div>
         </label>

@@ -24,32 +24,40 @@ export class AsyncCollection {
     })
   }
 
-  async create(data) {
-    this.collection.insert({
-      _id: uuid(),
-      ...data
-    })
+  async insert(data, callback) {
+    const getResponse = () => {
+      return new Promise(resolve => {
+        this.collection.insert({
+          _id: uuid(),
+          ...data
+        }, response => resolve(response))
+      })
+    }
+
+    const response = await getResponse()
 
     await this.save()
+
+    if (callback) callback(response)
   }
 
   async find(options = {}, projection = {}) {
-    return await this.collection.find(options, projection)
+    await this.load()
+    return this.collection.find(options, projection)
   }
 
   async findOne(options = {}) {
-    return await this.collection.findOne(options)
+    await this.load()
+    return this.collection.findOne(options)
   }
 
-  update() {
-    return new Promise((resolve, reject) => {
-
-    })
+  async update(options = {}, data = {}) {
+    this.collection.update(options, data)
+    await this.save()
   }
 
-  remove() {
-    return new Promise((resolve, reject) => {
-
-    })
+  async remove(options = {}) {
+    this.collection.remove(options)
+    await this.save()
   }
 }

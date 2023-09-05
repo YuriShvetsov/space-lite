@@ -1,19 +1,19 @@
 <template>
   <a
     class="download-todos__btn button button_type_icon-text"
+    disabled
     :href="json"
     :download="filename"
+    @click.prevent
   >
     <span>Download tasks</span>
-    <svg class="button__icon button__icon_stroke">
-      <use xlink:href="#download"></use>
-    </svg>
+    <Icon class="button__icon button__icon_stroke" name="download" />
   </a>
 </template>
 
 <script setup>
-import { useUserSettingsStore } from '@/stores/userSettings'
-const userSettings = useUserSettingsStore()
+import { useUserStore } from '@/stores/user'
+const userStore = useUserStore()
 
 const json = '{}'
 const filename = ''

@@ -1,14 +1,20 @@
 // Vendors
+
 @import './vendor/normalize';
 
 // Environment
+
 @import './env';
 
 // Common settings, fonts
+
 @import './reset';
 @import './fonts';
+@import './common';
 
 // Components and other custom styles
+
+@import './utils/animations';
 @import './components/text';
 @import './components/button';
 @import './components/form';

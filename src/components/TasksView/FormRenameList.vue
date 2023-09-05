@@ -1,17 +1,15 @@
 <template>
   <form class="form form_type_input"
-    v-on:submit.prevent
+    @submit.prevent
   >
     
     <div class="form__header">
       <div class="form__title title title_size_l">Rename list</div>
       <button class="form__cancel-button button button_type_icon button_color_black"
-        v-on:click="emitCancel"
+        @click="emitCancel"
       >
         <span>Cancel</span>
-        <svg class="button__icon button__icon_fill">
-          <use xlink:href="#close"></use>
-        </svg>
+        <Icon class="button__icon button__icon_fill" name="close" />
       </button>
     </div>
 
@@ -30,9 +28,7 @@
               v-model.trim="_name"
               @keydown.enter.prevent
             >
-            <svg class="form__icon form__icon_fill_red form__icon_pos_right_center">
-              <use xlink:href="#warning"></use>
-            </svg>
+            <Icon class="form__icon form__icon_fill_red form__icon_pos_right_center" name="warning" />
             <div class="form__input-warning" :class="nameWarningClasses">{{ nameWarningText }}</div>
           </div>
         </label>

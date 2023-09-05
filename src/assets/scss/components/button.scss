@@ -24,7 +24,9 @@
   background-color: lighten($primaryColor, 35%);
 }
 
-.button:disabled {
+.button:disabled,
+.button[disabled],
+.button[disabled=true] {
   filter: grayscale(1);
   opacity: .5;
   user-select: none;

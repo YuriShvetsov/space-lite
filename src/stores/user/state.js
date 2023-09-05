@@ -1,12 +1,12 @@
 export default {
   isInitialized: false,
   
-  userId: null,
+  id: null,
   
   theme: 'light',
   availableThemes: ['light', 'dark'],
   systemAppearance: null,
-  
+
   showHiddenLists: false,
   showHiddenTasks: false
 }

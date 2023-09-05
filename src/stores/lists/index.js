@@ -12,9 +12,5 @@ export const useListsStore = () => {
   })
   const store = defineInnerStore()
 
-  if (store.isInitialized) return store
-
-  store.init()
-
   return store
 }

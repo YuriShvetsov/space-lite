@@ -16,9 +16,7 @@
         <label class="task__done-label"
           v-bind:for="id"
         >
-          <svg class="task__done-icon">
-            <use xlink:href="#check"></use>
-          </svg>
+          <Icon class="task__done-icon" name="check" />
         </label>
       </div>
 
@@ -30,25 +28,15 @@
       </div>
 
       <div class="task__labels">
-        <svg class="task__hidden-status"
-          v-show="hidden"
-        >
-          <use xlink:href="#eye-slash"></use>
-        </svg>
-        <svg class="task__priority"
-          :class="priorityClasses"
-        >
-          <use xlink:href="#flag"></use>
-        </svg>
+        <Icon v-show="hidden" class="task__hidden-status" name="eye-slash" />
+        <Icon class="task__priority" :class="priorityClasses" name="flag" />
       </div>
 
       <button class="task__replace-button button button_type_icon button_type_grabber button_color_black"
         v-on:mousedown="emitStartMoving"
       >
         <span>Replace</span>
-        <svg class="button__icon button__icon_stroke">
-          <use xlink:href="#grabber"></use>
-        </svg>
+        <Icon class="button__icon button__icon_stroke" name="grabber" />
       </button>
 
       <popup ref="menu" class="task__menu">
@@ -58,9 +46,7 @@
             v-on:click="toggleMenu"
           >
             <span>Menu</span>
-            <svg class="button__icon button__icon_stroke">
-              <use xlink:href="#menu"></use>
-            </svg>
+            <Icon class="button__icon button__icon_stroke" name="menu" />
           </button>
         </template>
 
@@ -71,9 +57,7 @@
                 v-on:click="openModalEditTask(), closeMenu()"
               >
                 <span>Edit</span>
-                <svg class="button__icon button__icon_fill">
-                  <use xlink:href="#edit"></use>
-                </svg>
+                <Icon class="button__icon button__icon_fill" name="edit" />
               </button>
             </li>
             <li class="popup__action">
@@ -81,9 +65,7 @@
                 v-on:click="emitDuplicate(), closeMenu()"
               >
                 <span>Duplicate</span>
-                <svg class="button__icon button__icon_fill">
-                  <use xlink:href="#duplicate"></use>
-                </svg>
+                <Icon class="button__icon button__icon_fill" name="duplicate" />
               </button>
             </li>
             <li class="popup__action">
@@ -91,9 +73,7 @@
                 v-on:click="emitHideShow(), closeMenu()"
               >
                 <span>{{ toggleVisibilityText }}</span>
-                <svg class="button__icon button__icon_fill">
-                  <use :xlink:href="toggleVisibilityIcon"></use>
-                </svg>
+                <Icon class="button__icon button__icon_fill" :name="toggleVisibilityIcon" />
               </button>
             </li>
             <div class="popup__devider"></div>
@@ -102,9 +82,7 @@
                 v-on:click="emitRemove(), closeMenu()"
               >
                 <span>Delete</span>
-                <svg class="button__icon button__icon_stroke">
-                  <use xlink:href="#delete"></use>
-                </svg>
+                <Icon class="button__icon button__icon_stroke" name="delete" />
               </button>
             </li>
           </ul>

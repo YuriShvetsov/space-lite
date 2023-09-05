@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import { PiniaLogger } from "pinia-logger"
 
 import { startupLoader } from '@/js/startup'
-import { db } from './database'
+import db from './database'
 
 import App from './components/App.vue'
 import commonComponents from './components/common'
@@ -17,7 +17,7 @@ db.onReady(() => {
   const app = createApp(App)
 
   pinia.use(PiniaLogger({
-    expanded: true,
+    expanded: false,
     disabled: !import.meta.env.DEV
   }))
   app.use(pinia)

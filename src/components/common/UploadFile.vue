@@ -5,9 +5,7 @@
       v-on:keydown="onKeydownButton"
     >
       <span>{{ name }}</span>
-      <svg class="button__icon button__icon_stroke">
-        <use xlink:href="#upload"></use>
-      </svg>
+      <Icon class="button__icon button__icon_stroke" name="upload" />
     </button>
     <input type="file" class="upload-file__input"
       ref="inputFile"

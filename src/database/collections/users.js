@@ -12,14 +12,17 @@ export default class Users extends AsyncCollection {
     if (user) return
 
     const DEFAULT_USER_DATA = {
-      lists: [],
-      ui: {
-        showHiddenLists: false,
-        showHiddenTasks: false,
-        theme: 'light'
+      settings: {
+        ui: {
+          theme: 'light'
+        },
+        data: {
+          showHiddenLists: false,
+          showHiddenTasks: false
+        }
       }
     }
 
-    this.create(DEFAULT_USER_DATA)
+    await this.insert(DEFAULT_USER_DATA)
   }
 }

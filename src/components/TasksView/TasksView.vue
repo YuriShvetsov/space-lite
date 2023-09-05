@@ -4,9 +4,7 @@
     <div class="tasks-view__header">
 
       <div class="tasks-view__title title title_size_m" :title="name">
-        <svg class="tasks-view__icon">
-          <use :xlink:href="formattedIcon"></use>
-        </svg>
+        <Icon class="tasks-view__icon" :name="icon" />
         <span>{{ name }}</span>
       </div>
 
@@ -18,18 +16,14 @@
           v-on:click="removeCompletedTodos(id)"
         >
           <span>Clear</span>
-          <svg class="button__icon button__icon_stroke">
-            <use xlink:href="#backspace"></use>
-          </svg>
+          <Icon class="button__icon button__icon_stroke" name="backspace" />
         </button>
 
         <button class="button button_type_icon-text button_fill_violet"
           v-on:click="openModalAddTask"
         >
           <span>Task</span>
-          <svg class="button__icon button__icon_stroke">
-            <use xlink:href="#plus"></use>
-          </svg>
+          <Icon class="button__icon button__icon_stroke" name="plus" />
         </button>
 
         <popup ref="menu">
@@ -39,9 +33,7 @@
               v-on:click="toggleMenu"
             >
               <span>Menu</span>
-              <svg class="button__icon button__icon_stroke">
-                <use xlink:href="#menu"></use>
-              </svg>
+              <Icon class="button__icon button__icon_stroke" name="menu" />
             </button>
           </template>
 
@@ -52,9 +44,7 @@
                   v-on:click="openModalRenameList(), closeMenu()"
                 >
                   <span>Rename</span>
-                  <svg class="button__icon button__icon_fill">
-                    <use xlink:href="#edit"></use>
-                  </svg>
+                  <Icon class="button__icon button__icon_fill" name="edit" />
                 </button>
               </li>
               <li class="popup__action">
@@ -62,9 +52,7 @@
                   v-on:click="openModalImportTodos(), closeMenu()"
                 >
                   <span>Import</span>
-                  <svg class="button__icon button__icon_stroke">
-                    <use xlink:href="#upload"></use>
-                  </svg>
+                  <Icon class="button__icon button__icon_stroke" name="upload" />
                 </button>
               </li>
               <div class="popup__devider"></div>
@@ -73,9 +61,7 @@
                   v-on:click="openModalDeleteTasks(), closeMenu()"
                 >
                   <span>Delete all tasks</span>
-                  <svg class="button__icon button__icon_fill">
-                    <use xlink:href="#list-alternative"></use>
-                  </svg>
+                  <Icon class="button__icon button__icon_fill" name="list-alternative" />
                 </button>
               </li>
               <li class="popup__action">
@@ -83,9 +69,7 @@
                   v-on:click="openModalDeleteList(), closeMenu()"
                 >
                   <span>Delete{{ hasTodos ? ' list' : '' }}</span>
-                  <svg class="button__icon button__icon_stroke">
-                    <use xlink:href="#delete"></use>
-                  </svg>
+                  <Icon class="button__icon button__icon_stroke" name="delete" />
                 </button>
               </li>
             </ul>
@@ -128,12 +112,8 @@
 
       <div class="tasks-view__no-tasks" v-show="isEmpty">
         <div class="icon">
-          <svg class="icon__document">
-            <use xlink:href="#document-large"></use>
-          </svg>
-          <svg class="icon__pencil">
-            <use xlink:href="#pencil-large"></use>
-          </svg>
+          <Icon class="icon__document" name="document-large" />
+          <Icon class="icon__pencil" name="pencil-large" />
         </div>
         <span class="text">No tasks yet :(</span>
       </div>

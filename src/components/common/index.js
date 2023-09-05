@@ -7,6 +7,7 @@ import Popup from './Popup.vue'
 import TextBox from './TextBox.vue'
 import UploadFile from './UploadFile.vue'
 import IconSelector from './IconSelector.vue'
+import Icon from './Icon.vue'
 
 export default {
   Checkbox,
@@ -17,5 +18,6 @@ export default {
   Popup,
   TextBox,
   UploadFile,
-  IconSelector
+  IconSelector,
+  Icon
 }

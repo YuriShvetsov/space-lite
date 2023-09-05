@@ -64,6 +64,19 @@
   text-decoration: underline;
 }
 
+.fast-msg {
+  font-size: 12px;
+  color: get-light($secondaryTextColor);
+
+  &_access {
+    color: $green;
+  }
+
+  &_error {
+    color: $red;
+  }
+}
+
 @include dark-theme {
 
   .title,

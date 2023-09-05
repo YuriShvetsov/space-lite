@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid'
 import { AsyncCollection } from '../lib'
 
 export default class Lists extends AsyncCollection {
@@ -6,7 +5,7 @@ export default class Lists extends AsyncCollection {
     super(db, 'lists')
   }
 
-  async init(userId, ) {
+  async init() {
     await this.load()
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="radio-wrapper">
+  <div class="radio-wrapper" :disabled="disabled">
     <label class="radio"
       v-for="(item, index) of items"
       :key="index"
@@ -7,6 +7,7 @@
       <input class="radio__input" type="radio"
         :value="item.value"
         v-model="_curValue"
+        :disabled="disabled"
       >
       <div class="radio__marker"></div>
       <span class="radio__text">{{ item.name }}</span>
@@ -25,6 +26,10 @@ export default {
     current: {
       type: String,
       default: null
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -59,6 +64,12 @@ export default {
 
 .radio-wrapper {
   display: flex;
+  transition: opacity .15s ease;
+
+  &[disabled=true] {
+    opacity: .7;
+    filter: grayscale(1);
+  }
 }
 
 .radio {
@@ -66,6 +77,10 @@ export default {
   align-items: center;
   flex-direction: column;
   cursor: pointer;
+}
+
+.radio-wrapper[disabled=true] .radio {
+  cursor: default;
 }
 
 .radio:not(:last-child) {

@@ -4,8 +4,8 @@ import state from './state'
 import getters from './getters'
 import actions from './actions'
 
-export const useUserSettingsStore = () => {
-  const defineInnerStore = defineStore('userSettings', {
+export const useUserStore = () => {
+  const defineInnerStore = defineStore('user', {
     state: () => state,
     getters,
     actions

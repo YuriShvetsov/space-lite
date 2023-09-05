@@ -9,10 +9,7 @@
       ></div>
     </Transition>
 
-    <Transition name="fade-scale"
-      @after-leave="onAfterLeave"
-      @leave-cancelled="onLeaveCancelled"
-    >
+    <Transition name="fade-scale" @after-leave="onAfterLeave">
       <div
         v-if="isVisible"
         class="modal__container"
@@ -28,9 +25,16 @@
 export default {
   name: 'modal',
   emits: ['closed'],
+  props: {
+    isAutoOpen: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
-      isVisible: false
+      isVisible: false,
+      resolveClosePromise: null
     }
   },
   methods: {
@@ -39,8 +43,11 @@ export default {
       document.body.style.overflow = 'hidden'
     },
     close() {
-      this.isVisible = false
-      document.body.style.overflow = 'auto'
+      return new Promise(resolve => {
+        this.isVisible = false
+        document.body.style.overflow = 'hidden'
+        this.resolveClosePromise = resolve
+      })
     },
 
     onKeydownDocument() {
@@ -57,10 +64,11 @@ export default {
     },
     onAfterLeave() {
       this.$emit('closed')
+      this.resolveClosePromise()
     }
   },
   mounted() {
-    this.open()
+    if (this.isAutoOpen) this.open()
     this.onKeydownDocument()
   }
 }

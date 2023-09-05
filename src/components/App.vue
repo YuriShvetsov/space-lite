@@ -1,15 +1,13 @@
 <template>
   <div class="app">
     <Sprite />
-    <div class="app__container"><p>{{ userSettings.userId }}</p>
+    <div class="app__container">
 
       <div class="app__header">
 
         <div class="app__current-date">
-          <svg class="app__current-date-icon">
-            <use xlink:href="#calendar"></use>
-          </svg>
-          <span class="app__current-date-value">{{ currentDateString }}</span>
+          <Icon class="app__current-date-icon" name="calendar" />
+          <span class="app__current-date-value">{{ formattedCurrentDate }}</span>
         </div>
 
         <div class="app__logo">
@@ -25,19 +23,11 @@
             @:click="openSettingsModal"
           >
             <span>Settings</span>
-            <svg class="button__icon button__icon_stroke">
-              <use xlink:href="#settings"></use>
-            </svg>
+            <Icon class="button__icon button__icon_stroke" name="settings" />
           </button>
 
           <teleport to="#dialog">
-            <Modal
-              v-if="isModalSettingsOpened"
-              class="modal_size_sm"
-              @closed="onCloseSettingsModal"
-            >
-              <AppSettings />
-            </Modal>
+            <AppSettings v-if="isSettingsModalOpened" @cancel="onCloseSettingsModal" />
           </teleport>
 
         </div>
@@ -45,6 +35,14 @@
       </div>
 
       <div class="app__body">
+
+        <div class="app__section app__section_side">
+          <ListsViewer />
+        </div>
+
+        <div class="app__section app__section_main">
+<!--          <TasksViewer />-->
+        </div>
 
       </div>
 
@@ -58,33 +56,51 @@ import { useConfirmDialog } from '@vueuse/core'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 
-import { useUserSettingsStore } from '@/stores/userSettings'
+import { useUserStore } from '@/stores/user'
+import { delay } from '@/js/helpers'
 
 import Sprite from './Sprite.vue'
 import AppSettings from './AppSettings/AppSettings.vue'
+import ListsViewer from './ListsViewer/ListsViewer.vue'
 
 dayjs.extend(advancedFormat)
 
-const userSettings = useUserSettingsStore()
+// User settings
+
+const userStore = useUserStore()
 const updateAppTheme = () => {
-  if (userSettings.isDarkTheme) {
+  if (userStore.isDarkTheme) {
     document.documentElement.setAttribute('data-theme', 'dark')
   } else {
     document.documentElement.removeAttribute('data-theme')
   }
 }
 
-watch(userSettings, updateAppTheme, { deep: true })
-
-const currentDateString = ref(dayjs().format('dddd, Do MMMM, s'))
-
-// Settings modal
+watch(userStore, updateAppTheme, { deep: true })
 
 const {
   reveal: openSettingsModal,
   cancel: onCloseSettingsModal,
-  isRevealed: isModalSettingsOpened
+  isRevealed: isSettingsModalOpened
 } = useConfirmDialog()
+
+// Current date
+
+const formattedCurrentDate = ref(null)
+const updateCurrentDate = () => {
+  formattedCurrentDate.value = dayjs().format('dddd, Do MMMM')
+}
+
+async function scheduleUpdateCurrentDate() {
+  await delay(1000)
+  updateCurrentDate()
+  await scheduleUpdateCurrentDate()
+}
+
+updateCurrentDate()
+scheduleUpdateCurrentDate()
+
+//
 
 </script>
 
