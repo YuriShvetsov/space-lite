@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { catchFocus, execWhenShiftEnter } from '@/js/focusForm'
+import { catchFocus, execWhenShiftEnter } from '@/utils/focusForm.js'
 import { isValidImportedLists } from '@/js/isValidImportedLists'
 import { flat } from '@/js/helpers'
 import { DEFAULT_LIST_ICON } from '@/js/static/listIcons'

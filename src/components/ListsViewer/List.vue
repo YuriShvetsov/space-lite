@@ -6,7 +6,7 @@
     <div class="list-item__pointer list-item__pointer_top"></div>
     <button
       class="list-item__button button"
-      @click="listsStore.openList(id)"
+      @click="onClickButton"
     >
       <Icon class="list-item__icon" :name="icon" />
       <span class="list-item__name">{{ name }}</span>
@@ -49,7 +49,10 @@ const containerClasses = computed(() => {
 
 // Handlers
 
-
+const onClickButton = () => {
+  if (props.opened) return
+  listsStore.openList(props.id)
+}
 
 // export default {
 //   name: 'list-item',

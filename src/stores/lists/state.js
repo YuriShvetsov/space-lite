@@ -1,6 +1,5 @@
 export default {
   userId: null,
   lists: [],
-  openedListId: null,
-  lastOrder: 0
+  openedListId: null
 }

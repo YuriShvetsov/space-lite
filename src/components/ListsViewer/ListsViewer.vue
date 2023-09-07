@@ -13,43 +13,21 @@
     </div>
 
     <div class="lists-view__body scrollable-wrapper">
-
-      <div
-        class="lists-view__scroll-trigger lists-view__scroll-trigger_top"
-        ref="topScrollTrigger"
-      ></div>
-      <div
-        class="lists-view__scroll-trigger lists-view__scroll-trigger_bottom"
-        ref="bottomScrollTrigger"
-      ></div>
-
       <ul
         class="lists-view__ul scrollable-child"
-        ref="lists"
+        ref="listsRef"
       >
-<!--        <transition-group name="flip-list" :css="false">-->
-<!--          <list-item-->
-<!--            v-for="list in lists"-->
-<!--            v-bind:key="list.id"-->
-<!--            v-bind:data-id="list.id"-->
-<!--            v-bind="list"-->
-<!--            v-bind:isActive="listIsOpened(list.id)"-->
-<!--            v-on:start-moving="onStartListMoving"-->
-<!--            v-on:mouseover="setHoverList(list.id)"-->
-<!--            v-on:mouseout="unsetHoverList"-->
-<!--          />-->
-<!--        </transition-group>-->
-
-        <transition-group name="flip-list" :css="false">
+        <TransitionGroup name="flip-list" :css="false">
           <List
-            v-for="list of listsStore.lists"
+            v-for="list of sortedListsByOrder"
             :key="list._id"
+            :data-swap-id="list._id"
             :id="list._id"
             :name="list.name"
             :icon="list.icon"
             :opened="list.opened"
           />
-        </transition-group>
+        </TransitionGroup>
       </ul>
     </div>
 
@@ -66,13 +44,19 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useConfirmDialog } from "@vueuse/core"
 
+import Swapper from '@/utils/swapper'
 import { useListsStore } from '@/stores/lists'
 import CreateListModal from '@/components/modals/CreateListModal.vue'
 import List from './List.vue'
 
 const listsStore = useListsStore()
+
+const sortedListsByOrder = computed(() => {
+  return [...listsStore.lists].sort((a, b) => a.order - b.order)
+})
 
 // Create list modal
 
@@ -86,6 +70,21 @@ const {
 const onConfirmCreateListModal = (data) => {
   listsStore.createList(data)
 }
+
+// Swapping lists
+
+const listsRef = ref(null)
+const listsSwapper = new Swapper()
+
+onMounted(() => {
+  listsSwapper.init(listsRef.value, 300)
+  listsSwapper.onFirstSelected(listsStore.openList)
+  listsSwapper.onReady(listsStore.swapLists)
+})
+
+onBeforeUnmount(() => {
+  listsSwapper.destroy()
+})
 
 </script>
 

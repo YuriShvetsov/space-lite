@@ -61,7 +61,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/utils/focusForm.js'
 import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons'
 
 export default {

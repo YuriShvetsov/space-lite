@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/js/focusForm'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/utils/focusForm.js'
 
 export default {
   name: 'form-add-task',

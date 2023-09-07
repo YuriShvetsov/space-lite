@@ -12,8 +12,6 @@ export default {
 
     const lists = await db.lists.find({ userId })
 
-    console.log(lists.length)
-
     if (lists.length) {
       this.lists = [...lists]
       this.openedListId = get(this.lists.find(item => item.opened), '_id', null)
@@ -29,7 +27,7 @@ export default {
       icon: DEFAULT_LIST_ICON,
       hidden: false,
       opened: true,
-      order: 1
+      order: this.lastOrder + 1
     }
 
     await db.lists.insert(DEFAULT_LIST_OPTIONS, res => {
@@ -42,10 +40,12 @@ export default {
     })
   },
   async createList(options) {
-    check.object(options, {
-      name: String,
-      icon: String
-    })
+    const isOptionsValid = check.all(check.map(options, {
+      name: check.string && check.nonEmptyString,
+      icon: check.string && check.nonEmptyString
+    }))
+
+    if (!isOptionsValid) throw new Error('Invalid data')
 
     const LIST_OPTIONS = {
       userId: this.userId,
@@ -53,7 +53,7 @@ export default {
       icon: options.icon,
       hidden: false,
       opened: false,
-      order: 1
+      order: this.lastOrder + 1
     }
 
     await db.lists.insert(LIST_OPTIONS, res => {
@@ -70,8 +70,23 @@ export default {
   removeList(id) {
 
   },
-  swapLists(movedListA, movedListB) {
+  async swapLists(movedLists = []) {
+    if (movedLists.length < 2) throw new Error('Swap lists ERROR')
 
+    const [listIdA, listIdB] = movedLists
+    const listA = this.lists.find(list => list._id === listIdA)
+    const listB = this.lists.find(list => list._id === listIdB)
+
+    const prevOrderA = listA.order
+    const prevOrderB = listB.order
+
+    listA.order = prevOrderB
+    listB.order = prevOrderA
+
+    // Save to db
+
+    await db.lists.update({ _id: listIdA }, { order: prevOrderB })
+    await db.lists.update({ _id: listIdB }, { order: prevOrderA })
   },
   async openList(newListId) {
     const prevListId = this.openedListId

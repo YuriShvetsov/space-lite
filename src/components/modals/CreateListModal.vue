@@ -1,6 +1,6 @@
 <template>
   <modal class="modal_size_xsm" ref="modalWindow" @closed="emit('cancel')">
-    <form class="form form_type_input" @submit.prevent>
+    <form class="form form_type_input" @submit.prevent ref="formRef">
 
       <div class="form__header">
         <div class="form__title title title_size_l">Create a new list</div>
@@ -63,9 +63,10 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 
-import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/js/focusForm.js'
+import delay from '@/utils/delay'
+import { focusFirstElement, catchFocus, execWhenShiftEnter } from '@/utils/focusForm.js'
 import { DEFAULT_LIST_ICON, LIST_ICONS } from '@/js/static/listIcons.js'
 
 const emit = defineEmits(['cancel', 'confirm', 'closed'])
@@ -76,19 +77,31 @@ const resultData = reactive({
   name: '',
   icon: DEFAULT_LIST_ICON
 })
+const isConfirmed = ref(false)
 
 // Modal window
 
 const modalWindow = ref(null)
 
 const confirm = async () => {
+  if (isConfirmed.value) return
+
+  isConfirmed.value = true
   emit('confirm', resultData)
   await modalWindow.value.close()
   emit('closed')
 }
 
-// Icons
+// Form
 
+const formRef = ref(null)
 
+onMounted(() => {
+  delay().then(() => {
+    focusFirstElement(formRef.value)
+    catchFocus(formRef.value)
+    execWhenShiftEnter(confirm)
+  })
+})
 
 </script>

@@ -1,4 +1,4 @@
-import { AsyncCollection } from '../lib'
+import { AsyncCollection } from '../utils/AsyncCollection'
 
 export default class Lists extends AsyncCollection {
   constructor(db) {

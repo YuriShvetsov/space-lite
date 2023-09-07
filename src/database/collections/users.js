@@ -1,4 +1,4 @@
-import { AsyncCollection } from '../lib'
+import { AsyncCollection } from '../utils/AsyncCollection'
 
 export default class Users extends AsyncCollection {
   constructor(db) {
@@ -13,12 +13,12 @@ export default class Users extends AsyncCollection {
 
     const DEFAULT_USER_DATA = {
       settings: {
-        ui: {
-          theme: 'light'
-        },
         data: {
           showHiddenLists: false,
           showHiddenTasks: false
+        },
+        ui: {
+          theme: 'light'
         }
       }
     }
