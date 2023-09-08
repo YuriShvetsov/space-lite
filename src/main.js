@@ -1,31 +1,16 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import { PiniaLogger } from "pinia-logger"
+import buildApp from './app.js'
 
-import { startupLoader } from '@/js/startup'
+import startupLoader from '@/utils/startupLoader'
 import db from './database'
+import { useStoresRunner } from '@/stores/storesRunner'
 
-import App from './components/App.vue'
-import commonComponents from './components/common'
+const { app, router } = buildApp()
+const storesRunner = useStoresRunner()
 
-import './assets/scss/main.scss'
-
-db.onReady(() => {
-  startupLoader.hide()
-
-  const pinia = createPinia()
-  const app = createApp(App)
-
-  pinia.use(PiniaLogger({
-    expanded: false,
-    disabled: !import.meta.env.DEV
-  }))
-  app.use(pinia)
-
-  Object.entries(commonComponents).forEach(item => {
-    const [name, component] = item
-    app.component(name, component)
+db.onReady(async () => {
+  router.isReady().then(async () => {
+    await storesRunner.run()
+    startupLoader.hide()
+    app.mount('#app')
   })
-
-  app.mount('#app')
 })

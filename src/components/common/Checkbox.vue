@@ -1,9 +1,9 @@
 <template>
-  <label class="checkbox">
+  <label class="checkbox" tabindex="0" @keydown.enter.stop="onEnter">
     <input class="checkbox__input"
       type="checkbox"
-      :checked="_checked"
-      @change.stop="emitChange"
+      :checked="modelValue"
+      @change="onChange"
     >
     <div class="checkbox__bg">
       <Icon class="checkbox__icon" name="check-bold" />
@@ -14,24 +14,12 @@
 <script>
   export default {
     name: 'checkbox',
-    props: {
-      checked: {
-        type: Boolean,
-        default: false
-      }
-    },
-    data() {
-      return {
-        _checked: null
-      }
-    },
+    emits: ['update:modelValue'],
+    props: ['modelValue'],
     methods: {
-      emitChange() {
-        this.$emit('change')
+      onChange(e) {
+        this.$emit('update:modelValue', e.target.checked)
       }
-    },
-    created() {
-      this._checked = this.checked
     }
   }
 </script>

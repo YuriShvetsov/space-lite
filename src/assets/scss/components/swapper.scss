@@ -1,5 +1,5 @@
 [data-mode="draggable"] *,
 [data-mode="draggable"] *::before,
 [data-mode="draggable"] *::after {
-  cursor: grabbing;
+  cursor: grabbing !important;
 }

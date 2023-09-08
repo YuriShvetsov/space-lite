@@ -1,10 +1,19 @@
 import { defineConfig } from 'vite'
+// import path from 'path'
+import { fileURLToPath, URL } from 'url'
+// import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import vue from '@vitejs/plugin-vue'
-import { fileURLToPath, URL } from "url";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    // createSvgIconsPlugin({
+    //   iconDirs: [path.resolve(process.cwd(), 'src/assets/icons/hero')],
+    //   symbolId: '[dir]-[name]',
+    //   inject: 'body-first'
+    // }),
+    vue()
+  ],
   css: {
     devSourcemap: true
   },

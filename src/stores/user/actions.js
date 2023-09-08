@@ -1,30 +1,15 @@
 import { get, set } from 'lodash'
-
 import db from '@/database'
-import { useListsStore } from '@/stores/lists/index.js'
 
 export default {
-  async init() {
-    if (this.isInitialized) return
 
-    this.reactSystemAppearance()
-    await this.setInitialData()
+  // Startup actions
 
-    this.isInitialized = true
-  },
-  async setInitialData() {
-    const user = await db.users.findOne()
+  async init(user) {
+    this.user = user
 
-    this.userId = get(user, '_id', '')
-    this.theme = get(user, 'settings.ui.theme', 'light')
-    this.showHiddenLists = get(user, 'settings.data.showHiddenLists', false)
-    this.showHiddenTasks = get(user, 'settings.data.showHiddenTasks', false)
-
-    const listsStore = useListsStore()
-
-    await listsStore.setInitialData({
-      userId: this.userId,
-    })
+    const now = (new Date()).toISOString()
+    await db.users.update({ _id: user._id }, { lastUsedAt: now })
   },
   reactSystemAppearance() {
     const isPreferColorSchemeSupported = window.matchMedia('(prefers-color-scheme)').media !== 'not all'
@@ -41,31 +26,55 @@ export default {
     setSystemAppearance(preferColorScheme)
     preferColorScheme.addEventListener('change', setSystemAppearance)
   },
-  async setTheme(theme) {
-    this.theme = theme
 
-    await db.users.update({ _id: this.userId }, {
+  // Main actions
+
+  async changeTheme(theme) {
+    const path = 'settings.ui.theme'
+
+    // Update store
+
+    set(this.user, path, theme)
+
+    // Save to db
+
+    await db.users.update({ _id: this.id }, {
       settings: {
         ui: { theme }
       }
     })
   },
-  async toggleShowHiddenLists() {
-    this.showHiddenLists = !this.showHiddenLists
+  async toggleShowHiddenProjects() {
+    const path = 'settings.data.showHiddenProjects'
+    const newValue = !get(this.user, path, false)
 
-    await db.users.update({ _id: this.userId }, {
+    // Update store
+
+    set(this.user, path, newValue)
+
+    // Save to db
+
+    await db.users.update({ _id: this.id }, {
       settings: {
-        data: { showHiddenLists: this.showHiddenLists }
+        data: { showHiddenProjects: newValue }
       }
     })
   },
   async toggleShowHiddenTasks() {
-    this.showHiddenTasks = !this.showHiddenTasks
+    const path = 'settings.data.showHiddenTasks'
+    const newValue = !get(this.user, path, false)
 
-    await db.users.update({ _id: this.userId }, {
+    // Update store
+
+    set(this.user, path, newValue)
+
+    // Save to db
+
+    await db.users.update({ _id: this.id }, {
       settings: {
-        data: { showHiddenTasks: this.showHiddenTasks }
+        data: { showHiddenTasks: newValue }
       }
     })
   }
+
 }

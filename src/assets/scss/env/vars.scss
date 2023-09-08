@@ -1,14 +1,13 @@
-/* Color palette */
+/* Colors */
 
 $red: #e53f56;
-$redLight: #ed344e;
 $green: #1ad185;
 $blue: #1b84ff;
-$gray: #cccccc;
 $violet: #4545fe;
+$gray: #cccccc;
 $black: #333333;
 
-/* Colors of elements */
+/* Colors for elements */
 
 $primaryColor: $violet;
 $transparent: rgba(255, 255, 255, 0);
@@ -47,14 +46,14 @@ $bgColor: (
 );
 $taskPriorityBgColor: (
   'light': (
-    'low': darken($green, 1%),
-    'middle': lighten($blue, 12%),
-    'high': lighten($red, 4%)
+    'minor': lighten($blue, 12%),
+    'major': #f97316,
+    'critical': lighten($red, 4%)
   ),
   'dark': (
-    'low': darken($green, 1%),
-    'middle': lighten($blue, 12%),
-    'high': lighten($red, 4%)
+    'minor': lighten($blue, 12%),
+    'major': #f97316,
+    'critical': lighten($red, 4%)
   )
 );
 $taskHoverBg: (

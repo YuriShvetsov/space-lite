@@ -11,10 +11,16 @@ export default class Users extends AsyncCollection {
 
     if (user) return
 
+    const now = (new Date()).toISOString()
+
     const DEFAULT_USER_DATA = {
+      firstName: 'admin',
+      lastName: 'admin',
+      createdAt: now,
+      lastUsedAt: now,
       settings: {
         data: {
-          showHiddenLists: false,
+          showHiddenProjects: false,
           showHiddenTasks: false
         },
         ui: {

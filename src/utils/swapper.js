@@ -1,5 +1,5 @@
 import { get } from 'lodash'
-import { delay } from '@/js/helpers'
+import { delay } from './helpers'
 
 export default class Swapper {
   constructor() {
@@ -9,13 +9,14 @@ export default class Swapper {
     this.items = []
     this.movedItems = []
 
-    this.observer = null
-    this.observeConfig = { attributes: true, childList: true, subtree: true }
     this.timerStartMoving = null
     this.isMovingStarted = false
 
-    this._firstSelectedCallback = () => console.log('swapper::first_selected')
-    this._readyCallback = () => console.log('swapper::ready')
+    this.observer = null
+    this.observeConfig = { attributes: true, childList: true, subtree: true }
+
+    this._firstSelectedCallback = () => {}
+    this._readyCallback = () => {}
   }
 
   init(parent, timeout = 500) {

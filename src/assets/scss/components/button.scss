@@ -1,6 +1,7 @@
 .button {
   display: block;
   padding: 7px 12px;
+
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   font-weight: bold;
@@ -8,27 +9,28 @@
   color: $primaryColor;
   text-decoration: none;
   white-space: nowrap;
+
   background-color: $transparent;
   border: 1px solid $transparent;
-  border-radius: 4px;
+  border-radius: 6px;
   outline: none;
   appearance: none;
+
   cursor: pointer;
   user-select: none;
   transition: background-color 150ms ease-in-out;
 }
 
-
 .button:hover,
 .button:focus {
-  background-color: lighten($primaryColor, 35%);
+  background-color: lighten($primaryColor, 35.5%);
 }
 
 .button:disabled,
 .button[disabled],
 .button[disabled=true] {
   filter: grayscale(1);
-  opacity: .5;
+  opacity: .7;
   user-select: none;
   cursor: default;
 }
@@ -101,7 +103,8 @@
 
 .button_type_popup {
   width: 100%;
-  padding-left: 35px;
+  padding-left: 32px;
+  padding-right: 22px;
   position: relative;
   font-size: 13px;
   font-weight: 400;
@@ -117,7 +120,7 @@
 .button_type_popup .button__icon {
   width: 15px;
   height: 15px;
-  left: 10px;
+  left: 12px;
   top: 50%;
   transform: translate(0, -50%);
 }
@@ -150,11 +153,11 @@
 
 .button_fill_red {
   color: #fff;
-  background-color: $redLight;
+  background-color: $red;
 
   &:hover,
   &:focus {
-    background-color: darken($redLight, 5%);
+    background-color: darken($red, 5%);
   }
 
   .button__icon_fill {
@@ -190,26 +193,26 @@
   .button__icon_fill {
     fill: lighten($black, 3%);
   }
-  
+
   .button__icon_stroke {
     stroke: lighten($black, 3%);
   }
 }
 
 .button_color_red {
-  color: $redLight;
+  color: $red;
 
   &:hover,
   &:focus {
-    background-color: lighten($redLight, 41%);
+    background-color: lighten($red, 41%);
   }
 
   .button__icon_fill {
-    fill: $redLight;
+    fill: $red;
   }
-  
+
   .button__icon_stroke {
-    stroke: $redLight;
+    stroke: $red;
   }
 }
 
@@ -234,7 +237,7 @@
     .button__icon_fill {
       fill: get-dark($baseTextColor);
     }
-  
+
     .button__icon_stroke {
       stroke: get-dark($baseTextColor);
     }
@@ -245,15 +248,15 @@
   .button_type_icon {
     background-color: $transparent;
     border: none;
-  
+
     &:hover {
       background-color: $transparent;
     }
-  
+
     .button__icon_fill {
       fill: get-dark($baseTextColor);
     }
-  
+
     .button__icon_stroke {
       stroke: get-dark($baseTextColor);
     }
@@ -264,7 +267,7 @@
     .button__icon_fill {
       fill: get-dark($baseTextColor);
     }
-  
+
     .button__icon_stroke {
       stroke: get-dark($baseTextColor);
     }
@@ -278,7 +281,7 @@
     .button__icon_fill {
       fill: $red;
     }
-  
+
     .button__icon_stroke {
       stroke: $red;
     }
@@ -290,7 +293,7 @@
     .button__icon_fill {
       fill: $gray;
     }
-  
+
     .button__icon_stroke {
       stroke: $gray;
     }
@@ -310,7 +313,7 @@
     .button__icon_fill {
       fill: $red;
     }
-  
+
     .button__icon_stroke {
       stroke: $red;
     }
@@ -328,7 +331,7 @@
     .button__icon_fill {
       fill: get-dark($baseTextColor);
     }
-  
+
     .button__icon_stroke {
       stroke: get-dark($baseTextColor);
     }

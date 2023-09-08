@@ -1,45 +1,52 @@
 .form {
   width: 100%;
-  border-radius: 8px;
 }
 
 .form__header {
-  padding: 16px 20px;
-  position: relative;
-  background-color: get-light($bgColor, 'main');
-  border-top: 1px solid get-light($sectionBorderColor);
-  border-right: 1px solid get-light($sectionBorderColor);
-  border-bottom: 1px solid get-light($sectionBorderColor);
-  border-left: 1px solid get-light($sectionBorderColor);
-  border-radius: 8px 8px 0 0;
+  //padding: 16px 20px;
+  //position: relative;
+  //
+  //background-color: get-light($bgColor, 'main');
+  //border-top: 1px solid get-light($sectionBorderColor);
+  //border-right: 1px solid get-light($sectionBorderColor);
+  //border-bottom: 1px solid get-light($sectionBorderColor);
+  //border-left: 1px solid get-light($sectionBorderColor);
+  //border-radius: 8px 8px 0 0;
 }
 
 .form__body {
-  padding: 16px 20px 20px;
-  background-color: get-light($bgColor, 'main');
-  border-right: 1px solid get-light($sectionBorderColor);
-  border-bottom: 1px solid get-light($sectionBorderColor);
-  border-left: 1px solid get-light($sectionBorderColor);
-  border-radius: 0 0 8px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  //padding: 16px 20px 20px;
+  //
+  //background-color: get-light($bgColor, 'main');
+  //border-right: 1px solid get-light($sectionBorderColor);
+  //border-bottom: 1px solid get-light($sectionBorderColor);
+  //border-left: 1px solid get-light($sectionBorderColor);
+  //border-radius: 0 0 8px 8px;
 }
 
-.form__cancel-button {
-  position: absolute;
-  right: 0;
-  top: 14px;
-  transform: translate(-50%, 0);
-}
+//.form__cancel-button {
+//  position: absolute;
+//  right: 0;
+//  top: 14px;
+//  transform: translate(-50%, 0);
+//}
 
 .form__desc {
   margin-top: 6px;
 }
 
-.form__row_input:not(:first-child) {
-  padding-top: 4px;
+.form__row_checkbox .form__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 0;
 }
 
 .form_type_input .form__row_controls {
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .form__row_controls {
@@ -52,19 +59,16 @@
   padding-bottom: 16px;
 }
 
-.form__label {
-  padding-left: 6px;
-}
-
 .form__label-name {
   font-size: 12px;
+  font-weight: 600;
   line-height: 2;
   white-space: nowrap;
   color: get-light($secondaryTextColor);
 }
 
 .form__required-sign {
-  color: $redLight;
+  color: $red;
 }
 
 .form__input-wrapper {
@@ -72,20 +76,21 @@
 }
 
 .form__input {
-  font-family: 'Open Sans';
+  font-family: 'Open Sans', sans-serif;
   font-size: 12px;
   color: #464646;
   line-height: 1em;
-  border: none;
-  outline: none;
+  border: 1px solid #e2e1de;
+  outline: 2px solid transparent;
 }
 
 .form__input_type_text {
   display: block;
   width: 100%;
   padding: 8px;
-  background-color: #f0f2f5;
-  border-radius: 4px;
+  background-color: transparent;
+  border-radius: 6px;
+  transition: background-color 0.15s ease-in-out, border 0.15s ease-in-out, outline 0.15s ease-in-out;
 }
 
 .form__input_type_file {
@@ -105,7 +110,11 @@
 
 .form__input_type_text:focus,
 .form__textarea:focus {
-  background-color: #f6f7f9;
+  background-color: lighten($primaryColor, 36%);
+  //border: 1px solid $primaryColor;
+  //outline: 2px solid lighten($primaryColor, 32%);
+  border: 1px solid lighten($primaryColor, 32%);
+  //outline: 2px solid lighten($primaryColor, 32%);
 }
 
 .form__input_warn {
@@ -145,6 +154,7 @@
 
 .form__control-button {
   padding: 10px 12px;
+  font-size: 13px;
 }
 
 .form__control-button_scale_2-5 {

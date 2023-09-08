@@ -38,9 +38,9 @@ export default {
     }
   },
   watch: {
-    _curValue(value) {
-      if (this._current === value) return
-      this.$emit('update', value)
+    _curValue(newValue, oldValue) {
+      if (this._current === newValue || oldValue === null) return
+      this.$emit('update', newValue)
     }
   },
   methods: {

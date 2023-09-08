@@ -1,23 +1,19 @@
 <template>
   <div class="modal">
-
     <Transition name="fade">
-      <div
-        v-if="isVisible"
-        class="modal__overlay"
-        @click="close"
-      ></div>
+      <div v-if="isVisible" class="modal__overlay" @click="close"></div>
     </Transition>
 
     <Transition name="fade-scale" @after-leave="onAfterLeave">
-      <div
-        v-if="isVisible"
-        class="modal__container"
-      >
-        <slot></slot>
+      <div v-if="isVisible" class="modal__container">
+        <div class="modal__header">
+          <slot name="header"></slot>
+        </div>
+        <div class="modal__body">
+          <slot></slot>
+        </div>
       </div>
     </Transition>
-    
   </div>
 </template>
 
@@ -43,7 +39,7 @@ export default {
       document.body.style.overflow = 'hidden'
     },
     close() {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         this.isVisible = false
         document.body.style.overflow = 'hidden'
         this.resolveClosePromise = resolve
@@ -51,8 +47,7 @@ export default {
     },
 
     onKeydownDocument() {
-      document.addEventListener('keydown', e => {
-
+      document.addEventListener('keydown', (e) => {
         if (!this.isVisible) return
 
         switch (e.code) {
@@ -74,7 +69,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '@/assets/scss/env/index';
 
 .modal {
@@ -104,6 +99,37 @@ export default {
   pointer-events: all;
 }
 
+.modal__header {
+  width: 100%;
+  padding: 16px 20px;
+  position: relative;
+
+  background-color: get-light($bgColor, 'main');
+  border-top: 1px solid get-light($sectionBorderColor);
+  border-right: 1px solid get-light($sectionBorderColor);
+  border-bottom: 1px solid get-light($sectionBorderColor);
+  border-left: 1px solid get-light($sectionBorderColor);
+  border-radius: 8px 8px 0 0;
+}
+
+.modal__close-button {
+  position: absolute;
+  right: 0;
+  top: 14px;
+  transform: translate(-50%, 0);
+}
+
+.modal__body {
+  width: 100%;
+  padding: 16px 20px 20px;
+
+  background-color: get-light($bgColor, 'main');
+  border-right: 1px solid get-light($sectionBorderColor);
+  border-bottom: 1px solid get-light($sectionBorderColor);
+  border-left: 1px solid get-light($sectionBorderColor);
+  border-radius: 0 0 8px 8px;
+}
+
 .modal_size_default .modal__container {
   width: unset;
 }
@@ -128,7 +154,7 @@ export default {
   max-width: 992px;
 }
 
-.modal_size_full .modal__container {  
+.modal_size_full .modal__container {
   width: 100vw;
   height: 100vh;
   border-radius: 0;
@@ -141,14 +167,14 @@ export default {
   left: 0;
   top: 0;
 
-  background-color: rgba(31, 31, 31, .22);
+  background-color: rgba(31, 31, 31, 0.22);
   cursor: pointer;
   pointer-events: all;
   transition: background-color 300ms ease-out;
 }
 
 .modal__overlay:hover {
-  background-color: rgba(31,31,31,0.32);
+  background-color: rgba(31, 31, 31, 0.32);
 }
 
 .fade-enter-active {
@@ -172,19 +198,25 @@ export default {
 }
 
 @include dark-theme {
-
   .modal__overlay {
-    background-color: rgba(31, 31, 31, .30);
+    background-color: rgba(31, 31, 31, 0.3);
   }
 
   .modal__overlay:hover {
-    background-color: rgba(31, 31, 31, .45);
+    background-color: rgba(31, 31, 31, 0.45);
   }
 
   .modal__container {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
   }
 
+  .modal__header {
+    background-color: get-dark($bgColor, 'main');
+    border-top: 1px solid get-dark($formBorderColor);
+    border-right: 1px solid get-dark($formBorderColor);
+    border-bottom: 1px solid get-dark($sectionBorderColor);
+    border-left: 1px solid get-dark($formBorderColor);
+  }
 }
 
 @keyframes fade-in {
@@ -226,5 +258,4 @@ export default {
     transform: translate(-50%, 0) scale(0.9);
   }
 }
-
 </style>

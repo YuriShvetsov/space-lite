@@ -1,4 +1,4 @@
-import { flat } from './helpers'
+import { flat } from '@/utils/helpers'
 
 export const translateHtmlToStr = html => {
   const levels = getLevel(html)

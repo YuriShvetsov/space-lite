@@ -1,12 +1,11 @@
 <template>
-  <div class="icon-selector">
-    
+  <div class="icon-selector" tabindex="0">
     <button class="icon-selector__toggle-button">
       <Icon class="icon-selector__selected-icon" :name="selectedIcon" />
     </button>
 
     <div class="icon-selector__list-wrapper">
-      <ul class="icon-selector__list">
+      <ul class="icon-selector__list" ref="listRef">
         <li
           v-for="(icon, index) of icons"
           class="icon-selector__item"
@@ -18,12 +17,12 @@
         </li>
       </ul>
     </div>
-
   </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { findIndex } from 'lodash'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   name: 'icon-selector',
@@ -34,12 +33,13 @@ export default {
     },
     icons: {
       type: Array,
-      default: [],
+      default: []
     }
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const selectedIcon = ref(props.modelValue)
+    const listRef = ref(null)
 
     function changeSelectedIcon(iconName) {
       selectedIcon.value = iconName
@@ -47,7 +47,7 @@ export default {
     }
 
     function formatIconId(icon) {
-      return `#${ icon }`
+      return `#${icon}`
     }
 
     function getItemClasses(icon) {
@@ -56,11 +56,27 @@ export default {
       }
     }
 
+    function scrollToActiveIcon() {
+      const activeIconIndex = findIndex(
+        props.icons,
+        (icon) => icon === selectedIcon.value
+      )
+      const listElements = [...listRef.value.children]
+      const activeIconElement = listElements[activeIconIndex]
+
+      activeIconElement.scrollIntoView({ block: 'center' })
+    }
+
+    onMounted(() => {
+      scrollToActiveIcon()
+    })
+
     return {
       selectedIcon,
       formatIconId,
       changeSelectedIcon,
-      getItemClasses
+      getItemClasses,
+      listRef
     }
   }
 }
@@ -73,18 +89,20 @@ export default {
   position: relative;
 
   &__toggle-button {
+    display: none;
     width: 36px;
     height: 36px;
     position: relative;
 
-    background-color: #f0f2f5;
-    border: none;
+    background-color: transparent;
+    border: 1px solid #e2e1de;
+    outline: 0 solid lighten($primaryColor, 32%);
     border-radius: 50%;
     cursor: default;
   }
 
   &_opened .icon-selector__toggle-button {
-    background-color: #f6f7f9;
+    background-color: transparent;
   }
 
   &__selected-icon {
@@ -100,8 +118,6 @@ export default {
   &__list-wrapper {
     max-width: 300px;
     max-height: 140px;
-    margin-top: 8px;
-
     background-color: #fff;
   }
 
@@ -115,10 +131,11 @@ export default {
     padding: 8px;
     overflow-y: auto;
 
-    background-color: #f0f2f5;
-    border-radius: 4px;
+    border: 1px solid #e2e1de;
+    outline: 0 solid lighten($primaryColor, 32%);
+    border-radius: 6px;
 
-    @include custom-scrollbar(#f0f2f5);
+    @include custom-scrollbar(#fff);
   }
 
   &__item {
@@ -128,10 +145,10 @@ export default {
     border: 1px solid $transparent;
     border-radius: 50%;
     cursor: pointer;
-    transition: opacity .15s ease;
+    transition: opacity 0.15s ease;
 
     &:hover {
-      opacity: .8;
+      opacity: 0.8;
     }
 
     &_active,
@@ -149,7 +166,7 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
     stroke: get-light($baseTextColor);
-    transition: stroke .15s ease;
+    transition: stroke 0.15s ease;
   }
 
   &__item_active .icon-selector__item-icon {
@@ -158,12 +175,11 @@ export default {
 }
 
 @include dark-theme {
-
   .icon-selector {
     &__toggle-button {
       background-color: get-dark($bgColor, 'main');
     }
-  
+
     &__selected-icon {
       stroke: #ffffff;
     }
@@ -199,8 +215,6 @@ export default {
     &__item_active:hover .icon-selector__item-icon {
       stroke: #ffffff;
     }
-
   }
-
 }
 </style>
