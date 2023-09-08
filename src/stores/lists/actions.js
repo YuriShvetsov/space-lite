@@ -1,43 +1,58 @@
-import { get, set } from 'lodash'
+import { get, set, remove, findIndex } from 'lodash'
 import check from 'check-types'
 
+import { update } from '@/utils/helpers'
 import db from '@/database'
-import { DEFAULT_LIST_ICON } from '@/js/static/listIcons.js'
+
+const MAX_LIST_ORDER = 1000000
 
 export default {
-  async setInitialData(data) {
-    const { userId } = data
-
-    this.userId = userId
-
-    const lists = await db.lists.find({ userId })
-
-    if (lists.length) {
-      this.lists = [...lists]
-      this.openedListId = get(this.lists.find(item => item.opened), '_id', null)
-      return
-    }
-
-    await this.createDefaultList()
+  // async setInitialData(data) {
+  //   const { userId, showHiddenLists } = data
+  //
+  //   this.userId = userId
+  //   this.showHiddenLists = showHiddenLists
+  //
+  //   const lists = await db.lists.find({ userId })
+  //
+  //   if (!lists.length) return
+  //
+  //   this.lists = [...lists]
+  //
+  //   this.updateTasksCounters()
+  // },
+  setUserId(id) {
+    this.userId = id
   },
-  async createDefaultList() {
-    const DEFAULT_LIST_OPTIONS = {
-      userId: this.userId,
-      name: 'Main',
-      icon: DEFAULT_LIST_ICON,
-      hidden: false,
-      opened: true,
-      order: this.lastOrder + 1
-    }
+  setLists(lists) {
+    this.lists = lists
+    this.updateTasksCounters()
+  },
+  updateTasksCounters() {
+    const tasksCounter = db.tasksCounter.exec()
 
-    await db.lists.insert(DEFAULT_LIST_OPTIONS, res => {
-      if (!res.inserted.length) throw new Error('Create default list ERROR')
+    this.lists = this.lists.map(list => {
+      const counters = tasksCounter.find(counter => counter.listId === list._id)
 
-      const list = res.inserted[0]
-
-      this.lists.push(list)
-      this.openedListId = list._id
+      return {
+        ...list,
+        tasksCount: {
+          visible: counters.visible,
+          hidden: counters.hidden
+        }
+      }
     })
+  },
+  async setShowHiddenLists(show) {
+    this.showHiddenLists = show
+
+    if (show || !this.openedList || !this.openedList.hidden) return
+
+    const query = { _id: this.openedList._id }
+    const modifier = { opened: false }
+
+    update(this.lists, query, modifier)
+    await db.lists.update(query, modifier)
   },
   async createList(options) {
     const isOptionsValid = check.all(check.map(options, {
@@ -45,33 +60,52 @@ export default {
       icon: check.string && check.nonEmptyString
     }))
 
-    if (!isOptionsValid) throw new Error('Invalid data')
+    if (!isOptionsValid) throw new Error('Invalid list options!')
 
-    const LIST_OPTIONS = {
+    const now = (new Date()).toISOString()
+    const listOptions = {
       userId: this.userId,
       name: options.name,
       icon: options.icon,
       hidden: false,
       opened: false,
-      order: this.lastOrder + 1
+      order: this.lastOrder + 1,
+      createdAt: now,
+      modifiedAt: now,
+      tags: []
     }
 
-    await db.lists.insert(LIST_OPTIONS, res => {
-      if (!res.inserted.length) throw new Error('Create default list ERROR')
+    await db.lists.insert(listOptions, res => {
+      if (!res.inserted.length) throw new Error('List was not saved!')
 
       const list = res.inserted[0]
+
       this.lists.push(list)
       this.openList(list._id)
     })
-  },
-  updateList(options) {
 
+    if (this.lastOrder >= MAX_LIST_ORDER) await this.reorderLists()
   },
-  removeList(id) {
+  async updateList(options) {
+    const isOptionsValid = check.all(check.map(options, {
+      id: check.string && check.nonEmptyString,
+      name: check.string && check.nonEmptyString,
+      icon: check.string && check.nonEmptyString
+    }))
 
+    if (!isOptionsValid) throw new Error('Invalid list options!')
+
+    const query = { _id: options.id }
+    const modifier = {
+      name: options.name,
+      icon: options.icon
+    }
+
+    update(this.lists, query, modifier)
+    await db.lists.update(query, modifier)
   },
   async swapLists(movedLists = []) {
-    if (movedLists.length < 2) throw new Error('Swap lists ERROR')
+    if (movedLists.length < 2) throw new Error('Error lists moving!')
 
     const [listIdA, listIdB] = movedLists
     const listA = this.lists.find(list => list._id === listIdA)
@@ -83,39 +117,78 @@ export default {
     listA.order = prevOrderB
     listB.order = prevOrderA
 
-    // Save to db
-
     await db.lists.update({ _id: listIdA }, { order: prevOrderB })
     await db.lists.update({ _id: listIdB }, { order: prevOrderA })
   },
   async openList(newListId) {
-    const prevListId = this.openedListId
+    const prevListId = get(this.openedList, '_id', null)
 
-    this.openedList.opened = false
-    this.openedListId = newListId
+    if (prevListId) this.openedList.opened = false
 
     const newOpenedList = this.lists.find(item => item._id === newListId)
+
     newOpenedList.opened = true
 
-    await db.lists.update({ _id: prevListId }, { opened: false })
+    if (prevListId) await db.lists.update({ _id: prevListId }, { opened: false })
     await db.lists.update({ _id: newListId }, { opened: true })
   },
-  async hideList(id) {
-    const list = this.lists.find(item => item._id === id)
+  async openClosestList(id) {
+    const isIdInvalid = check.string(id) && check.nonEmptyString(id)
 
-    list.hidden = true
+    if (!isIdInvalid) throw new Error('List id is invalid!')
 
-    await db.lists.update({ _id: id }, {
-      hidden: true
-    })
+    const index = findIndex(this.lists, list => list._id === id)
+    const prevList = this.lists[index - 1]
+    const nextList = this.lists[index + 1]
+    const closestListId = nextList ? nextList._id : (
+      prevList ? prevList._id : null
+    )
+
+    if (closestListId) await this.openList(closestListId)
   },
-  async showList(id) {
-    const list = this.lists.find(item => item._id === id)
+  async toggleListVisibility(id) {
+    const isIdInvalid = check.string(id) && check.nonEmptyString(id)
 
-    list.hidden = false
+    if (!isIdInvalid) throw new Error('List id is invalid!')
 
-    await db.lists.update({ _id: id }, {
-      hidden: false
-    })
+    const list = this.lists.find(list => list._id === id)
+    const query = { _id: id }
+    const modifier = { hidden: !list.hidden, opened: this.showHiddenLists }
+
+    // update store
+
+    if (!this.showHiddenLists) await this.openClosestList(id)
+
+    update(this.lists, query, modifier)
+
+    // update db
+
+    await db.lists.update(query, modifier)
+  },
+  async removeList(id) {
+    const isIdInvalid = check.string(id) && check.nonEmptyString(id)
+
+    if (!isIdInvalid) throw new Error('List id is invalid!')
+
+    // update store
+
+    await this.openClosestList(id)
+
+    this.lists = this.lists.filter(list => list._id !== id)
+
+    // update db
+
+    await db.lists.remove({ _id: id })
+  },
+  async reorderLists() {
+    let newOrder = 0
+    for (const list of this.sortedListsByOrder) {
+      const query = { _id: list._id }
+      const modifier = { order: ++newOrder }
+
+      update(this.lists, query, modifier)
+
+      await db.lists.update(query, { order: newOrder })
+    }
   }
 }

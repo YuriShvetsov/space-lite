@@ -1,13 +1,13 @@
 Space Lite
 ==========
 
-This is a simple todolist system implemented with Vue.
+This is a simple task manager implemented with Vue and IndexedDB.
 
 ## Features
 
-- Folders
-- Task editing
-- Hidden tasks
+- Multiple projects (folders)
+- Markdown for tasks
+- Hidden projects and tasks
 - Export/import to json
 - Dark theme
 

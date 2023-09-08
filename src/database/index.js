@@ -1,14 +1,11 @@
-import { get, set } from 'lodash'
+import { get, chain, countBy } from 'lodash'
 import ForerunnerDB from 'forerunnerdb'
 
 import UsersCollection from './collections/users'
-import ListsCollection from './collections/lists'
+import ProjectsCollection from './collections/projects'
+import TasksCollection from './collections/tasks'
 
 const isDev = import.meta.env.DEV
-
-const sleep = (ms = 0) => {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 class Database {
   constructor() {
@@ -23,10 +20,10 @@ class Database {
   
   async _initCollections(app, options) {
     await this._initUsersCollection()
-    await this._initListsCollection()
-    // await this.initTasksCollection()
-    
-    await sleep(1000)
+    await this._initProjectsCollection()
+    await this._initTasksCollection()
+
+    this._initTasksCounter()
 
     this._ready()
   }
@@ -36,19 +33,45 @@ class Database {
     await this.users.init()
   }
   
-  async _initListsCollection() {    
+  async _initProjectsCollection() {
     const user = this.users.collection.findOne()
     const userId = get(user, '_id', null)
 
     if (!userId) throw new Error('User not found')
     
-    this.lists = new ListsCollection(this.db)
+    this.projects = new ProjectsCollection(this.db)
 
-    await this.lists.init()
+    await this.projects.init()
   }
   
   async _initTasksCollection() {
-    
+    this.tasks = new TasksCollection(this.db)
+    await this.tasks.init()
+  }
+
+  _initTasksCounter() {
+    this.tasksCounter = this.db.overview('tasksCounter')
+
+    this.tasksCounter.from(this.tasks.collection)
+    this.tasksCounter.reduce(function() {
+      const tasks = [...this.find()]
+      const result = chain(tasks)
+        // .groupBy('userId')
+        // .map((group, userId) => ({
+        //   userId,
+        //   hidden: group.hidden
+        // }))
+        .groupBy('projectId')
+        .map((group, projectId) => ({
+          projectId,
+          ...countBy(group, rec => rec.hidden ? 'hidden' : 'visible')
+        }))
+        .value()
+
+      return result
+    })
+
+    // console.log(this.tasksCounter.exec())
   }
   
   onReady(callback) {

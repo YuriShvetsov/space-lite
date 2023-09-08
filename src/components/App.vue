@@ -37,11 +37,11 @@
       <div class="app__body">
 
         <div class="app__section app__section_side">
-          <ListsViewer />
+          <ProjectsViewer />
         </div>
 
         <div class="app__section app__section_main">
-<!--          <TasksViewer />-->
+          <TasksViewer />
         </div>
 
       </div>
@@ -51,17 +51,19 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useConfirmDialog } from '@vueuse/core'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 
+import { delay } from '@/utils/helpers'
+
 import { useUserStore } from '@/stores/user'
-import { delay } from '@/js/helpers'
 
 import Sprite from './Sprite.vue'
-import AppSettings from './AppSettings/AppSettings.vue'
-import ListsViewer from './ListsViewer/ListsViewer.vue'
+import AppSettings from './modals/AppSettingsModal/AppSettingsModal.vue'
+import ProjectsViewer from './ProjectsViewer/ProjectsViewer.vue'
+import TasksViewer from './TasksViewer/TasksViewer.vue'
 
 dayjs.extend(advancedFormat)
 
@@ -75,6 +77,8 @@ const updateAppTheme = () => {
     document.documentElement.removeAttribute('data-theme')
   }
 }
+
+updateAppTheme()
 
 watch(userStore, updateAppTheme, { deep: true })
 
@@ -99,8 +103,6 @@ async function scheduleUpdateCurrentDate() {
 
 updateCurrentDate()
 scheduleUpdateCurrentDate()
-
-//
 
 </script>
 
@@ -149,6 +151,8 @@ scheduleUpdateCurrentDate()
   font-weight: bold;
   color: lighten(get-light($secondaryTextColor), 12%);
   white-space: nowrap;
+
+  user-select: none;
 
   &-icon {
     width: 16px;
@@ -236,6 +240,7 @@ scheduleUpdateCurrentDate()
 .app__section_main {
   width: 100%;
   max-width: calc(100% - 320px);
+  position: relative;
 }
 
 @include dark-theme {

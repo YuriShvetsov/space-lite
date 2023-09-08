@@ -6,7 +6,7 @@
     </button>
 
     <div class="icon-selector__list-wrapper">
-      <ul class="icon-selector__list">
+      <ul class="icon-selector__list" ref="listRef">
         <li
           v-for="(icon, index) of icons"
           class="icon-selector__item"
@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { findIndex } from 'lodash'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   name: 'icon-selector',
@@ -40,6 +41,7 @@ export default {
   emits: ['update:modelValue'],
   setup(props, { emit }) {
     const selectedIcon = ref(props.modelValue)
+    const listRef = ref(null)
 
     function changeSelectedIcon(iconName) {
       selectedIcon.value = iconName
@@ -56,11 +58,24 @@ export default {
       }
     }
 
+    function scrollToActiveIcon() {
+      const activeIconIndex = findIndex(props.icons, icon => icon === selectedIcon.value)
+      const listElements = [...listRef.value.children]
+      const activeIconElement = listElements[activeIconIndex]
+
+      activeIconElement.scrollIntoView({ block: 'center' })
+    }
+
+    onMounted(() => {
+      scrollToActiveIcon()
+    })
+
     return {
       selectedIcon,
       formatIconId,
       changeSelectedIcon,
-      getItemClasses
+      getItemClasses,
+      listRef
     }
   }
 }

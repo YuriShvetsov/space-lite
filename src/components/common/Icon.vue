@@ -20,11 +20,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.icon {
-  display: block;
-  width: 16px;
-  height: 16px;
-}
-</style>

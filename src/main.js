@@ -2,17 +2,16 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { PiniaLogger } from "pinia-logger"
 
-import { startupLoader } from '@/js/startup'
+import startupLoader from '@/utils/startupLoader'
 import db from './database'
+import { useStoresRunner } from '@/stores/storesRunner'
 
 import App from './components/App.vue'
 import commonComponents from './components/common'
 
 import './assets/scss/main.scss'
 
-db.onReady(() => {
-  startupLoader.hide()
-
+db.onReady(async () => {
   const pinia = createPinia()
   const app = createApp(App)
 
@@ -27,5 +26,10 @@ db.onReady(() => {
     app.component(name, component)
   })
 
+  const storesRunner = useStoresRunner()
+
+  await storesRunner.run()
+
+  startupLoader.hide()
   app.mount('#app')
 })
