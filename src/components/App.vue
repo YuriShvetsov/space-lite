@@ -13,7 +13,7 @@
           </svg>
           <span class="app__current-date-value">{{ currentDateString }}</span>
         </div>
-        
+
         <div class="app__logo">
           <div class="app__logo-text">Space Lite</div>
           <img class="app__logo-icon app__logo-icon_default" src="/images/stylus.png" alt="stylus">
@@ -284,12 +284,12 @@ export default {
 
 .app__section {
   width: 100%;
-  padding: 20px;
+  padding: 16px;
 }
 
 .app__section_side {
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -300,7 +300,7 @@ export default {
 
 .app__section_main {
   width: 100%;
-  max-width: calc(100% - 320px);
+  max-width: calc(100% - 300px);
 }
 
 // Dark theme

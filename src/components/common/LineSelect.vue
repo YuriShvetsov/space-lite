@@ -90,6 +90,16 @@ export default {
   transition: background-color .15s ease, color .15s ease;
 }
 
+.line-select__option:first-of-type {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.line-select__option:last-of-type {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
 .line-select__option:not(:last-child) {
   margin-right: 2px;
 }

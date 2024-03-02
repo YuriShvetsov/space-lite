@@ -51,7 +51,7 @@
 
     </div>
 
-  </div>  
+  </div>
 </template>
 
 <script>
@@ -104,7 +104,7 @@ export default {
 
 .app-settings__header {
   width: 100%;
-  padding: 16px 20px;
+  padding: 12px 16px;
   position: relative;
   background-color: get-light($bgColor, 'main');
   border-radius: 8px 8px 0 0;
@@ -115,7 +115,7 @@ export default {
 }
 
 .app-settings__body {
-  padding: 4px 20px;
+  padding: 4px 16px;
   background-color: get-light($bgColor, 'main');
   border-right: 1px solid get-light($sectionBorderColor);
   border-bottom: 1px solid get-light($sectionBorderColor);

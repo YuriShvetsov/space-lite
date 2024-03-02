@@ -4,8 +4,8 @@
   >
 
     <div class="form__header">
-      <div class="form__title title title_size_l title_color_red title_align_center">Are you sure you want to delete this list?</div>
-      <div class="form__desc text text_color_gray text_align_center">You can't undo this action</div>
+      <div class="form__title title title_size_l title_color_red title_align_center">You can't undo this action</div>
+      <div class="form__desc text text_color_gray text_align_center">Are you sure you want to delete this list?</div>
     </div>
 
     <div class="form__body">
@@ -19,9 +19,9 @@
           v-on:click="emitSuccess"
         >Delete</button>
       </div>
-      
+
     </div>
-    
+
   </form>
 </template>
 

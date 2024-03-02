@@ -168,18 +168,24 @@
         <form-import-todos
           v-on:success="onSuccessFormImportTodos"
           v-on:cancel="closeModalImportTodos"
-        >  
+        >
         </form-import-todos>
       </modal>
 
-      <modal ref="modalDeleteTasks">
+      <modal
+        ref="modalDeleteTasks"
+        v-bind:classNames="['modal_size_xsm']"
+      >
         <form-delete-tasks
           v-on:success="onSuccessFormDeleteTasks"
           v-on:cancel="closeModalDeleteTasks"
         ></form-delete-tasks>
       </modal>
 
-      <modal ref="modalDeleteList">
+      <modal
+        ref="modalDeleteList"
+        v-bind:classNames="['modal_size_xsm']"
+      >
         <form-delete-list
           v-on:success="onSuccessFormDeleteList"
           v-on:cancel="closeModalDeleteList"
@@ -492,7 +498,7 @@ export default {
       this.$refs.scrollUpTrigger.classList.remove('scroll-trigger_active')
       this.$refs.scrollDownTrigger.classList.remove('scroll-trigger_active')
     },
-    
+
     initListeners() {
       document.addEventListener('mouseover', this.continueTaskMoving)
       document.addEventListener('mouseup', this.finishTaskMoving)
@@ -559,7 +565,7 @@ export default {
       if (!hoverTaskId) {
         this.taskMoving.hoverTaskId = newTaskId
         this.showPointerOnHoverTask()
-        
+
         return
       }
     },
