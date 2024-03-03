@@ -32,7 +32,7 @@ const testValues = [
           {
             id: 'todo-1000',
             name: 'Task',
-            notes: 'Some notes',
+            notes: 'Some note-board',
             priority: 'high'
           }
         ]
@@ -50,7 +50,7 @@ const testValues = [
             id: 'todo-1000',
             done: true,
             name: 'Task',
-            notes: 'Some notes',
+            notes: 'Some note-board',
             priority: 'high'
           }
         ]
@@ -69,7 +69,7 @@ const testValues = [
             id: 'todo-1000',
             done: true,
             name: 'Task 1',
-            notes: 'Some notes',
+            notes: 'Some note-board',
             priority: 'high',
             hidden: false
           }
@@ -83,7 +83,7 @@ const testValues = [
             id: 'todo-1200',
             done: true,
             name: 'Task 2',
-            notes: 'Some notes',
+            notes: 'Some note-board',
             priority: 'high',
             hidden: true
           },
@@ -91,7 +91,7 @@ const testValues = [
             id: 'todo-1201',
             done: false,
             name: 'Task 3',
-            notes: 'Some notes',
+            notes: 'Some note-board',
             priority: '',
             hidden: false
           }

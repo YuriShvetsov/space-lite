@@ -6,17 +6,34 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "mocha './**/*.spec.js' --exit"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "^2.3.18",
+    "dayjs": "^1.11.10",
+    "forerunnerdb": "^2.0.24",
+    "joi": "^17.12.2",
     "lodash": "^4.17.21",
-    "vue": "^3.3.4",
-    "vuex": "^4.1.0"
+    "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.3.3",
-    "sass": "^1.66.1",
-    "vite": "^4.4.9"
+    "@vitejs/plugin-vue": "^5.0.4",
+    "chai": "^5.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.22.0",
+    "mocha": "^10.3.0",
+    "sass": "^1.71.1",
+    "vite": "^5.1.4"
   }
 }

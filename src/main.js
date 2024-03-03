@@ -1,17 +1,16 @@
-import { createApp } from 'vue'
+import { app } from './app/index'
 
-import './assets/scss/main.scss'
+import { addUser } from '~/data-access'
 
-import App from './components/App.vue'
-import commonComponents from './components/common'
-import store from './store'
+app.mount('#app')
 
-const app = createApp(App)
-
-Object.entries(commonComponents).forEach(item => {
-  const [name, component] = item
-  app.component(name, component)
+const user = addUser({
+  username: 'root',
+  password: 'root',
+  firstname: 'John',
+  lastname: 'Doe',
+  lastLoginAt: (new Date).toISOString(),
+  settings: {}
 })
 
-app.use(store)
-app.mount('#app')
+console.log(user)
