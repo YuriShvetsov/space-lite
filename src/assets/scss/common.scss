@@ -1,0 +1,28 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: $font-base;
+}
+
+.page {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.page__container {
+  width: inherit;
+  height: 100vh;
+  padding: 12px 12px 12px 79px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+  padding: 0 16px
+}

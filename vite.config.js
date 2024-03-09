@@ -1,12 +1,17 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { fileURLToPath, URL } from "url";
+import createSvgSpritePlugin from 'vite-plugin-svg-sprite'
+import { fileURLToPath, URL } from 'url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
   css: {
-    devSourcemap: true
+    devSourcemap: true,
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "@/assets/scss/index.scss";'
+      }
+    }
   },
   resolve: {
     alias: {
@@ -16,5 +21,11 @@ export default defineConfig({
   },
   define: {
     global: {}
-  }
+  },
+  plugins: [
+    vue(),
+    createSvgSpritePlugin({
+      symbolId: 'icon-[name]-[hash]'
+    })
+  ]
 })

@@ -6,20 +6,30 @@ export default Joi.object({
     .required(),
 
   username: Joi.string()
+    .min(4)
+    .max(32)
     .required(),
 
   password: Joi.string()
+    .min(4)
+    .max(32)
     .required(),
 
   firstname: Joi.string()
+    .min(2)
+    .max(32)
     .required(),
 
   lastname: Joi.string()
+    .min(2)
+    .max(32)
     .required(),
 
-  createdAt: Joi.string()
-    .isoDate()
-    .default((new Date()).toISOString()),
+  // createdAt: Joi.string()
+  //   .isoDate()
+  //   .default((new Date()).toISOString()),
+  createdAt: Joi.date()
+    .default(new Date()),
 
   lastLoginAt: Joi.string()
     .isoDate()

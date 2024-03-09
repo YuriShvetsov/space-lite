@@ -1,3 +1,3 @@
-import TaskBoard from './index.vue'
+import TaskBoardPage from './TaskBoardPage.vue'
 
-export default TaskBoard
+export default TaskBoardPage

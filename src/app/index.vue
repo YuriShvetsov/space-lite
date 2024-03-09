@@ -4,11 +4,7 @@ import { Routing } from '../pages'
 </script>
 
 <template>
-  <div class="app">
-    <main>
-      <Routing />
-    </main>
-  </div>
+  <Routing />
 </template>
 
 <style lang="scss">

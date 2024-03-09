@@ -1,0 +1,60 @@
+// Colors
+
+$color-primary: #135df6;
+$color-secondary: #9BA5B7;
+$color-tertiary: #EEF1F4;
+$color-success: #2ec971;
+$color-danger: #ec4c4c;
+$color-text-base: #353840;
+
+// Font
+
+$font-base: "Open Sans";
+$font-mono: "Hack";
+$font-logo: "";
+
+// Button
+
+$button-default-color: $color-text-base;
+$button-default-background-color: transparent;
+$button-default-background-color-hover: lighten($color-text-base, 72%);
+$button-default-background-color-focus: lighten($color-text-base, 68%);
+
+$button-primary-color: $color-primary;
+$button-primary-background-color: transparent;
+$button-primary-background-color-hover: lighten($color-primary, 45%);
+$button-primary-background-color-focus: lighten($color-primary, 42%);
+
+$button-success-color: $color-success;
+$button-success-background-color: transparent;
+$button-success-background-color-hover: lighten($color-success, 47%);
+$button-success-background-color-focus: lighten($color-success, 42%);
+
+$button-danger-color: $color-danger;
+$button-danger-background-color: transparent;
+$button-danger-background-color-hover: lighten($color-danger, 36%);
+$button-danger-background-color-focus: lighten($color-danger, 32%);
+
+$button-fill-default-color: #fff;
+$button-fill-default-background-color: $color-text-base;
+$button-fill-default-background-color-hover: darken($color-text-base, 5%);
+$button-fill-default-background-color-focus: darken($color-text-base, 8%);
+
+$button-fill-primary-color: #fff;
+$button-fill-primary-background-color: $color-primary;
+$button-fill-primary-background-color-hover: darken($color-primary, 5%);
+$button-fill-primary-background-color-focus: darken($color-primary, 8%);
+
+$button-fill-success-color: #fff;
+$button-fill-success-background-color: $color-success;
+$button-fill-success-background-color-hover: darken($color-success, 5%);
+$button-fill-success-background-color-focus: darken($color-success, 8%);
+
+$button-fill-danger-color: #fff;
+$button-fill-danger-background-color: $color-danger;
+$button-fill-danger-background-color-hover: darken($color-danger, 5%);
+$button-fill-danger-background-color-focus: darken($color-danger, 8%);
+
+// Animations
+
+$base-transition: 0.15s ease;

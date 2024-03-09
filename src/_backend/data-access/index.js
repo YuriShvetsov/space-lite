@@ -1,7 +1,11 @@
 import {
-  addUser
+  addUser,
+  getAllUsers,
+  findUsers
 } from './users'
 
 export {
-  addUser
+  addUser,
+  getAllUsers,
+  findUsers
 }
